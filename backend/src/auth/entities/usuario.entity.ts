@@ -1,4 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { EstadosUsuarioEnum } from "../enums/estado-usuario.enum";
 
 
 @Entity({name:'usuarios'})
@@ -16,12 +17,12 @@ export class Usuario{
         nombres:string;
     @Column({type:'varchar'})
         foto:string;
-    @Column({type:'int'})
-        estado:number;
+    @Column({type:'enum', enum:EstadosUsuarioEnum})
+        estado:EstadosUsuarioEnum;
     @Column({type:'varchar'})
         nombreusuario:string;
-    @Column({type:'int'})
-        rol:number;
+    @Column({type:'enum', enum:RolesEnum})
+        rol:RolesEnum;
 
     
 }
