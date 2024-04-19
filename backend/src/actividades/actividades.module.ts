@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { ActividadesController } from './actividades.controller';
-import { ActividadesService } from './actividades.service';
+import { ActividadesController } from './controllers/actividades.controller';
+import { ActividadesService } from './services/actividades.service';
 
 @Module({
   controllers: [ActividadesController],

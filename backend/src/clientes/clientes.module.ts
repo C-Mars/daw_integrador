@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { ClientesService } from './clientes.service';
-import { ClientesController } from './clientes.controller';
+import { ClientesService } from './services/clientes.service';
+import { ClientesController } from './controllers/clientes.controller';
 
 @Module({
   providers: [ClientesService],
