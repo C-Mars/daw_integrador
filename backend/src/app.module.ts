@@ -5,6 +5,7 @@ import { ActividadesModule } from './actividades/actividades.module';
 import { AuditoriaModule } from './auditoria/auditoria.module';
 import { ClientesModule } from './clientes/clientes.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [AuthModule,TypeOrmModule.forRoot({
@@ -17,7 +18,15 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     // entities: [__dirname + '/**/*.entity{.ts,.js}'],
     autoLoadEntities:true,
     synchronize: false
-  }), UsuariosModule, ActividadesModule, AuditoriaModule, ClientesModule],
+  }), 
+  JwtModule.register({
+    global: true,
+    secret: 'dawsecret',
+    signOptions:{
+      expiresIn: '24h'
+    }
+  }),
+  UsuariosModule, ActividadesModule, AuditoriaModule, ClientesModule],
   controllers: [],
   providers: [],
 })

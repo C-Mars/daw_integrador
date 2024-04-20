@@ -10,8 +10,8 @@ export class AuthController{
     }
 
     @Post()
-    login(@Body() loginDto:loginDto){
+    async login(@Body() loginDto:loginDto){
         // console.log('auth funciona')
-        this.AuthService.login(loginDto);
+        return await this.AuthService.login(loginDto);
     }
 }
