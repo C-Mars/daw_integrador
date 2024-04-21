@@ -9,7 +9,12 @@ export class AuthController{
         
     }
 
-    @Post()
+    @Post('/registro')
+    registro(){
+        return 'registro Funciono mierd'
+    };
+
+    @Post('/login')
     async login(@Body() loginDto:LoginDto){
         // console.log('auth funciona')
         return await this.AuthService.login(loginDto);

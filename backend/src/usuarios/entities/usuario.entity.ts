@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-import { EstadosUsuarioEnum } from "../enums/estado-usuario.enum";
-import { RolesEnum } from "../enums/roles.enum";
+import { EstadosUsuarioEnum } from "../../auth/enums/estado-usuario.enum";
+import { RolesEnum } from "../../auth/enums/roles.enum";
 import { Exclude, Expose } from 'class-transformer';
 
 @Entity({name:'usuarios'})
