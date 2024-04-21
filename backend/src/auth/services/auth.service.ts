@@ -7,13 +7,14 @@ import * as bcrypt from "bcrypt";
 import { EstadosUsuarioEnum } from "../enums/estado-usuario.enum";
 import { JwtService } from "@nestjs/jwt";
 import { UsuariosService } from './usuarios.service';
+
 @Injectable()
 export class AuthService{
     constructor(@InjectRepository(Usuario) private usuariosRepo:Repository<Usuario>,
     private jwtService: JwtService){
 
     }
-    async login(loginDto: loginDto): Promise<{ token: string }> {
+    async login(loginDto: loginDto): Promise<{ token:string }> {
         const usuario: Usuario =
           await this.usuariosService.obtenerUsuarioPorNombreDeUsuario(
             loginDto.nombreUsuario,
