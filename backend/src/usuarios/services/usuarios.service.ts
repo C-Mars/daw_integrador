@@ -11,7 +11,9 @@ export class UsuariosService {
     @InjectRepository(Usuario) private usuariosRepo: Repository<Usuario>,
   ) {}
 
-
+  crearUsuario(crearUsuarioDto:CrearUsuarioDto){
+    return this.usuariosRepo.save(crearUsuarioDto)
+  }
   
   async obtenerUsuarioPorEmaildeUsuario(
     email: string,
