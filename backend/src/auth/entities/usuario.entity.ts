@@ -29,7 +29,7 @@ export class Usuario{
         email:string;
 
     @Column({type:'varchar'})
-        nombreusuario:string;
+        nombreUsuario:string;
     
     @Column({type:'enum', enum:RolesEnum})
         rol: RolesEnum;

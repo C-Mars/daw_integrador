@@ -2,7 +2,7 @@ import { IsNotEmpty, IsString } from "class-validator"
 
 
 
-export class loginDto{
+export class LoginDto{
     
     @IsString()
     @IsNotEmpty()
