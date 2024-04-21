@@ -11,9 +11,22 @@ export class UsuariosService {
     @InjectRepository(Usuario) private usuariosRepo: Repository<Usuario>,
   ) {}
 
-  crearUsuario(crearUsuarioDto:CrearUsuarioDto){
-    return this.usuariosRepo.save(crearUsuarioDto)
+
+  
+  async obtenerUsuarioPorEmaildeUsuario(
+    email: string,
+  ): Promise<Usuario> {
+    const usuario: Usuario = await this.usuariosRepo.findOne({
+      where: {
+        email: email,
+        estado: EstadosUsuarioEnum.ACTIVO,
+      },
+    });
+
+    return usuario;
   }
+
+  
   async obtenerUsuarioPorNombreDeUsuario(
     nombreUsuario: string,
   ): Promise<Usuario> {
