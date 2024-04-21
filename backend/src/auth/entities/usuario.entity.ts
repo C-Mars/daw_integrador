@@ -28,6 +28,7 @@ export class Usuario{
     @Column({type:'varchar'})
         email:string;
 
+    @Exclude()    
     @Column({type:'varchar'})
         nombreUsuario:string;
     
