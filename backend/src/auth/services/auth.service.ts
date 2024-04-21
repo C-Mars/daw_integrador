@@ -7,6 +7,7 @@ import * as bcrypt from "bcrypt";
 import { EstadosUsuarioEnum } from "../enums/estado-usuario.enum";
 import { JwtService } from "@nestjs/jwt";
 import { UsuariosService } from "../../usuarios/services/usuarios.service";
+import { RegistroUsuarioDto } from "../dtos/registro.dto";
 
 @Injectable()
 export class AuthService {
@@ -14,7 +15,10 @@ export class AuthService {
     private usuariosService: UsuariosService,
     private jwtService: JwtService,
   ) {}
-
+  async registroUsuario(registroUsuarioDto:RegistroUsuarioDto){
+    // const usuario = await this.usuariosService.findOneById
+    await this.usuariosService.crearUsuario(RegistroUsuarioDto)
+  }
   async login(loginDto:LoginDto): Promise<{ token: string }> {
     const usuario: Usuario =
       await this.usuariosService.obtenerUsuarioPorNombreDeUsuario(

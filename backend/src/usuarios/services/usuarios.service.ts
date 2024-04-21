@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Usuario } from '../entities/usuario.entity';
 import { Repository } from 'typeorm';
 import { EstadosUsuarioEnum } from '../../auth/enums/estado-usuario.enum';
+import { CrearUsuarioDto } from '../dto/crear-usuario.dto';
 
 @Injectable()
 export class UsuariosService {
@@ -10,6 +11,9 @@ export class UsuariosService {
     @InjectRepository(Usuario) private usuariosRepo: Repository<Usuario>,
   ) {}
 
+  crearUsuario(crearUsuarioDto:CrearUsuarioDto){
+    return this.usuariosRepo.save(crearUsuarioDto)
+  }
   async obtenerUsuarioPorNombreDeUsuario(
     nombreUsuario: string,
   ): Promise<Usuario> {
