@@ -25,12 +25,12 @@ export class RegistroUsuarioDto{
     @IsNotEmpty()
     nombreUsuario: string
 
-    @Transform(({value})=> value.thim())
+    // @Transform(({value})=> value.thim())
     @IsNotEmpty()
-    @MinLength(8)
+    @MinLength(6)
     clave:string
 
-    @IsString()
-    @IsNotEmpty()
-    estado:EstadosUsuarioEnum
+    // @IsString()
+    // @IsNotEmpty()
+    // estado:EstadosUsuarioEnum.ACTIVO
 }

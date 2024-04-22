@@ -11,8 +11,8 @@ export class AuthController{
     }
 
     @Post('/registro')
-    registroUsuario(@Body() regisroUsuarioDto:RegistroUsuarioDto){
-        return 'registro Funciono mierd'
+    async registroUsuario(@Body() regisroUsuarioDto:RegistroUsuarioDto){
+        return await this.AuthService.registroUsuario(regisroUsuarioDto)
     };
 
     @Post('/login')

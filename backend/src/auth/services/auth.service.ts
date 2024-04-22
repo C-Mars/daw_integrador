@@ -15,14 +15,14 @@ export class AuthService {
     private usuariosService: UsuariosService,
     private jwtService: JwtService,
   ) {}
-  async registroUsuario({nombres,apellidos,clave,nombreUsuario,email,rol,estado}:RegistroUsuarioDto){
+  async registroUsuario({nombres,apellidos,clave,nombreUsuario,email,rol}:RegistroUsuarioDto){
 
     const usuario = await this.usuariosService.obtenerUsuarioPorEmaildeUsuario(email)
     
     if(usuario){
       throw new BadRequestException('El usuario ya existe');
     }
-    return await this.usuariosService.crearUsuario({nombres,apellidos,clave,nombreUsuario,email,rol,estado})
+    return await this.usuariosService.crearUsuario({nombres,apellidos,clave,nombreUsuario,email,rol})
   }
 
 
