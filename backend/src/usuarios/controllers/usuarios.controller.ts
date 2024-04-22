@@ -10,7 +10,7 @@ export class UsuariosController {
   constructor(private usuariosService: UsuariosService) {}
 
   @Get()
-  @ApiBearerAuth()
+  // @ApiBearerAuth()
   @Roles([RolesEnum.ADMINISTRADOR])
   @UseGuards(AuthGuard)
   async getUsuarios() {

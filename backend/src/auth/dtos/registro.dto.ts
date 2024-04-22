@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsString, MinLength } from "class-validator"
+import { IsEmail, IsNotEmpty, IsOptional, IsString, MinLength } from "class-validator"
 import { RolesEnum } from "../enums/roles.enum"
 import { EstadosUsuarioEnum } from "../enums/estado-usuario.enum"
 import { Transform } from "class-transformer"
@@ -15,6 +15,9 @@ export class RegistroUsuarioDto{
    
     @IsEmail()
     email:string
+    
+    @IsOptional()
+    foto:string
     
     @IsString()
     @IsNotEmpty()

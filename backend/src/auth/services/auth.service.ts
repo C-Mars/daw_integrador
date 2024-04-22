@@ -15,7 +15,7 @@ export class AuthService {
     private usuariosService: UsuariosService,
     private jwtService: JwtService,
   ) {}
-  async registroUsuario({nombres,apellidos,clave,nombreUsuario,email,rol}:RegistroUsuarioDto){
+  async registroUsuario({nombres,apellidos,clave,nombreUsuario,email,foto,rol}:RegistroUsuarioDto){
 
     const usuario = await this.usuariosService.obtenerUsuarioPorEmaildeUsuario(email)
     
@@ -28,6 +28,7 @@ export class AuthService {
       clave: await bcrypt.hash(clave,10),
       nombreUsuario,
       email,
+      foto,
       rol
     });
   }
