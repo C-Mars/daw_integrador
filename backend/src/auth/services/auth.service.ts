@@ -22,7 +22,14 @@ export class AuthService {
     if(usuario){
       throw new BadRequestException('El usuario ya existe');
     }
-    return await this.usuariosService.crearUsuario({nombres,apellidos,clave,nombreUsuario,email,rol})
+    return await this.usuariosService.crearUsuario({
+      nombres,
+      apellidos,
+      clave: await bcrypt.hash(clave,10),
+      nombreUsuario,
+      email,
+      rol
+    });
   }
 
 
