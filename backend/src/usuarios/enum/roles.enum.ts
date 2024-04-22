@@ -1,4 +1,4 @@
 export enum RolesEnum{
-    ADMINISTRADOR="ADMINISTRADOR",
-    EJECUTOR="EJECUTOR"
+    ADMINISTRADOR="administrador",
+    EJECUTOR="ejecutor"
 }
