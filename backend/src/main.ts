@@ -5,6 +5,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.setGlobalPrefix('api');
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));// Defino un interceptor(estructura de nest -milware) que intercepta las solicitudesuna vez que estan volviendo al cliente- intercepta las respuestas
   app.useGlobalPipes(new ValidationPipe({
     whitelist:true,
