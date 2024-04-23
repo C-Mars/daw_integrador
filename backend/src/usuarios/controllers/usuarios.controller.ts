@@ -17,18 +17,18 @@ export class UsuariosController {
     return await this.usuariosService.obtenerUsuarios();
   }
 
-  @Patch()
-  @ApiBearerAuth()
-  @Roles([RolesEnum.ADMINISTRADOR])
-  @UseGuards(AuthGuard)
-  async patchUsuarios() {
-    return await this.usuariosService.obtenerUsuarios();
+  // @Patch()
+  // @ApiBearerAuth()
+  // @Roles([RolesEnum.ADMINISTRADOR])
+  // @UseGuards(AuthGuard)
+  // async patchUsuarios() {
+  //   return await this.usuariosService.obtenerUsuarios();
 
-  }@Delete()
-  @ApiBearerAuth()
-  @Roles([RolesEnum.ADMINISTRADOR])
-  @UseGuards(AuthGuard)
-  async deleteUsuarios() {
-    return await this.usuariosService.obtenerUsuarios();
-  }
+  // }@Delete()
+  // @ApiBearerAuth()
+  // @Roles([RolesEnum.ADMINISTRADOR])
+  // @UseGuards(AuthGuard)
+  // async deleteUsuarios() {
+  //   return await this.usuariosService.obtenerUsuarios();
+  // }
 }
