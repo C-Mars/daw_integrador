@@ -3,6 +3,7 @@ import { EstadosUsuarioEnum } from "../../auth/enums/estado-usuario.enum";
 import { RolesEnum } from "../../auth/enums/roles.enum";
 import { Exclude, Expose } from 'class-transformer';
 
+
 @Entity({name:'usuarios'})
 export class Usuario{
 

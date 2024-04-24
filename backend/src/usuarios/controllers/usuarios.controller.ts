@@ -3,12 +3,14 @@ import { UsuariosService } from '../services/usuarios.service';
 import { Roles } from '../../auth/decorators/roles.decorator';
 import { RolesEnum } from '../../auth/enums/roles.enum';
 import { AuthGuard } from '../../auth/guards/auth.guard';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('usuarios')
 @Controller('/usuarios')
 export class UsuariosController {
   constructor(private usuariosService: UsuariosService) {}
 
+  
   @Get()
   @ApiBearerAuth()
   @Roles([RolesEnum.ADMINISTRADOR])
