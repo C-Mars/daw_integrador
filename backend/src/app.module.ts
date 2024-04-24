@@ -17,7 +17,9 @@ import { JwtModule } from '@nestjs/jwt';
     database: 'appluthier',
     // entities: [__dirname + '/**/*.entity{.ts,.js}'],
     autoLoadEntities:true,
-    synchronize: false
+    synchronize: false,
+    logging:true,
+    logger:'advanced-console'//puedo ver sql
   }), 
   JwtModule.register({
     global: true,
