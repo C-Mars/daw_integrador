@@ -11,7 +11,9 @@ async function bootstrap() {
     whitelist:true,
     forbidNonWhitelisted:true // Si pasan algo que no es el nest se encarga de rechazarlo
   }))
-  const config = new DocumentBuilder().build();
+  const config = new DocumentBuilder()
+  .addBasicAuth()
+  .build();
   const document = SwaggerModule.createDocument(app, config); //libreria sawwer
   SwaggerModule.setup('api', app, document);
   await app.listen(3000);

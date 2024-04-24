@@ -68,5 +68,19 @@ export class UsuariosService {
     return usuario;
   }
 
+  async borrarUsuario(id: number, estadosUsuarioEnum:EstadosUsuarioEnum.ACTIVO) {
+    const usuario = await this.usuariosRepo.delete({ 
+        id,
+        estado: EstadosUsuarioEnum.ACTIVO,
+      });
+
+      if (!usuario) {
+        throw new UnauthorizedException(
+          'No existe un usuario con ese nombre de usuario',
+        );
+      };
+      console.log('eliminado')
+  }
+
   
 }
