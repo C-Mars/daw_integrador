@@ -68,19 +68,56 @@ export class UsuariosService {
     return usuario;
   }
 
-  async borrarUsuario(id: number, estadosUsuarioEnum:EstadosUsuarioEnum.ACTIVO) {
-    const usuario = await this.usuariosRepo.delete({ 
+      
+  async borrarUsuario(id: number): Promise<Usuario> {
+    const usuario = await this.usuariosRepo.findOne({
+      where: {
         id,
         estado: EstadosUsuarioEnum.ACTIVO,
-      });
+      },
+    });
+    if (!usuario) {
+      throw new UnauthorizedException(
+        'No existe un usuario con ese nombre de Usuario',
+      );
+    }
+    await this.usuariosRepo.delete(id);
 
-      if (!usuario) {
-        throw new UnauthorizedException(
-          'No existe un usuario con ese nombre de usuario',
-        );
-      };
-      console.log('eliminado')
+    return usuario
   }
+
+  // async editarUsuario(id: number): Promise<Usuario> {
+  //   const usuario = await this.usuariosRepo.findOne({
+  //     where: {
+  //       id,
+  //       estado: EstadosUsuarioEnum.ACTIVO,
+  //     },
+  //   });
+  //   if (!usuario) {
+  //     throw new UnauthorizedException(
+  //       'No existe un usuario con ese nombre',
+  //     );
+  //   }
+  //   await this.usuariosRepo.update({
+  //     where: {
+  //         nombres: nombres,
+  //         apellidos:apellidos,
+  //         email:email,
+      
+  //         foto:foto,
+      
+  //         rol: RolesEnum,
+    
+  //         nombreUsuario: nombreUsuario,
+
+  //         clave:string,
+  //         estado: EstadosUsuarioEnum.ACTIVO,
+  //       },
+  //   });
+
+    // return usuario
+  // }
+
 
   
 }

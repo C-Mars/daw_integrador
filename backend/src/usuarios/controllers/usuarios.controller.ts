@@ -5,6 +5,7 @@ import { RolesEnum } from '../../auth/enums/roles.enum';
 import { AuthGuard } from '../../auth/guards/auth.guard';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Usuario } from '../entities/usuario.entity';
+import { EstadosUsuarioEnum } from 'src/auth/enums/estado-usuario.enum';
 
 @ApiTags('usuarios')
 @Controller('/usuarios')
@@ -28,18 +29,19 @@ export class UsuariosController {
     return await this.usuariosService.findOneById(id);
   }
   
-  // @Patch()
-  // @ApiBearerAuth()
-  // @Roles([RolesEnum.ADMINISTRADOR])
-  // @UseGuards(AuthGuard)
-  // async patchUsuarios() {
-  //   return await this.usuariosService.obtenerUsuarios();
+  @Patch()
+  @ApiBearerAuth()
+  @Roles([RolesEnum.ADMINISTRADOR])
+  @UseGuards(AuthGuard)
+  async patchUsuarios() {
+    // return await this.usuariosService.patchUsuarios();
+  }
 
   @Delete(':id')
   @ApiBearerAuth()
   @Roles([RolesEnum.ADMINISTRADOR])
   @UseGuards(AuthGuard)
-  async deleteUsuarios(@Param('id', ParseIntPipe) id:number):Promise<Usuario> {
-    return await this.usuariosService.findOneById(id);
+  async deleteUsuarios(@Param('id', ParseIntPipe) id:number): Promise<Usuario> { // Aquí asigna el estado de usuario que desees borrar
+      return await this.usuariosService.borrarUsuario(id);
   }
 }
