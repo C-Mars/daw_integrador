@@ -85,6 +85,20 @@ export class UsuariosService {
 
     return usuario
   }
+  async eliminarUsuarioPorNombresApellidosUsuario(
+    nombres: string,
+    apellidos: string
+  ): Promise<Usuario> {
+    const usuario: Usuario = await this.usuariosRepo.findOne({
+      where: {
+        nombres: nombres,
+        apellidos: apellidos,
+        estado: EstadosUsuarioEnum.ACTIVO,
+      },
+    });
+
+    return usuario;
+  }
 
   // async editarUsuario(id: number): Promise<Usuario> {
   //   const usuario = await this.usuariosRepo.findOne({
