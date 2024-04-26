@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { EstadosUsuarioEnum } from "../../auth/enums/estado-usuario.enum";
 import { RolesEnum } from "../../auth/enums/roles.enum";
 import { Exclude, Expose } from 'class-transformer';
@@ -40,4 +40,6 @@ export class Usuario{
     get nombreCompleto(): string {
         return this.apellidos + ', ' + this.nombres;
     }
+
+    @OneToMany(()=>Actividades),(actividades) =>avtividades.usuario
 }
