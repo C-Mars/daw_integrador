@@ -4,6 +4,7 @@ import { Usuario } from '../entities/usuario.entity';
 import { Repository } from 'typeorm';
 import { EstadosUsuarioEnum } from '../../auth/enums/estado-usuario.enum';
 import { CrearUsuarioDto } from '../dto/crear-usuario.dto';
+import { EditarUsuario } from '../dto/editar-usuario.dto';
 
 @Injectable()
 export class UsuariosService {
@@ -62,25 +63,62 @@ export class UsuariosService {
 
     if (!usuario) {
       throw new UnauthorizedException(
-        'No existe un usuario con ese nombre de usuario',
+        'El usuario no existe',
       );
     }
     return usuario;
   }
 
-  async borrarUsuario(id: number, estadosUsuarioEnum:EstadosUsuarioEnum.ACTIVO) {
-    const usuario = await this.usuariosRepo.delete({ 
+      
+  async borrarUsuario(id: number): Promise<Usuario> {
+    const usuario = await this.usuariosRepo.findOne({
+      where: {
         id,
         estado: EstadosUsuarioEnum.ACTIVO,
-      });
+      },
+    });
+    if (!usuario) {
+      throw new UnauthorizedException(
+        'El usuario no existe',
+      );
+    }
+    await this.usuariosRepo.delete(id);
 
-      if (!usuario) {
-        throw new UnauthorizedException(
-          'No existe un usuario con ese nombre de usuario',
-        );
-      };
-      console.log('eliminado')
+    return usuario
   }
+  // async eliminarUsuarioPorNombresApellidosUsuario(
+  //   nombres: string,
+  //   apellidos: string
+  // ): Promise<Usuario> {
+  //   const usuario: Usuario = await this.usuariosRepo.findOne({
+  //     where: {
+  //       nombres: nombres,
+  //       apellidos: apellidos,
+  //       estado: EstadosUsuarioEnum.ACTIVO,
+  //     },
+  //   });
+
+  //   return usuario;
+  // }
+
+  async editarUsuario(id: number, usuario: EditarUsuario)
+  // : Promise<Usuario> 
+  {
+    const existeUsu= await this.usuariosRepo.findOne({
+      where: {
+        id,
+        estado: EstadosUsuarioEnum.ACTIVO,
+      },
+    });
+    if (!existeUsu) {
+      throw new UnauthorizedException(
+        'El usuario no existe',
+      );
+    }
+    return   await this.usuariosRepo.update({id}, usuario)
+    ;
+  }
+
 
   
 }
