@@ -101,18 +101,18 @@ export class UsuariosService {
   }
 
   // async editarUsuario(id: number): Promise<Usuario> {
-  //   const usuario = await this.usuariosRepo.findOne({
+  //   const buscarUsuario= await this.usuariosRepo.findOne({
   //     where: {
   //       id,
   //       estado: EstadosUsuarioEnum.ACTIVO,
   //     },
   //   });
-  //   if (!usuario) {
+  //   if (!buscarUsuario) {
   //     throw new UnauthorizedException(
   //       'No existe un usuario con ese nombre',
   //     );
   //   }
-  //   await this.usuariosRepo.update({
+  //   const usuario= await this.buscar.update({
   //     where: {
   //         nombres: nombres,
   //         apellidos:apellidos,
@@ -129,7 +129,7 @@ export class UsuariosService {
   //       },
   //   });
 
-    // return usuario
+  //   return usuario
   // }
 
 
