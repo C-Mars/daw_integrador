@@ -10,7 +10,7 @@ import { UsuariosModule } from "src/usuarios/usuarios.module";
 @Module({
     controllers:[AuthController],
     providers:[AuthService,UsuariosService],
-    imports:[TypeOrmModule.forFeature([Usuario]),UsuariosModule ],
+    imports:[TypeOrmModule.forFeature([Usuario])],
     exports:[]
 })
 export class AuthModule{}

@@ -17,7 +17,7 @@ export class RegistroUsuarioDto{
     email:string
     
     @IsOptional()
-    foto:string
+    foto: string
     
     @IsString()
     @IsNotEmpty()
