@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 import { EstadosUsuarioEnum } from "../../auth/enums/estado-usuario.enum";
 import { RolesEnum } from "../../auth/enums/roles.enum";
 import { Exclude, Expose } from 'class-transformer';

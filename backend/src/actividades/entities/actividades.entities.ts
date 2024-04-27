@@ -5,7 +5,7 @@ import { Usuario } from "src/usuarios/entities/usuario.entity"
 
 @Entity()
 export class Actividades{
-
+ 
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -37,6 +37,7 @@ export class Actividades{
 
     @Column({type: 'enum', enum:EstadoActividad})
     estado:EstadoActividad;
+    nuevaActividad: Promise<Usuario>;
 
     // @ManyToOne(() => Usuario,(usuario)) => usuario.actividades
     // usuario: Usuario
