@@ -5,7 +5,6 @@ import { RolesEnum } from '../../auth/enums/roles.enum';
 import { AuthGuard } from '../../auth/guards/auth.guard';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Usuario } from '../entities/usuario.entity';
-import { EstadosUsuarioEnum } from 'src/auth/enums/estado-usuario.enum';
 import { EditarUsuario } from '../dto/editar-usuario.dto';
 
 @ApiTags('usuarios')
@@ -41,6 +40,16 @@ export class UsuariosController {
     return await this.usuariosService.editarUsuario(id, usuario);
   }
 
+  @Patch(':id')
+  @ApiBearerAuth()
+  @Roles([RolesEnum.EJECUTOR])
+  @UseGuards(AuthGuard)
+  async patchUsuariosContraseña(
+    @Param('id', ParseIntPipe) id:number,
+    @Body() usuario: EditarUsuario){
+    return await this.usuariosService.editarUsuario(id, usuario);
+  }
+  
   @Delete(':id')
   @ApiBearerAuth()
   @Roles([RolesEnum.ADMINISTRADOR])

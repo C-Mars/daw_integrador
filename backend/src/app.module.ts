@@ -6,6 +6,7 @@ import { AuditoriaModule } from './auditoria/auditoria.module';
 import { ClientesModule } from './clientes/clientes.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtModule } from '@nestjs/jwt';
+import { FilesModule } from './files/files.module';
 
 @Module({
   imports: [AuthModule,TypeOrmModule.forRoot({
@@ -28,7 +29,7 @@ import { JwtModule } from '@nestjs/jwt';
       expiresIn: '24h'
     }
   }),
-  UsuariosModule, ActividadesModule, AuditoriaModule, ClientesModule],
+  UsuariosModule, ActividadesModule, AuditoriaModule, ClientesModule, FilesModule],
   controllers: [],
   providers: [],
 })

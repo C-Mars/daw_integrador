@@ -16,10 +16,17 @@ export class AuthController{
     async registroUsuario(@Body() regisroUsuarioDto:RegistroUsuarioDto){
         return await this.AuthService.registroUsuario(regisroUsuarioDto)
     };
+    
+    
+    // @Post('/file')
+    // async subirArchivo(@Body() archivoUsuarioDto:)
+
 
     @Post('/login')
     async login(@Body() loginDto:LoginDto){
         // console.log('auth funciona')
         return await this.AuthService.login(loginDto);
     }
+
+
 }

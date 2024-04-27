@@ -37,5 +37,8 @@ export class Actividades{
 
     @Column({type: 'enum', enum:EstadoActividad})
     estado:EstadoActividad;
+
+    // @ManyToOne(() => Usuario,(usuario)) => usuario.actividades
+    // usuario: Usuario
     
 }

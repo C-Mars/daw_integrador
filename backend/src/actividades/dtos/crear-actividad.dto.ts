@@ -24,5 +24,5 @@ export class CrearActividadDto{
     @IsString()
     @IsNotEmpty()
     estado: EstadoActividad;
-    
+
 }

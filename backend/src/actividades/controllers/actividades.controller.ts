@@ -4,6 +4,7 @@ import { Roles } from 'src/auth/decorators/roles.decorator';
 import { ActividadesService } from '../services/actividades.service';
 import { RolesEnum } from 'src/auth/enums/roles.enum';
 import { AuthGuard } from 'src/auth/guards/auth.guard';
+import { Actividades } from '../entities/actividades.entities';
 
 @ApiTags('actividades')
 @Controller('/actividades')
@@ -15,7 +16,7 @@ export class ActividadesController {
     @Roles([RolesEnum.ADMINISTRADOR])
     @UseGuards(AuthGuard)
     async getActividades() {
-        return this.actividadService.obtenerActividadPorId(id);
+        // return this.actividadService.obtenerActividadPorId(id);
     }
 
 }

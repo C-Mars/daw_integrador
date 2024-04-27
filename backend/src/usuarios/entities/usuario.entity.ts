@@ -41,5 +41,5 @@ export class Usuario{
         return this.apellidos + ', ' + this.nombres;
     }
 
-    @OneToMany(()=>Actividades),(actividades) =>avtividades.usuario
+    // @OneToMany(()=>Actividades),(actividades) =>avtividades.usuario
 }
