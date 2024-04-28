@@ -8,8 +8,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtModule } from '@nestjs/jwt';
 import { FilesModule } from './files/files.module';
 
+
 @Module({
-  imports: [AuthModule,TypeOrmModule.forRoot({
+  imports: [AuthModule,
+    TypeOrmModule.forRoot({
     type: 'mysql',
     host: 'localhost',
     port: 3306,
@@ -29,7 +31,11 @@ import { FilesModule } from './files/files.module';
       expiresIn: '24h'
     }
   }),
-  UsuariosModule, ActividadesModule, AuditoriaModule, ClientesModule, FilesModule],
+  UsuariosModule, 
+  ActividadesModule, 
+  AuditoriaModule, 
+  ClientesModule,
+  FilesModule],
   controllers: [],
   providers: [],
 })

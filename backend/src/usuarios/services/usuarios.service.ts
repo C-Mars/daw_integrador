@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Usuario } from '../entities/usuario.entity';
 import { Repository } from 'typeorm';
@@ -12,8 +12,8 @@ export class UsuariosService {
     @InjectRepository(Usuario) private usuariosRepo: Repository<Usuario>,
   ) {}
 
-  crearUsuario(crearUsuarioDto:CrearUsuarioDto){
-    return this.usuariosRepo.save(crearUsuarioDto)
+  async crearUsuario(crearUsuarioDto:CrearUsuarioDto):Promise<Usuario>{
+    return await this.usuariosRepo.save(crearUsuarioDto)
   }
   
   async obtenerUsuarioPorEmaildeUsuario(
@@ -28,6 +28,7 @@ export class UsuariosService {
 
     return usuario;
   }
+  
 
   
   async obtenerUsuarioPorNombreDeUsuario(
