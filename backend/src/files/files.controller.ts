@@ -3,31 +3,32 @@ import { FilesService } from './files.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { RolesEnum } from 'src/auth/enums/roles.enum';
 import { Roles } from 'src/auth/decorators/roles.decorator';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from 'src/auth/guards/auth.guard';
 import { fileFilter } from './helpers/fileFilter.helper';
 import { diskStorage } from 'multer';
+import path from 'path';
 
-
+@ApiTags('fotos')
 @Controller('/files')
 export class FilesController {
   constructor(private readonly filesService: FilesService) {}
 
-  @ApiBearerAuth('imagenes')
+  
   @Post('/usuarios')
-  @UseInterceptors(FileInterceptor('foto', {
+  @UseInterceptors(FileInterceptor('file', {
     fileFilter: fileFilter,
     storage: diskStorage({
       destination:'../../static/usuarios'})
   }))
-  async subirFiles(@UploadedFile() foto: Express.Multer.File,) : Promise<{ fileName: string }>{
+  async subirFiles(@UploadedFile() file: Express.Multer.File,) : Promise<{ fileName: string }>{
     
-    if (!foto){
+    if (!file){
       throw new BadRequestException('El archivo no corresponde a una imagen');
     }
 
     return { 
-      fileName : foto.originalname
+      fileName : file.originalname
     }
   }
   
