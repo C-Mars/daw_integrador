@@ -6,7 +6,7 @@ import { AuditoriaModule } from './auditoria/auditoria.module';
 import { ClientesModule } from './clientes/clientes.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtModule } from '@nestjs/jwt';
-import { FilesModule } from './files/files.module';
+
 
 
 @Module({
@@ -35,7 +35,7 @@ import { FilesModule } from './files/files.module';
   ActividadesModule, 
   AuditoriaModule, 
   ClientesModule,
-  FilesModule],
+  ],
   controllers: [],
   providers: [],
 })
