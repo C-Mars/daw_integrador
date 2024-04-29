@@ -41,7 +41,7 @@ export class Usuario{
     get nombreCompleto(): string {
         return this.apellidos + ', ' + this.nombres;
     }
-    // @OneToMany(() => Actividades, (actividades) => actividades.usuario)
-    // actividades: Actividades[];
+    @OneToMany(() => Actividades, (actividades) => actividades.idUsuarioModificacion)
+    actividades: Actividades[];
    
 }

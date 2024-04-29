@@ -9,7 +9,7 @@ export class Actividades{
     @PrimaryGeneratedColumn()
     id: number;
 
-    @ManyToOne(()=>Usuario)
+    // @ManyToOne(()=>Cliente)
     @JoinColumn({name:'idCliente'})
     idCliente: number;
 
