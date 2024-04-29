@@ -14,6 +14,9 @@ export class ActividadesController {
     constructor(private actividadService:ActividadesService) {}
 
     @Post()
+    @ApiBearerAuth()
+    @Roles([RolesEnum.ADMINISTRADOR])
+    @UseGuards(AuthGuard)
     async crearActividad(
     @Req() request:Request,
     @Body() crearActvidadDto: CrearActividadDto)
