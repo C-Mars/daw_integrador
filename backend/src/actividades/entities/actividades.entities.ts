@@ -9,7 +9,8 @@ export class Actividades{
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @ManyToOne(()=>Usuario)
+    @JoinColumn({name:'idCliente'})
     idCliente: number;
 
     @Column()
@@ -27,7 +28,7 @@ export class Actividades{
     //Columna relacional, debo obtener el id del usuario que modifica
     @ManyToOne(()=>Usuario)
     @JoinColumn({name: 'idUsuarioModificacion'})
-    UsuarioModificacion: Usuario;
+    idUsuarioModificacion: Usuario;
 
     @Column()
     fechaModificacion: Date;
@@ -39,7 +40,7 @@ export class Actividades{
     estado:EstadoActividad;
     nuevaActividad: Promise<Usuario>;
 
-    // @ManyToOne(() => Usuario,(usuario)) => usuario.actividades
-    // usuario: Usuario
+    // @ManyToOne(() => Usuario, (usuario) => usuario.id)
+    // usuario: Usuario;
     
 }

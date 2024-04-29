@@ -1,11 +1,12 @@
-import { IsNotEmpty, IsString } from "class-validator";
+import { IsDate, IsNotEmpty, IsOptional, IsString } from "class-validator";
 import { EstadoActividad } from "../enums/estado-actividad.enum";
 import { PrioridadActividad } from "../enums/prioridad-actividad.enum";
 
 
 export class CrearActividadDto{
     
-    @IsNotEmpty()
+    // @IsNotEmpty()
+    @IsOptional()
     idCliente: number;
     
     @IsString()
@@ -20,6 +21,15 @@ export class CrearActividadDto{
     
     @IsNotEmpty()
     idUsuarioModificacion:number;
+    
+    @IsNotEmpty()
+    @IsDate()
+    fechaModificacion: Date;
+   
+    
+    @IsNotEmpty()
+    @IsDate()
+    fechaInicio: Date;
     
     @IsString()
     @IsNotEmpty()

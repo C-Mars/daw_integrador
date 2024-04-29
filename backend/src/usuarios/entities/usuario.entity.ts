@@ -1,12 +1,13 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { EstadosUsuarioEnum } from "../../auth/enums/estado-usuario.enum";
 import { RolesEnum } from "../../auth/enums/roles.enum";
 import { Exclude, Expose } from 'class-transformer';
+import { Actividades } from "src/actividades/entities/actividades.entities";
 
 
 @Entity({name:'usuarios'})
 export class Usuario{
-
+    
     @PrimaryGeneratedColumn()
         id:number; 
         
@@ -40,6 +41,7 @@ export class Usuario{
     get nombreCompleto(): string {
         return this.apellidos + ', ' + this.nombres;
     }
-
-    // @OneToMany(()=>Actividades),(actividades) =>avtividades.usuario
+    // @OneToMany(() => Actividades, (actividades) => actividades.usuario)
+    // actividades: Actividades[];
+   
 }

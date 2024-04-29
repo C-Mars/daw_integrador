@@ -36,31 +36,7 @@ export class UsuariosController {
     @Param('id', ParseIntPipe) id:number):Promise<Usuario> {
     return await this.usuariosService.findOneById(id);
   }
-  
-  // @ApiBearerAuth()
-  // @Roles([RolesEnum.ADMINISTRADOR])
-  // @UseGuards(AuthGuard) 
-  // @Post()
-  // @UseInterceptors(FileInterceptor('file', {
-  //   fileFilter: fileFilter,
-  //   storage: diskStorage({
-  //     destination: '/backend/static/usuarios'
-  //       })
-  // }))
-  // async subirAvatar(
-  //   @Param('id', ParseIntPipe) id:number,
-  //   @Body() usuario: EditarUsuario,
-  //   @UploadedFile() file: Express.Multer.File) {
-  //   const usuarioId = await this.usuariosService.findOneById(id)
-  //   usuarioId.foto = file.originalname
-  //   await this.usuariosService.editarUsuario(id,usuario)
-    
-  //   if (!file){
-  //     throw new BadRequestException('El archivo no corresponde a una imagen');
-  //   }
-  //   return usuarioId.foto
-  // }
-  
+
 
   @Patch(':id')
   @ApiBearerAuth()
