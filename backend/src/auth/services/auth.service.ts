@@ -1,13 +1,10 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { LoginDto} from "../dtos/login.dto";
-import { InjectRepository } from "@nestjs/typeorm";
 import { Usuario } from "../../usuarios/entities/usuario.entity";
-import { Repository } from "typeorm";
 import * as bcrypt from "bcrypt";
-import { EstadosUsuarioEnum } from "../enums/estado-usuario.enum";
 import { JwtService } from "@nestjs/jwt";
 import { UsuariosService } from "../../usuarios/services/usuarios.service";
-import { RegistroUsuarioDto } from "../dtos/registro.dto";
+import { CrearUsuarioDto } from "src/usuarios/dto/crear-usuario.dto";
 
 @Injectable()
 export class AuthService {
@@ -15,7 +12,7 @@ export class AuthService {
     private usuariosService: UsuariosService,
     private jwtService: JwtService,
   ) {}
-  async registroUsuario({nombres,apellidos,clave,nombreUsuario,email,foto,rol}:RegistroUsuarioDto){
+  async registroUsuario({nombres,apellidos,clave,nombreUsuario,email,foto,rol,estado}:CrearUsuarioDto){
 
     const usuEmail = await this.usuariosService.obtenerUsuarioPorEmail(email)
     const usuNombre = await this.usuariosService.obtenerUsuarioPorNombreDeUsuario(nombreUsuario)
@@ -31,6 +28,7 @@ export class AuthService {
       nombreUsuario,
       email,
       foto,
+      estado,
       rol
     });
   }
