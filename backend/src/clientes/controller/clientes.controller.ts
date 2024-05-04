@@ -12,11 +12,11 @@ import {
 
 import { ValidationPipe } from "@nestjs/common/pipes";
 
-import { CreateClientesDto } from "./dto/create-clientes.dto";
+import { CreateClientesDto } from "../dto/create-clientes.dto";
 
 import { UpdateClientesDto } from "src/clientes/dto/update-clientes.dto";
 
-import { ClientesService } from "./clientes.service";
+import { ClientesService } from "../service/clientes.service";
 import { ApiBearerAuth } from "@nestjs/swagger";
 import { RolesEnum } from "src/auth/enums/roles.enum";
 import { Roles } from "src/auth/decorators/roles.decorator";
