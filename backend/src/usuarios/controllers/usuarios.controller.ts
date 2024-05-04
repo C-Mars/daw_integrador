@@ -1,4 +1,4 @@
-import { Controller, Delete, Get, Patch, UseGuards,Param, ParseIntPipe, Body, Post, UseInterceptors, UploadedFile, BadRequestException } from '@nestjs/common';
+import { Controller, Delete, Get, Patch, UseGuards, Param, ParseIntPipe, Body, Post, UseInterceptors, UploadedFile, BadRequestException } from '@nestjs/common';
 import { UsuariosService } from '../services/usuarios.service';
 import { Roles } from '../../auth/decorators/roles.decorator';
 import { RolesEnum } from '../../auth/enums/roles.enum';
@@ -17,9 +17,9 @@ import { ArchivosService } from 'src/archivos/service/archivos.service';
 export class UsuariosController {
   constructor(private usuariosService: UsuariosService,
     private archivosService: ArchivosService
-  ) {}
+  ) { }
 
-  
+
   @Get()
   @ApiBearerAuth()
   @Roles([RolesEnum.ADMINISTRADOR])
@@ -33,7 +33,7 @@ export class UsuariosController {
   @Roles([RolesEnum.ADMINISTRADOR])
   @UseGuards(AuthGuard)
   async getUsuario(
-    @Param('id', ParseIntPipe) id:number):Promise<Usuario> {
+    @Param('id', ParseIntPipe) id: number): Promise<Usuario> {
     return await this.usuariosService.findOneById(id);
   }
 
@@ -43,8 +43,8 @@ export class UsuariosController {
   @Roles([RolesEnum.ADMINISTRADOR])
   @UseGuards(AuthGuard)
   async patchUsuarios(
-    @Param('id', ParseIntPipe) id:number,
-    @Body() editarUsuarioDto: EditarUsuario){
+    @Param('id', ParseIntPipe) id: number,
+    @Body() editarUsuarioDto: EditarUsuario) {
     return await this.usuariosService.editarUsuario(id, editarUsuarioDto);
   }
 
@@ -53,17 +53,17 @@ export class UsuariosController {
   @Roles([RolesEnum.EJECUTOR])
   @UseGuards(AuthGuard)
   async patchUsuariosContraseña(
-    @Param('id', ParseIntPipe) id:number,
-    @Body()editarUsuarioDto: EditarUsuario){
-    return await this.usuariosService.editarUsuario(id,editarUsuarioDto);
+    @Param('id', ParseIntPipe) id: number,
+    @Body() editarUsuarioDto: EditarUsuario) {
+    return await this.usuariosService.editarUsuario(id, editarUsuarioDto);
   }
-  
+
   @Delete(':id')
   @ApiBearerAuth()
   @Roles([RolesEnum.ADMINISTRADOR])
   @UseGuards(AuthGuard)
   async deleteUsuarios(
-    @Param('id', ParseIntPipe) id:number): Promise<Usuario> { // Aquí asigna el estado de usuario que desees borrar
+    @Param('id', ParseIntPipe) id: number): Promise<Usuario> { // Aquí asigna el estado de usuario que desees borrar
     return await this.usuariosService.borrarUsuario(id);
   }
 
@@ -79,16 +79,16 @@ export class UsuariosController {
         const cambioNombre = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('');
         cb(null, `${cambioNombre}${extname(file.originalname)}`);
       },
-        })
+    })
   }))
   async subirAvatar(
-    @Param('id', ParseIntPipe) id:number,
+    @Param('id', ParseIntPipe) id: number,
     @Body() editarUsuarioDto: EditarUsuario,
-    @UploadedFile() file: Express.Multer.File)  {
-    
-      // se fija en el Dto de editarUsuaro
+    @UploadedFile() file: Express.Multer.File) {
+
+    // se fija en el Dto de editarUsuaro
     editarUsuarioDto.foto = file.filename
-  
+
     // Guardar el archivo en el sistema de archivos en la carpeta static/usuarios y obtener el nombre de dicho archivo
     const nombreArchivo = await this.archivosService.guardarArchivo(file);
 
@@ -102,4 +102,4 @@ export class UsuariosController {
     return usuarioFotoDto
   }
 }
-  
+

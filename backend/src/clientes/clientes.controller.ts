@@ -21,11 +21,14 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 import { RolesEnum } from "src/auth/enums/roles.enum";
 import { Roles } from "src/auth/decorators/roles.decorator";
 import { AuthGuard } from "src/auth/guards/auth.guard";
+import { UsuariosService } from "src/usuarios/services/usuarios.service";
 
 @Controller("clientes")
 export class ClientesController {
 
-    constructor(private clienteService: ClientesService) {
+    constructor(private clienteService: ClientesService,
+       
+    ) {
     }
 
     @Get()

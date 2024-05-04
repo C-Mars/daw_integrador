@@ -39,3 +39,5 @@ export class auditoriaDto{
     operacion: OperacionAuditoria;
 
 }
+
+

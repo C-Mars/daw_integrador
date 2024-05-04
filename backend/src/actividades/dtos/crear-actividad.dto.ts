@@ -22,14 +22,14 @@ export class CrearActividadDto{
     @IsNotEmpty()
     idUsuarioModificacion:number;
     
-    @IsNotEmpty()
-    @IsDate()
-    fechaModificacion: Date;
+    // @IsNotEmpty()
+    // @IsDate()
+    // fechaModificacion: Date;
    
     
-    @IsNotEmpty()
-    @IsDate()
-    fechaInicio: Date;
+    // @IsNotEmpty()
+    // @IsDate()
+    // fechaInicio: Date;
     
     @IsString()
     @IsNotEmpty()

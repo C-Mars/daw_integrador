@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { createReadStream, createWriteStream, writeFileSync } from 'fs';
-import { extname, join } from 'path';import { writeFile } from 'fs/promises';
+import { createReadStream, createWriteStream, writeFileSync } from 'fs';//file sistem
+import { extname, join } from 'path';
+import { writeFile } from 'fs/promises';
 
 @Injectable()
 export class ArchivosService {
@@ -9,7 +10,7 @@ export class ArchivosService {
     const randomName = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('');
     const extension = extname(file.originalname);
     const nombreArchivo = `${randomName}${extension}`;
-    const rutaArchivo = join(__dirname, '..', '..','..', 'static', 'usuarios', nombreArchivo); // Ruta absoluta donde se guardará el archivo
+    const rutaArchivo = join(__dirname, '..', '..','..', 'static', 'usuarios', nombreArchivo);
     
    
     // Crea un flujo de lectura del archivo
@@ -28,6 +29,6 @@ export class ArchivosService {
     });
 
 
-   return nombreArchivo; // Para devevolver el nombre del archivo guardado
+   return nombreArchivo;
   }
 }

@@ -11,19 +11,18 @@ import { EditarActividadDto } from '../dtos/editar-actividades.dto';
 @ApiTags('actividades')
 @Controller('/actividades')
 export class ActividadesController {
-    constructor(private actividadService:ActividadesService) {}
+    constructor(private actividadService: ActividadesService) { }
 
     @Post()
     @ApiBearerAuth()
     @Roles([RolesEnum.ADMINISTRADOR])
     @UseGuards(AuthGuard)
     async crearActividad(
-    @Req() request:Request,
-    @Body() crearActvidadDto: CrearActividadDto)
-    {
-        // console.log(request)
+        @Req() request: Request,
+        @Body() crearActvidadDto: CrearActividadDto) {
+      
         await this.actividadService.crearActividad(
-            crearActvidadDto, 
+            crearActvidadDto,
             request['usuario'],
         )
     }
@@ -34,26 +33,26 @@ export class ActividadesController {
     @Roles([RolesEnum.ADMINISTRADOR])
     @UseGuards(AuthGuard)
     async getActividad(
-        @Param('id',ParseIntPipe) id: number): Promise<Actividades> {
-         return this.actividadService.obtenerActividadPorId(id);
+        @Param('id', ParseIntPipe) id: number): Promise<Actividades> {
+        return this.actividadService.obtenerActividadPorId(id);
     }
 
     @Get()
     @ApiBearerAuth()
     @Roles([RolesEnum.ADMINISTRADOR])
     @UseGuards(AuthGuard)
-    async getActividades(){}
+    async getActividades() { }
 
-    
-@Patch(':id')
-@ApiBearerAuth()
-@Roles([RolesEnum.ADMINISTRADOR, RolesEnum.EJECUTOR])
-@UseGuards(AuthGuard)
-async editarActividad(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() editarActividadDto: EditarActividadDto
-) {
-    return await this.actividadService.editarActividad(id, editarActividadDto);
-}
-    
+
+    @Patch(':id')
+    @ApiBearerAuth()
+    @Roles([RolesEnum.ADMINISTRADOR, RolesEnum.EJECUTOR])
+    @UseGuards(AuthGuard)
+    async editarActividad(
+        @Param('id', ParseIntPipe) id: number,
+        @Body() editarActividadDto: EditarActividadDto
+    ) {
+        return await this.actividadService.editarActividad(id, editarActividadDto);
+    }
+
 }

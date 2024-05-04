@@ -21,8 +21,7 @@ export class ActividadesService {
 
     ) { }
 
-    //Obtenemos un array de actividades con un promise //no sé por qué el promise lo marca rojo @Mario
-    //Por cierto, quería que busque todas las actividades, pero no hay una forma definida para buscarlas todas en un "where" @Mario
+    
     async obtenerActividadPorId(id: number): Promise<Actividades> {
         const actividad = await this.actividadesRepo.findOne({
             where: {
