@@ -16,17 +16,17 @@ export class UsuariosService {
     return await this.usuariosRepo.save(crearUsuarioDto)
   }
   
-  async obtenerUsuarioPorEmaildeUsuario(
+  async obtenerUsuarioPorEmail(
     email: string,
   ): Promise<Usuario> {
-    const usuario: Usuario = await this.usuariosRepo.findOne({
+    const usuEmail: Usuario = await this.usuariosRepo.findOne({
       where: {
         email: email,
         estado: EstadosUsuarioEnum.ACTIVO,
       },
     });
 
-    return usuario;
+    return usuEmail;
   }
   
 
@@ -34,14 +34,14 @@ export class UsuariosService {
   async obtenerUsuarioPorNombreDeUsuario(
     nombreUsuario: string,
   ): Promise<Usuario> {
-    const usuario: Usuario = await this.usuariosRepo.findOne({
+    const usuNombre: Usuario = await this.usuariosRepo.findOne({
       where: {
         nombreUsuario: nombreUsuario,
         estado: EstadosUsuarioEnum.ACTIVO,
       },
     });
 
-    return usuario;
+    return usuNombre;
   }
 
   async obtenerUsuarios(): Promise<Usuario[]> {

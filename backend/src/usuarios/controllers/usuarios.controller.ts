@@ -63,7 +63,7 @@ export class UsuariosController {
   @Roles([RolesEnum.ADMINISTRADOR])
   @UseGuards(AuthGuard)
   async deleteUsuarios(
-    @Param('id', ParseIntPipe) id: number): Promise<Usuario> { // Aquí asigna el estado de usuario que desees borrar
+    @Param('id', ParseIntPipe) id: number): Promise<Usuario> { 
     return await this.usuariosService.borrarUsuario(id);
   }
 

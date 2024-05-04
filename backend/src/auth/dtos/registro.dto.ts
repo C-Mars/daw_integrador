@@ -33,7 +33,7 @@ export class RegistroUsuarioDto{
     @MinLength(6)
     clave:string
 
-    // @IsString()
-    // @IsNotEmpty()
-    // estado:EstadosUsuarioEnum.ACTIVO
+    @IsString()
+    @IsNotEmpty()
+    estado:EstadosUsuarioEnum.ACTIVO
 }

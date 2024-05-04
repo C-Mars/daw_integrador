@@ -17,9 +17,11 @@ export class AuthService {
   ) {}
   async registroUsuario({nombres,apellidos,clave,nombreUsuario,email,foto,rol}:RegistroUsuarioDto){
 
-    const usuario = await this.usuariosService.obtenerUsuarioPorEmaildeUsuario(email)
+    const usuEmail = await this.usuariosService.obtenerUsuarioPorEmail(email)
+    const usuNombre = await this.usuariosService.obtenerUsuarioPorNombreDeUsuario(nombreUsuario)
     
-    if(usuario){
+    
+    if(usuEmail || usuNombre){
       throw new BadRequestException('El usuario ya existe');
     }
     return await this.usuariosService.crearUsuario({
