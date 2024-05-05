@@ -102,7 +102,7 @@ export class UsuariosService {
   //   return usuario;
   // }
 
-  async editarUsuario(id: number, usuario: EditarUsuario)
+  async editarUsuario(id: number, editarUsuario: EditarUsuario)
   // : Promise<Usuario> 
   {
     const existeUsu= await this.usuariosRepo.findOne({
@@ -116,8 +116,16 @@ export class UsuariosService {
         'El usuario no existe',
       );
     }
-    return   await this.usuariosRepo.update({id}, usuario)
-    ;
+    await this.usuariosRepo.update({id}, editarUsuario)
+    const usuarioeditado = await this.usuariosRepo.findOne({
+      where:{
+        id,
+        estado: EstadosUsuarioEnum.ACTIVO
+      },
+    });
+    
+    return usuarioeditado
+    
   }
 
   

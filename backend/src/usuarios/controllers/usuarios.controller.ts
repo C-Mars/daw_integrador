@@ -56,6 +56,7 @@ export class UsuariosController {
     @Param('id', ParseIntPipe) id: number,
     @Body() editarUsuarioDto: EditarUsuario) {
     return await this.usuariosService.editarUsuario(id, editarUsuarioDto);
+    
   }
 
   @Delete(':id')
