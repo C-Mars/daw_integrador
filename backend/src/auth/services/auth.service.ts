@@ -28,8 +28,8 @@ export class AuthService {
       nombreUsuario,
       email,
       foto,
-      estado,
-      rol
+      rol,
+      estado
     });
   }
 

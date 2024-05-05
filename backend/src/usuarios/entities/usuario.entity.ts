@@ -5,43 +5,44 @@ import { Exclude, Expose } from 'class-transformer';
 import { Actividades } from "src/actividades/entities/actividades.entities";
 
 
-@Entity({name:'usuarios'})
-export class Usuario{
-    
+@Entity({ name: 'usuarios' })
+export class Usuario {
+
     @PrimaryGeneratedColumn()
-        id:number; 
-        
-    @Column({type:'varchar'})
-        nombres:string;
-    
-    @Column({type:'varchar'})
-        apellidos:string;
-    
-    @Exclude()    
-    @Column({type:'varchar'})
-        clave:string;
-    
-    @Column({type:'varchar'})
-        foto:string;
-    
-    @Column({type:'enum', enum:EstadosUsuarioEnum})
-        estado:EstadosUsuarioEnum;
+    id: number;
 
-    @Column({type:'varchar'})
-        email:string;
+    @Column({ type: 'varchar' })
+    nombres: string;
 
-    @Exclude()    
-    @Column({type:'varchar'})
-        nombreUsuario:string;
+    @Column({ type: 'varchar' })
+    apellidos: string;
+
+    @Exclude()
+    @Column({ type: 'varchar' })
+    clave: string;
+
+    @Column({ type: 'varchar' })
+    foto: string;
+
+
+    @Column({ type: 'varchar' })
+    email: string;
+
+    @Exclude()
+    @Column({ type: 'varchar' })
+    nombreUsuario: string;
+
+    @Column({ type: 'enum', enum: RolesEnum })
+    rol: RolesEnum;
+
+    @Column({ type: 'enum', enum: EstadosUsuarioEnum })
+    estado: EstadosUsuarioEnum;
     
-    @Column({type:'enum', enum:RolesEnum})
-        rol: RolesEnum;
-
     @Expose()
     get nombreCompleto(): string {
         return this.apellidos + ', ' + this.nombres;
     }
     @OneToMany(() => Actividades, (actividades) => actividades.idUsuarioModificacion)
     actividades: Actividades[];
-   
+
 }

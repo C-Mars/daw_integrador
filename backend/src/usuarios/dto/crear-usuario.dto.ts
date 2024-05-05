@@ -1,7 +1,8 @@
-import { IsEmail, IsNotEmpty, IsOptional, IsString, MinLength } from "class-validator"
+import { IsEmail, IsEnum, IsNotEmpty, IsOptional, IsString, MinLength } from "class-validator"
 import { RolesEnum } from "../../auth/enums/roles.enum"
 import { EstadosUsuarioEnum } from "../../auth/enums/estado-usuario.enum"
 import { Transform } from "class-transformer"
+import { Usuario } from "../entities/usuario.entity"
 
 export class CrearUsuarioDto{
     
@@ -33,7 +34,7 @@ export class CrearUsuarioDto{
     @MinLength(6)
     clave:string
 
-    @IsString()
-    @IsNotEmpty()
+   
+    // @IsNotEmpty()
     estado:EstadosUsuarioEnum.ACTIVO
 }
