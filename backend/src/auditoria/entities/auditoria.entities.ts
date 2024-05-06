@@ -1,8 +1,8 @@
-import { time } from "console";
 import { Actividades } from "src/actividades/entities/actividades.entities";
 import { Usuario } from "src/usuarios/entities/usuario.entity";
-import { PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, OneToMany } from "typeorm";
+import { PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from "typeorm";
 import { OperacionAuditoria } from "../enums/auditoriaEnum.enum";
+import { Clientes } from "src/clientes/entities/clientes.entity";
 
 export class Auditoria{
 
@@ -11,8 +11,12 @@ export class Auditoria{
 
     //Relacional, debo obtener el id de la actividad a la que se le realiza auditoria
     @OneToOne(()=>Actividades)
-    @JoinColumn({name: 'id'})
+    @JoinColumn({name: 'idActividad'})
     actividadActual:Actividades
+
+    @OneToOne(()=>Clientes)
+    @JoinColumn({name: 'idCliente' })
+    clienteActual: Clientes
 
     //Relacional, debo obtener el id del usuario asignado a la actividad?
     @OneToOne(()=>Usuario)
@@ -29,7 +33,7 @@ export class Auditoria{
     usuarioModificacion: Usuario
 
     //Relacional, obtener el id de la fecha de modificación
-    @Column()
+    @Column({type: 'time'})
     fechaModificacion: Date;
 
     //hora en que se realizó la modificiación

@@ -1,40 +1,41 @@
-import { IsDate, IsNotEmpty, IsString, isDate } from "class-validator";
 import { EstadoActividad } from "src/actividades/enums/estado-actividad.enum";
 import { PrioridadActividad } from "src/actividades/enums/prioridad-actividad.enum";
 import { OperacionAuditoria } from "../enums/auditoriaEnum.enum";
+import { IsDate, IsNotEmpty, IsString } from "class-validator";
 
-//Fijarse si esto está bien hecho, el estado no sé si puede ser un enum o simplemente debe ser algo automático @Mario
 
-export class auditoriaDto{
+export class CrearAuditoriaDto{
+
+    @IsNotEmpty()
+    idActividad: number;
+
+    @IsNotEmpty()
+    idCliente: number;
 
     @IsString()
     @IsNotEmpty()
-    descripcion:string;
+    descripcion: string;
 
     @IsNotEmpty()
-    cliente: number;
+    idUsuarioActual: number
 
     @IsNotEmpty()
-    usuarioActual:number;
-
-    @IsString()
+    prioridad: PrioridadActividad;
+    
     @IsNotEmpty()
-    prioridad:PrioridadActividad;
-
+    idUsuarioModificion: number;
+    
+    @IsDate()
     @IsNotEmpty()
-    usuarioModificacion:number;
+    fechaModificacion: Date;
 
     @IsDate()
-    fechaModificacion:Date;
+    @IsNotEmpty()
+    fechaInicio: Date;
 
-    @IsDate()
-    fechaInicio:Date;
-
-    @IsString()
     @IsNotEmpty()
     estado: EstadoActividad;
 
-    @IsString()
     @IsNotEmpty()
     operacion: OperacionAuditoria;
 
