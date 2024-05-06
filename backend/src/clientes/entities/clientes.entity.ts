@@ -1,23 +1,22 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Actividades } from "src/actividades/entities/actividades.entities";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
+@Entity()
+export class Clientes{
 
-@Entity("clientes")
+    @PrimaryGeneratedColumn()
+    id:number;
 
-export class ClientesEntity{
+    @Column()
+    nombres:string;
 
-@PrimaryGeneratedColumn()
-id: string;
+    @Column()
+    apellidos:string;
 
-@Column()
-nombres: string;
+    @Column()
+    email:string;
 
-
-@Column()
-apellidos: string;
-
-
-@Column()
-email: string;
-
-
+    @OneToMany(() => Actividades, (actividades) => actividades.idUsuarioModificacion) 
+    actividades: Actividades[]; 
+    
 }

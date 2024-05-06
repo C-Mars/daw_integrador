@@ -8,7 +8,6 @@ import { EstadoActividad } from '../enums/estado-actividad.enum';
 import { Usuario } from 'src/usuarios/entities/usuario.entity';
 import { RolesEnum } from 'src/auth/enums/roles.enum';
 import { EditarActividadDto } from '../dtos/editar-actividades.dto';
-//import { Usuario } from 'src/usuarios/entities/usuario.entity';
 
 
 
@@ -21,7 +20,7 @@ export class ActividadesService {
 
     ) { }
 
-    
+    //Obtenemos un array de actividades con un promise 
     async obtenerActividadPorId(id: number): Promise<Actividades> {
         const actividad = await this.actividadesRepo.findOne({
             where: {
@@ -30,7 +29,7 @@ export class ActividadesService {
         });
         if (!actividad) {
             throw new UnauthorizedException(
-                'La actividad no existe'
+                'La actividad no existe o fue eliminada'
             );
         }
         return actividad;
@@ -80,7 +79,7 @@ export class ActividadesService {
             }
         });
         if (!actividad) {
-            throw new UnauthorizedException('La actividad no existe');
+            throw new UnauthorizedException('La actividad no existe o fue eliminada');
         }
         
         actividad.estado = editaraAtividadDto.estado
@@ -90,10 +89,19 @@ export class ActividadesService {
         actividad.prioridad = editaraAtividadDto.prioridad
         actividad.idCliente = editaraAtividadDto.idCliente
        
-    
-       
         await this.actividadesRepo.save(actividad);
     
         return actividad;
     }
+
+
+    async borrarActividad(id: number, usuario: Usuario) {
+        const rol: RolesEnum = usuario.rol;
+        
+        if (rol === RolesEnum.EJECUTOR || rol === RolesEnum.ADMINISTRADOR ) {
+        await this.actividadesRepo.delete(id);
+      }
+}
+
+
 }
