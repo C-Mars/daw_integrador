@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { CreateClientesDto } from "../dto/create-clientes.dto";
 import { UpdateClientesDto } from "../dto/update-clientes.dto";
-import { ClientesEntity } from "../entities/clientes.entity";
+import { Clientes } from "../entities/clientes.entity";
 import { Repository } from "typeorm";
 
 @Injectable()
@@ -11,7 +11,7 @@ UpdateCliente: any;
     deleteCliente: any;
 
 constructor(
-@InjectRepository(ClientesEntity) private repo: Repository<ClientesEntity>
+@InjectRepository(Clientes) private repo: Repository<Clientes>
 ){}
 
 async getAllCliente(){
@@ -20,7 +20,7 @@ async getAllCliente(){
 
 async addNewCliente(CreateClientesDto: CreateClientesDto){
 
-    const cliente=new ClientesEntity();
+    const cliente=new Clientes();
     const { nombres,apellidos, email} = CreateClientesDto;
     cliente.nombres = nombres;
     cliente.apellidos = apellidos;
