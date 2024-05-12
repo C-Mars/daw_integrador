@@ -3,6 +3,7 @@ import { Usuario } from "src/usuarios/entities/usuario.entity";
 import { PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from "typeorm";
 import { OperacionAuditoria } from "../enums/auditoriaEnum.enum";
 import { Clientes } from "src/clientes/entities/clientes.entity";
+import { EstadoActividad } from "src/actividades/enums/estado-actividad.enum";
 
 export class Auditoria{
 
@@ -16,8 +17,10 @@ export class Auditoria{
 
     @OneToOne(()=>Clientes)
     @JoinColumn({name: 'idCliente' })
-    clienteActual: Clientes
-
+    clienteActual: number
+    
+    @Column()
+    descripcion: string;
     //Relacional, debo obtener el id del usuario asignado a la actividad?
     @OneToOne(()=>Usuario)
     @JoinColumn({name:'idUsuarioActual'})
@@ -41,8 +44,9 @@ export class Auditoria{
     fechaInicio: Date;
 
     //Relacional, heredar el estado de la actividad?
-    @Column()
-    estado: string;
+    @Column({type: 'enum', enum:EstadoActividad})
+    estado:EstadoActividad;
+    nuevaActividad: Promise<Usuario>;
 
     //si es una modificación, creación o eliminación
     @Column({type: 'enum', enum: OperacionAuditoria})

@@ -25,10 +25,10 @@ export class AuditoriaService {
         //private clienteService: ClientesService
     ) {}
 
-    async crearAuditoriaActividad(crearAuditoriaDto: CrearAuditoriaDto): Promise<Auditoria>{
+    async crearAuditoriaActividad(crearAuditoriaDto: CrearAuditoriaDto, auditoria:Auditoria){
         const auditoriaActividad: Auditoria = this.auditoriaRepo.create();
-        auditoriaActividad.idActividad = crearAuditoriaDto.idActividad;
-        auditoriaActividad.idCliente = crearAuditoriaDto.idCliente;
+        // auditoriaActividad.actividadActual = crearAuditoriaDto.idActividad;
+        // auditoriaActividad.idCliente = crearAuditoriaDto.idCliente;
         auditoriaActividad.descripcion = crearAuditoriaDto.descripcion;
         auditoriaActividad.id = crearAuditoriaDto.idUsuarioActual;
         auditoriaActividad.prioridad = crearAuditoriaDto.prioridad;
@@ -36,48 +36,49 @@ export class AuditoriaService {
         auditoriaActividad.fechaModificacion = new Date();
         auditoriaActividad.fechaInicio = crearAuditoriaDto.fechaInicio;
         auditoriaActividad.estado = crearAuditoriaDto.estado;
-        auditoriaActividad.operacion = crearAuditoriaDto.OperacionAuditoria.CREACION;
+        // auditoriaActividad.operacion= crearAuditoriaDto.operacion.CREACION;
         
         return await this.auditoriaRepo.save(auditoriaActividad);
     }
 
-    async buscarAuditoriaActividades(usuario: Usuario): Promise<Auditoria[]>{
-        //const AuditoriaActividades: Auditoria[] =  await this.auditoriaRepo.find();
-        const rol: RolesEnum = usuario.rol
+    // async buscarAuditoriaActividades(usuario: Usuario): Promise<Auditoria[]>{
+    //     //const AuditoriaActividades: Auditoria[] =  await this.auditoriaRepo.find();
+    //     const rol: RolesEnum = usuario.rol
 
-        const consulta = this.AuditoriaActividades
-        .createQueryBuilder('auditoria')
-        .innerJoin('auditoria.usuarioModificacion', 'usuario');
+    //     // const consulta = this.AuditoriaActividades
+    //     .createQueryBuilder('auditoria')
+    //     .innerJoin('auditoria.usuarioModificacion', 'usuario');
 
-        if(rol === RolesEnum.ADMINISTRADOR){
-            consulta.select()
-        }
-        return await consulta.getMany();
-    }
+    //     if(rol === RolesEnum.ADMINISTRADOR){
+    //         consulta.select()
+    //     }
+    //     return await consulta.getMany();
+    // }
 
-    async editarAuditoriaActividad(id: Auditoria, modificarAuditoriaDto: ModificarAuditoriaDto, 
-        usuario: Usuario): Promise<Auditoria>{
-        const modAuditoriaAcitividad: Auditoria = this.auditoriaRepo.findOne({
-            where:{
-                id,
-                estado,
-                operacion,
-            }
-        });
-        const rol: RolesEnum = usuario.rol;
+    // async editarAuditoriaActividad(id: Auditoria, modificarAuditoriaDto: ModificarAuditoriaDto, 
+        // usuario: Usuario): Promise<Auditoria>{
+        // const modAuditoriaAcitividad: Auditoria = this.auditoriaRepo.findOne({
+        //     where:{
+        //         id,
+        //         estado,
+        //         operacion,
+        //     }
+        // });
+        // const rol: RolesEnum = usuario.rol;
         
-        if(rol === RolesEnum.ADMINISTRADOR){
-        modAuditoria.estado = modificarAuditoriaDto.estado;
-        modAuditoria.operacion = modificarAuditoriaDto.OperacionAuditoria.MODIFICACION;
+        // if(rol === RolesEnum.ADMINISTRADOR){
+        // modAuditoria.estado = modificarAuditoriaDto.estado;
+        // modAuditoria.operacion = modificarAuditoriaDto.OperacionAuditoria.MODIFICACION;
 
-        return await this.auditoriaRepo.save(modAuditoriaAcitividad);
-     }
-   }
+        // await this.auditoriaRepo.save(modAuditoriaAcitividad);
+    //  }
+//    }
 
-   async eliminarAuditoriaActividad(id: Auditoria, usuario: Usuario): Promise<Auditoria>{
-    const rol: RolesEnum = usuario.rol;
+//    async eliminarAuditoriaActividad(id: Auditoria, usuario: Usuario): Promise<Auditoria>{
+    // const rol: RolesEnum = usuario.rol;
 
-    if(rol === RolesEnum.ADMINISTRADOR || RolesEnum.EJECUTOR){
-        await this.delAuditoriaActividad: Auditoria = this.auditoriaRepo.delete(id)
-   }
+    // if(rol === RolesEnum.ADMINISTRADOR || RolesEnum.EJECUTOR){
+        // await this.delAuditoriaActividad: Auditoria = this.auditoriaRepo.delete(id)
+//    }
+// }}
 }

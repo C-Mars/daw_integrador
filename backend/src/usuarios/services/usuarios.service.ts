@@ -83,7 +83,10 @@ export class UsuariosService {
         'El usuario no existe',
       );
     }
-    await this.usuariosRepo.delete(id);
+    
+    usuario.estado = EstadosUsuarioEnum.BAJA
+    
+    await this.usuariosRepo.save(usuario);
 
     return usuario
   }

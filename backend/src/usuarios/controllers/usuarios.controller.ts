@@ -42,9 +42,29 @@ export class UsuariosController {
   @ApiBearerAuth()
   @Roles([RolesEnum.ADMINISTRADOR])
   @UseGuards(AuthGuard)
+  @UseInterceptors(FileInterceptor('foto', {
+    //Creo un filtro para que se fije que el archivo que subo sea formato imagen
+    fileFilter: fileFilter,
+    //Donde se va a guardar el archivo
+    storage: diskStorage({
+      destination: '/backend/static/usuarios',
+      filename: (req, foto, cb) => {
+        //Lo hago para que el nombre que suba y se guarde en la BD sea distinto al archivo que subio el usuario
+        const cambioNombre = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('');
+        cb(null, `${cambioNombre}${extname(foto.originalname)}`);
+      },
+    })
+  }))
   async patchUsuarios(
     @Param('id', ParseIntPipe) id: number,
-    @Body() editarUsuarioDto: EditarUsuario) {
+    @Body() editarUsuarioDto: EditarUsuario,
+    @UploadedFile() foto: Express.Multer.File) {
+    // se fija en el Dto de editarUsuaro
+    editarUsuarioDto.foto = foto.filename
+
+    // Guardar el archivo en el sistema de archivos en la carpeta static/usuarios y obtener el nombre de dicho archivo
+    const nombreArchivo = await this.archivosService.guardarArchivo(foto);
+
     return await this.usuariosService.editarUsuario(id, editarUsuarioDto);
   }
 
@@ -54,9 +74,10 @@ export class UsuariosController {
   @UseGuards(AuthGuard)
   async patchUsuariosContraseña(
     @Param('id', ParseIntPipe) id: number,
-    @Body() editarUsuarioDto: EditarUsuario) {
+    @Body() editarUsuarioDto: EditarUsuario,
+  ) {
     return await this.usuariosService.editarUsuario(id, editarUsuarioDto);
-    
+
   }
 
   @Delete(':id')
@@ -64,43 +85,9 @@ export class UsuariosController {
   @Roles([RolesEnum.ADMINISTRADOR])
   @UseGuards(AuthGuard)
   async deleteUsuarios(
-    @Param('id', ParseIntPipe) id: number): Promise<Usuario> { 
+    @Param('id', ParseIntPipe) id: number): Promise<Usuario> {
     return await this.usuariosService.borrarUsuario(id);
   }
 
-  @Patch('avatar/:id')
-  @UseInterceptors(FileInterceptor('file', {
-    //Creo un filtro para que se fije que el archivo que subo sea formato imagen
-    fileFilter: fileFilter,
-    //Donde se va a guardar el archivo
-    storage: diskStorage({
-      destination: '/backend/static/usuarios',
-      filename: (req, file, cb) => {
-        //Lo hago para que el nombre que suba y se guarde en la BD sea distinto al archivo que subio el usuario
-        const cambioNombre = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('');
-        cb(null, `${cambioNombre}${extname(file.originalname)}`);
-      },
-    })
-  }))
-  async subirAvatar(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() editarUsuarioDto: EditarUsuario,
-    @UploadedFile() file: Express.Multer.File) {
-
-    // se fija en el Dto de editarUsuaro
-    editarUsuarioDto.foto = file.filename
-
-    // Guardar el archivo en el sistema de archivos en la carpeta static/usuarios y obtener el nombre de dicho archivo
-    const nombreArchivo = await this.archivosService.guardarArchivo(file);
-
-    // Actualiza la entidad(entity) de usuario con el nombre del archivo
-    const usuarioFotoDto: EditarUsuario = {
-      foto: `${nombreArchivo}`, // Ruta relativa al archivo guardado
-    };
-
-    // Actualiza el usuario con la nueva foto 
-    await this.usuariosService.editarUsuario(id, editarUsuarioDto);
-    return usuarioFotoDto
-  }
 }
 
