@@ -1,11 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title></title>
 </head>
+
 <body>
-    <h1>LOGIN</h1>
+    <p-toolbar>
+        <p-card id="inicio-de-sesion" header="Inicio de Sesión">
+            <ng-template pTemplate="center">
+                <form [formGroup]="form">
+                    <div class="conteiner-input">
+                        <p-floatLabel>
+                            <input id="nombre-usuario" pInputText type="text" formControlName="nombreUsuario" />
+                            <label for="nombre-usuario">Nombre de Usuario</label>
+
+                        </p-floatLabel>
+                    </div>
+
+                    <div class="conteiner-input">
+                        <p-floatLabel>
+                            <p-password id="clave" formControlName="clave" />
+                            <label for="clave">Contraseña:</label>
+                        </p-floatLabel>
+                    </div>
+                    
+                        <div class="button">
+                            <p-button label="Confirmar" (onClick)="login()" [rounded]="true" />
+                        </div>
+        
+                    
+                </form>
+            </ng-template>
+
+            <!-- <ng-template pTemplate="footer">
+                <div class="button">
+                    <p-button label="Confirmar" (onClick)="login()" [rounded]="true" />
+                </div>
+
+            </ng-template> -->
+        </p-card>
+
+    </p-toolbar>
+
+    <p-toast></p-toast>
+
 </body>
+
 </html>
