@@ -1,19 +1,12 @@
 header {
-  height: 20vh;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  background-color: aquamarine;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  z-index: 2;
+  background-size: cover;
+  background-position: center;
+
 }
 
-@media only screen and (min-height: 400px) {
+@media (max-width: 768px) {
   header {
-    height: 10vh;
+      background-size: contain; 
   }
 }
 

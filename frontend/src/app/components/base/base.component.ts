@@ -9,7 +9,11 @@ import { SplitterModule } from 'primeng/splitter';
 @Component({
   selector: 'app-base',
   standalone: true,
-  imports: [HeaderComponent, FooterComponent, ToastModule,ToolbarModule,SplitterModule],
+  imports: [HeaderComponent, 
+    FooterComponent, 
+    ToastModule,
+    ToolbarModule,
+    SplitterModule],
   templateUrl: './base.component.html',
   styleUrl: './base.component.scss'
 })

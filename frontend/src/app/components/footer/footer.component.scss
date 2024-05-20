@@ -1,9 +1,12 @@
 footer {
-  height: 20vh;
+  height: 500px;
   width: 100%;
-  background-color: aquamarine;
+  background-color: #14b8a6;
   position: fixed;
   bottom: 0;
+  display: flex;
+  border: 1px solid #e5e7eb;
+
 }
 
 @media only screen and (min-height: 400px) {

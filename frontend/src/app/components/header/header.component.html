@@ -1,4 +1,12 @@
-<header>
-    <h1>Gestión de Actividades</h1>
-    <p-button label="Cerrar Sesión" (onClick)="cerrarSesion()" [rounded]="true"></p-button>
-</header>
+
+<p-toolbar  >
+    <div class="p-toolbar-group-start">
+      <img src="path-to-your-logo.png" alt="Logo" class="logo">
+      <button pButton icon="pi pi-home" label="Inicio" [rounded]="true" ></button>
+    </div>
+    <div class="p-toolbar-group-end">
+      <button pButton icon="pi pi-user"  label="Iniciar Sesión" [rounded]="true" (click)="onLoginClick()"></button>
+      <!-- <button pButton icon="pi pi-sign-out"  label="Cerrar Sesión" [rounded]="true" (click)="cerrarSesion()" ></button> -->
+    </div>
+  </p-toolbar>
+  

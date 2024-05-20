@@ -1,5 +1,4 @@
-import { Component, NgModule } from "@angular/core";
-import { CardModule } from 'primeng/card';
+import { Component, EventEmitter, Input, NgModule, Output } from "@angular/core";
 import { ToolbarModule } from 'primeng/toolbar';
 import {
     FormControl,
@@ -16,6 +15,8 @@ import { RolesEnum } from "../../enums/roles.enum";
 import { MessageService } from "primeng/api";
 import { Router } from '@angular/router';
 import { AuthService } from "../../services/auth.service";
+import { ImageModule } from 'primeng/image';
+import { DialogModule } from 'primeng/dialog';
 
 
 @Component({
@@ -24,15 +25,28 @@ import { AuthService } from "../../services/auth.service";
     styleUrl: './login.component.scss',
     selector: 'app-login',
     imports: [ReactiveFormsModule, 
-      CardModule, 
+      DialogModule,
       ToolbarModule, 
       InputTextModule, 
       ButtonModule, 
       FloatLabelModule, 
       PasswordModule,
+      ImageModule,
       ToastModule]
 })
 export class LoginComponent {
+  
+  @Input() visible: boolean = false; 
+  @Output() visibleChange = new EventEmitter<boolean>();
+
+  // Método para cerrar el modal
+  closeDialog() {
+    this.visible = false;
+    this.visibleChange.emit(this.visible);
+    this.form.reset();
+  }
+
+  
     form = new FormGroup({
         nombreUsuario: new FormControl('', [Validators.required]),
         clave: new FormControl('', [Validators.required])
@@ -63,6 +77,7 @@ export class LoginComponent {
               this.authService.setSession(res.token);
               if (this.authService.hasRole(RolesEnum.ADMINISTRADOR)) {
                 this.router.navigateByUrl('admin');
+                
               } else {
                 this.router.navigateByUrl('');
               }
