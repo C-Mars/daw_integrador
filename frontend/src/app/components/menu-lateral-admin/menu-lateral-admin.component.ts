@@ -11,7 +11,11 @@ import { NgIf } from '@angular/common';
 @Component({
   selector: 'app-menu-lateral-admin',
   standalone: true,
-  imports: [MenuModule,AvatarModule,AvatarGroupModule,BadgeModule,NgIf],
+  imports: [MenuModule,
+    AvatarModule,
+    AvatarGroupModule,
+    BadgeModule,
+    NgIf],
   templateUrl: './menu-lateral-admin.component.html',
   styleUrl: './menu-lateral-admin.component.scss'
 })
