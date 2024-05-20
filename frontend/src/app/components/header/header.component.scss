@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 header {
   height: 20vh;
   position: fixed;
@@ -20,3 +21,20 @@ header {
 h1 {
   font-size: 1.5rem;
 }
+=======
+header {
+  background-size: cover;
+  background-position: center;
+
+}
+
+@media (max-width: 768px) {
+  header {
+      background-size: contain; 
+  }
+}
+
+h1 {
+  font-size: 1.5rem;
+}
+>>>>>>> e6b539547a53cba9e96ad508ff8f36c25836bd4d

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 main {
     height: 80vh;
     top: 10vh;
@@ -20,4 +21,25 @@ main {
       bottom: 20vh;
     }
   }
+=======
+main {
+    height: 80vh;
+    overflow: auto;
+    position: fixed !important;
+    width: 100%;
+    background-color: #9ae0d9;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    
+  }
+
+  @media only screen and (min-height: 400px) {
+    .main {
+      height: 60vh;
+      top: 20vh;
+      bottom: 20vh;
+    }
+  }
+>>>>>>> e6b539547a53cba9e96ad508ff8f36c25836bd4d
   

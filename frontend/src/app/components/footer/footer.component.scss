@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 footer {
   height: 20vh;
   width: 100%;
@@ -11,3 +12,21 @@ footer {
     height: 10vh;
   }
 }
+=======
+footer {
+  height: 500px;
+  width: 100%;
+  background-color: #14b8a6;
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  border: 1px solid #e5e7eb;
+
+}
+
+@media only screen and (min-height: 400px) {
+  footer {
+    height: 10vh;
+  }
+}
+>>>>>>> e6b539547a53cba9e96ad508ff8f36c25836bd4d
