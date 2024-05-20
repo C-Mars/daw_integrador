@@ -7,7 +7,10 @@ import { ButtonModule } from 'primeng/button';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [HeaderComponent,LoginComponent,ButtonModule,NgIf],
+  imports: [HeaderComponent,
+    LoginComponent,
+    ButtonModule,
+    NgIf],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

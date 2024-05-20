@@ -11,7 +11,11 @@ import { NgIf } from '@angular/common';
 @Component({
   selector: 'app-menu-lateral-admin',
   standalone: true,
-  imports: [MenuModule,AvatarModule,AvatarGroupModule,BadgeModule,NgIf],
+  imports: [MenuModule,
+    AvatarModule,
+    AvatarGroupModule,
+    BadgeModule,
+    NgIf],
   templateUrl: './menu-lateral-admin.component.html',
   styleUrl: './menu-lateral-admin.component.scss'
 })
@@ -29,12 +33,13 @@ export class MenuLateralAdminComponent implements OnInit {
                   {
                       label: 'Nuevo',
                       icon: 'pi pi-plus',
+                      routerLink: '/registro'
                       
                   },
                   {
                       label: 'Search',
                       icon: 'pi pi-search',
-                      
+                      routerLink: ''
                   }
               ]
           },
@@ -44,12 +49,12 @@ export class MenuLateralAdminComponent implements OnInit {
                   {
                       label: 'Nuevo',
                       icon: 'pi pi-plus',
-                      
+                      routerLink: '/clientes'
                   },
                   {
                       label: 'Search',
                       icon: 'pi pi-search',
-                      
+                      routerLink: '/clientes'
                   }
               ]
           },
@@ -59,12 +64,12 @@ export class MenuLateralAdminComponent implements OnInit {
                   {
                       label: 'Nuevo',
                       icon: 'pi pi-plus',
-                      
+                      routerLink: '/actividades'
                   },
                   {
                       label: 'Search',
                       icon: 'pi pi-search',
-                      
+                      routerLink: ''
                   }
               ]
           },
@@ -74,12 +79,12 @@ export class MenuLateralAdminComponent implements OnInit {
                   {
                       label: 'Nuevo',
                       icon: 'pi pi-plus',
-                      
+                      routerLink: '/auditoria'
                   },
                   {
                       label: 'Search',
                       icon: 'pi pi-search',
-                      
+                      routerLink: ''
                   }
               ]
           },
@@ -89,17 +94,17 @@ export class MenuLateralAdminComponent implements OnInit {
                   {
                       label: 'Ajustes',
                       icon: 'pi pi-cog',
-                     
+                      routerLink: ''
                   },
                   {
                       label: 'Mensajes',
                       icon: 'pi pi-inbox',
-                      
+                      routerLink: ''
                   },
                   {
                       label: 'Cerrar Sesión',
                       icon: 'pi pi-sign-out',
-                     
+                      routerLink: ''
                   }
               ]
           },
