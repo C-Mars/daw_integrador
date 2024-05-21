@@ -1,6 +1,6 @@
 <span>{{titulo}}</span>
 
-    <p-table [value]="listaUsuarios">
+    <p-table [value]="listaUsuarios" class="flex flex-warp w-min md:w-max ">
         <ng-template pTemplate="header">
             <tr>
                 <th>Nombres</th>
@@ -9,16 +9,41 @@
                 <th>Email</th>
                 <th>Rol</th>
                 <th>Estado</th>
+                <th></th>
+
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-usuario>
             <tr (mouseover)="informacion(usuario)">
                 <td>{{ usuario.nombres }}</td>
                 <td>{{ usuario.apellidos }}</td>
-                <td>{{ usuario.foto }}</td>
+                <td> <ng-template let-usuario pTemplate="item">
+                    <div class="inline-block vertical-align-middle">
+                        <img [alt]="" [src]="" width="24" class="vertical-align-middle" />
+                        <span class="ml-1 mt-1">{{ usuario.nombre }}</span>
+                    </div>
+                </ng-template></td>
                 <td>{{ usuario.email }}</td>
                 <td>{{ usuario.rol }}</td>
                 <td>{{ usuario.estado }}</td>
+                <td class="flex flex-warp">
+                    <p-button 
+                        pRipple 
+                        icon="pi pi-pen-to-square" 
+                        class="mr-2" 
+                        [rounded]="true" 
+                        
+                        severity="primary" 
+                         />
+                    <p-button 
+                        pRipple 
+                        icon="pi pi-trash" 
+                        severity="info"
+                        [rounded]="true" 
+                        
+                        
+                        />
+                </td>
             </tr>
         </ng-template>
     </p-table>

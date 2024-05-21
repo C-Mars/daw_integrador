@@ -5,6 +5,7 @@ import { IUsuario } from '../../interfaces/usuario.interface';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
 
 
 
@@ -12,7 +13,7 @@ import { CardModule } from 'primeng/card';
   selector: 'app-tabla-usuario',
   standalone: true,
   imports: [TableModule,CardModule,
-    CommonModule],
+    CommonModule,ButtonModule],
   templateUrl: './tabla-usuarios.component.html',
   styleUrl: './tabla-usuarios.component.scss'
 })
@@ -51,4 +52,11 @@ export class TablaUsuariosComponent implements OnInit {
   informacion(item: IUsuario): void {
     this.usuarioSeleccionado = item;
   }
+  // getSeverity(status: string) {
+  //   switch (status) {
+  //       case 'EJECUTOR':
+  //           return 'success';
+  //       case 'ADMINISTRADOR':
+  //           return 'warning';
+  //   }
 }
