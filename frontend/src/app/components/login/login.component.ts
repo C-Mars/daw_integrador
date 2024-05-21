@@ -24,15 +24,7 @@ import { DialogModule } from 'primeng/dialog';
     templateUrl: './login.component.html',
     styleUrl: './login.component.scss',
     selector: 'app-login',
-    imports: [ReactiveFormsModule, 
-      DialogModule,
-      ToolbarModule, 
-      InputTextModule, 
-      ButtonModule, 
-      FloatLabelModule, 
-      PasswordModule,
-      ImageModule,
-      ToastModule]
+    imports: [ReactiveFormsModule, DialogModule,ToolbarModule, InputTextModule,ButtonModule,FloatLabelModule,PasswordModule,ImageModule,ToastModule]
 })
 export class LoginComponent {
   
@@ -40,11 +32,7 @@ export class LoginComponent {
   @Output() visibleChange = new EventEmitter<boolean>();
 
   // Método para cerrar el modal
-  closeDialog() {
-    this.visible = false;
-    this.visibleChange.emit(this.visible);
-    this.form.reset();
-  }
+ 
 
   
     form = new FormGroup({
@@ -89,5 +77,11 @@ export class LoginComponent {
               });
             },
           });
+      }
+      
+      closeDialog() {
+        this.visible = false;
+        this.visibleChange.emit(this.visible);
+        this.form.reset();
       }
 }

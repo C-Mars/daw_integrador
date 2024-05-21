@@ -2,6 +2,7 @@ import { EstadosUsuarioEnum } from "../enums/estado-usuario.enum"
 import { RolesEnum } from "../enums/roles.enum"
 
 export interface IUsuario{
+        id:string
         nombres: string
         apellidos:string
         email:string

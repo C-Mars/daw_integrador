@@ -4,17 +4,23 @@ import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable } from 'rxjs';
 import { RolesEnum } from '../enums/roles.enum';
+import { IUsuario } from '../interfaces/usuario.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+
+  private apiURL = `http://localhost:3000/api`
+
   constructor(
-    private client: HttpClient, 
-    private router: Router) {}
+    private _client: HttpClient,
+    private _router: Router) {
+
+  }
 
   login(nombreUsuario: string, clave: string): Observable<{ token: string }> {
-    return this.client.post<{ token: string }>('http://localhost:3000/api/auth/login', {
+    return this._client.post<{ token: string }>(`${this.apiURL}/auth/login`, {
       nombreUsuario,
       clave,
     });
@@ -26,7 +32,7 @@ export class AuthService {
 
   logout() {
     sessionStorage.removeItem('token');
-    this.router.navigateByUrl('login');
+    this._router.navigateByUrl('inicio');
   }
 
   isLoggedIn(): boolean {
@@ -42,8 +48,30 @@ export class AuthService {
     if (!token) {
       return false;
     }
+    const userRole = new JwtHelperService().decodeToken(token).rol;
 
-    return new JwtHelperService().decodeToken(token).rol === rol;
+    return userRole === rol;
+  }
+
+
+  getUsuarios(): Observable<IUsuario[]> {
+    if (!this.hasRole(RolesEnum.ADMINISTRADOR)){
+      throw new Error('El usuario no esta autorizado para ver esta sección')
+    }
+    return this._client.get<IUsuario[]>(`${this.apiURL}/usuarios`);
+  }
+
+  getUsuario(id: number): Observable<IUsuario> {
+    
+    
+    return this._client.get<IUsuario>(`${this.apiURL}/usuarios/${id}`);
+  }
+  
+  isLogged(): boolean {
+    
+    return  sessionStorage.getItem('token') ? true : false;
   }
 }
+
+
 //nos devuelve el rol que estamos buscando
