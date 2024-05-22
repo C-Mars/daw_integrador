@@ -1,22 +1,55 @@
-<p-dialog header="Inicio de Sesión"  [(visible)]="visible" [modal]="true"  [closable]="false" class=" w-6 " >
-    <ng-template pTemplate="center">
-        <form [formGroup]="form" class="pt-5">
-            <div class="flex pb-5">
-                <p-floatLabel class="p-2">
-                    <input id="nombre-usuario" pInputText type="text" formControlName="nombreUsuario" autocomplete="off"/>
-                    <label for="nombre-usuario">Nombre de Usuario</label>
+<p-dialog 
+header="Inicio de Sesión"  
+[(visible)]="visible" 
+[modal]="true"  
+[closable]="false" 
+class=" w-6 " >
+    <ng-template 
+    pTemplate="center">
+        <form 
+        [formGroup]="form" 
+        class="pt-5">
+            <div 
+            class="flex pb-5">
+                <p-floatLabel 
+                class="p-2">
+                    <input 
+                    id="nombre-usuario" 
+                    pInputText type="text" 
+                    formControlName="nombreUsuario" 
+                    autocomplete="off"/>
+                    <label 
+                    for="nombre-usuario"
+                    >Nombre de Usuario</label>
                 </p-floatLabel>
             </div>
     
-            <div class="flex pb-5">
-                <p-floatLabel class="p-2">
-                    <p-password id="clave" formControlName="clave" autocomplete="off" />
-                    <label for="clave">Contraseña:</label>
+            <div 
+            class="flex pb-5">
+                <p-floatLabel 
+                class="p-2">
+                    <p-password 
+                    id="clave" 
+                    formControlName="clave" 
+                    autocomplete="off" />
+                    <label 
+                    for="clave"
+                    >Contraseña:</label>
                 </p-floatLabel>
             </div>
-            <div class="flex justify-content-center">
-                <p-button label="Confirmar" (onClick)="login()" [rounded]="true" class="p-2" />
-                <p-button label="Cancelar" (onClick)="closeDialog()" [rounded]="true" severity="secondary" class="p-2"/>
+            <div 
+            class="flex justify-content-center">
+                <p-button 
+                label="Confirmar" 
+                (onClick)="login()" 
+                [rounded]="true" 
+                class="p-2" />
+                <p-button 
+                label="Cancelar" 
+                (onClick)="closeDialog()" 
+                [rounded]="true" 
+                severity="secondary" 
+                class="p-2"/>
             </div>
         </form>
     </ng-template>

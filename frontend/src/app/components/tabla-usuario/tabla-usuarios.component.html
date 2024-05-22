@@ -1,5 +1,5 @@
-<span>{{titulo}}</span>
 
+<p-card header="{{titulo}}">
     <p-table [value]="listaUsuarios" class="flex flex-warp w-min md:w-max ">
         <ng-template pTemplate="header">
             <tr>
@@ -19,7 +19,7 @@
                 <td>{{ usuario.apellidos }}</td>
                 <td> <ng-template let-usuario pTemplate="item">
                     <div class="inline-block vertical-align-middle">
-                        <img [alt]="" [src]="" width="24" class="vertical-align-middle" />
+                        <img [alt]="" src= "src/assets/{{ usuario.nombre }}" width="24" class="vertical-align-middle" />
                         <span class="ml-1 mt-1">{{ usuario.nombre }}</span>
                     </div>
                 </ng-template></td>
@@ -47,3 +47,5 @@
             </tr>
         </ng-template>
     </p-table>
+</p-card>
+    

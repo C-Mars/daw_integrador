@@ -1,0 +1,16 @@
+<p-sidebar [(visible)]="visible" position="bottom">
+    <div class="justify-content-center">
+        <div class="flex align-items-center justify-content-between w-8">
+            <button pButton icon="pi pi-users" label="Usuarios"  severity="success" [outlined]="true" [rounded]="true" routerLink="usurios"
+                (click)="onOption('usuarios')"></button>
+            <button pButton icon="pi pi-face-smile" label="Clientes" severity="info" [outlined]="true" [rounded]="true" routerLink="clientes"
+                (click)="onOption('clientes')"></button>
+            <button pButton icon="pi pi-list" label="Actividades" severity="warning" [outlined]="true" [rounded]="true" routerLink="Actividades"
+                (click)="onOption('inicio')"></button>
+            <button pButton icon="pi pi-receipt" label="Auditoria"  [outlined]="true" [rounded]="true" routerLink="inicio"
+                (click)="onOption('inicio')"></button>
+        </div>
+    </div>
+
+
+</p-sidebar>
