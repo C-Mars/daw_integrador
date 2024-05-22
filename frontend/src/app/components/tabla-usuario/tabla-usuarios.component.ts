@@ -1,29 +1,33 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { IUsuario } from '../../interfaces/usuario.interface';
 import { Router } from '@angular/router';
-import { UsuariosService } from '../../services/usuarios.service';
+import { AuthService } from '../../services/auth.service';
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+
 
 
 @Component({
   selector: 'app-tabla-usuario',
   standalone: true,
-  imports: [TableModule,
-    CommonModule],
+  imports: [TableModule,CardModule,
+    CommonModule,ButtonModule,NgIf],
   templateUrl: './tabla-usuarios.component.html',
   styleUrl: './tabla-usuarios.component.scss'
 })
-export class TablaUsuariosComponent implements OnInit{
+export class TablaUsuariosComponent implements OnInit {
 
   titulo: string = 'Usuarios'
   listaUsuarios: IUsuario[] = [];
-  UsuarioSeleccionado: IUsuario | undefined;  
-  
-  private _servicioUsuario = inject(UsuariosService);
-  private _route = inject(Router);
+  usuarioSeleccionado: IUsuario | undefined;
 
-  constructor(){}
+  // private _servicioUsuario = inject(AuthService);
+  // private _route = inject(Router);
+
+  constructor(private _servicioUsuario: AuthService,
+    private _route: Router) { }
 
   ngOnInit(): void {
 
@@ -37,15 +41,15 @@ export class TablaUsuariosComponent implements OnInit{
     })
   }
 
-  eliminar(id: number): void{
+  eliminar(id: number): void {
     alert(id);
   }
 
-  editar(id: number): void{
+  editar(id: number): void {
     this._route.navigate(['/usuarios', id]);
   }
 
   informacion(item: IUsuario): void {
-    this.UsuarioSeleccionado = item;
+    this.usuarioSeleccionado = item;
   }
 }

@@ -1,58 +1,57 @@
-<<<<<<< HEAD
-import { Component } from '@angular/core';
-import { ButtonModule } from 'primeng/button';
-import { AuthService } from '../../services/auth.service';
-
-@Component({
-  selector: 'app-header',
-  standalone: true,
-  imports: [ButtonModule],
-  templateUrl: './header.component.html',
-  styleUrl: './header.component.scss',
-})
-export class HeaderComponent {
-  constructor(private authService: AuthService) {}
-
-  cerrarSesion() {
-    this.authService.logout();
-  }
-}
-=======
-import { Component,EventEmitter, Output  } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Output, inject } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { AuthService } from '../../services/auth.service';
 import { ToolbarModule } from 'primeng/toolbar';
-import { NgClass } from '@angular/common';
+import { NgClass, NgIf } from '@angular/common';
+import { Router } from '@angular/router';
+import { MenuFooterComponent } from '../menu-footer/menu-footer.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [ButtonModule,
-    ToolbarModule,
-    NgClass],
+  imports: [ButtonModule, 
+    ToolbarModule, 
+    NgClass, 
+    NgIf,
+    MenuFooterComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
   menuOption: string = '';
-  
-  constructor(private authService: AuthService) {}
+  sidebarVisible: boolean = false;
+  private _authService = inject(AuthService)
+  private _router = inject(Router)
+
+  constructor(private cd: ChangeDetectorRef)
+   { }
 
   @Output() loginClicked = new EventEmitter<void>();
+  @Output() usersClicked = new EventEmitter<void>();
 
- 
-  
-  onOption(menuOption: string){
+
+
+  onOption(menuOption: string) {
     this.menuOption = menuOption
   }
-  
+
   onLoginClick() {
     this.loginClicked.emit();
   }
-  
+  isLoggedView(): boolean {
+    const token = this._authService.isLoggedIn();
+    return token
+  }
   cerrarSesion() {
-    this.authService.logout();
+    this._authService.logout();
   }
 
+  onMenuFooter(){
+    this.sidebarVisible = !this.sidebarVisible;
+    this.cd.detectChanges(); 
+  }
+  
+  onUsersClick() {
+    this.usersClicked.emit();
+  }
 }
->>>>>>> e6b539547a53cba9e96ad508ff8f36c25836bd4d

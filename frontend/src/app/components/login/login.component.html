@@ -1,85 +1,55 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
-</head>
-
-<body>
-<<<<<<< HEAD
-    <h1>LOGIN</h1>
-    
-=======
-    <p-toolbar>
-        <p-card id="inicio-de-sesion" header="Inicio de Sesión">
-            <ng-template pTemplate="center">
-                <form [formGroup]="form">
-                    <div class="conteiner-input">
-                        <p-floatLabel>
-                            <input id="nombre-usuario" pInputText type="text" formControlName="nombreUsuario" />
-                            <label for="nombre-usuario">Nombre de Usuario</label>
-
-                        </p-floatLabel>
-                    </div>
-
-                    <div class="conteiner-input">
-                        <p-floatLabel>
-                            <p-password id="clave" formControlName="clave" />
-                            <label for="clave">Contraseña:</label>
-                        </p-floatLabel>
-                    </div>
-                    
-                        <div class="button">
-                            <p-button label="Confirmar" (onClick)="login()" [rounded]="true" />
-                        </div>
-        
-                    
-                </form>
-            </ng-template>
-
-            <!-- <ng-template pTemplate="footer">
-                <div class="button">
-                    <p-button label="Confirmar" (onClick)="login()" [rounded]="true" />
-                </div>
-
-            </ng-template> -->
-        </p-card>
-
-    </p-toolbar>
-
-    <p-toast></p-toast>
-
->>>>>>> 304e7ac1bb87f3a26333f55ce78279baff5c0f82
-</body>
-
-</html>
-=======
-<p-dialog header="Inicio de Sesión"  [(visible)]="visible" [modal]="true"  [closable]="false" class="w-6">
-=======
-<p-dialog header="Inicio de Sesión"  [(visible)]="visible" [modal]="true"  [closable]="false" class=" w-6 " >
->>>>>>> 6ba74a53bc3e5ebabb31b05d72a5e4e6349894be
-    <ng-template pTemplate="center">
-        <form [formGroup]="form" class="pt-5">
-            <div class="flex pb-5">
-                <p-floatLabel class="p-2">
-                    <input id="nombre-usuario" pInputText type="text" formControlName="nombreUsuario" autocomplete="off"/>
-                    <label for="nombre-usuario">Nombre de Usuario</label>
+<p-dialog 
+header="Inicio de Sesión"  
+[(visible)]="visible" 
+[modal]="true"  
+[closable]="false" 
+class=" w-6 " >
+    <ng-template 
+    pTemplate="center">
+        <form 
+        [formGroup]="form" 
+        class="pt-5">
+            <div 
+            class="flex pb-5">
+                <p-floatLabel 
+                class="p-2">
+                    <input 
+                    id="nombre-usuario" 
+                    pInputText type="text" 
+                    formControlName="nombreUsuario" 
+                    autocomplete="off"/>
+                    <label 
+                    for="nombre-usuario"
+                    >Nombre de Usuario</label>
                 </p-floatLabel>
             </div>
     
-            <div class="flex pb-5">
-                <p-floatLabel class="p-2">
-                    <p-password id="clave" formControlName="clave" autocomplete="off" />
-                    <label for="clave">Contraseña:</label>
+            <div 
+            class="flex pb-5">
+                <p-floatLabel 
+                class="p-2">
+                    <p-password 
+                    id="clave" 
+                    formControlName="clave" 
+                    autocomplete="off" />
+                    <label 
+                    for="clave"
+                    >Contraseña:</label>
                 </p-floatLabel>
             </div>
-            <div class="flex justify-content-center">
-                <p-button label="Confirmar" (onClick)="login()" [rounded]="true" class="p-2" />
-                <p-button label="Cancelar" (onClick)="closeDialog()" [rounded]="true" severity="secondary" class="p-2"/>
+            <div 
+            class="flex justify-content-center">
+                <p-button 
+                label="Confirmar" 
+                (onClick)="login()" 
+                [rounded]="true" 
+                class="p-2" />
+                <p-button 
+                label="Cancelar" 
+                (onClick)="closeDialog()" 
+                [rounded]="true" 
+                severity="secondary" 
+                class="p-2"/>
             </div>
         </form>
     </ng-template>
@@ -89,4 +59,3 @@
 <p-toast></p-toast>
 
 <!--  -->
->>>>>>> e6b539547a53cba9e96ad508ff8f36c25836bd4d

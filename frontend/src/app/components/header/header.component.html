@@ -1,19 +1,19 @@
-<<<<<<< HEAD
-<header>
-    <h1>Gestión de Actividades</h1>
-    <p-button label="Cerrar Sesión" (onClick)="cerrarSesion()" [rounded]="true"></p-button>
-</header>
-=======
+<p-toolbar>
+  <div class="p-toolbar-group-start">
+    <img src="path-to-your-logo.png" alt="Logo" class="logo">
+    <button pButton icon="pi pi-home" label="Inicio" [rounded]="true" routerLink="inicio" *ngIf='isLoggedView()'
+      [ngClass]="{active: menuOption == 'inicio'}" (click)="onOption('inicio')"></button>
+  </div>
+  <div class="p-toolbar-group-center">
+    <p-button pRipple icon="pi pi-briefcase" class="mr-2" [rounded]="true" severity="primary" (click)="onMenuFooter()"
+      *ngIf='isLoggedView()' />
+  </div>
 
-<p-toolbar  >
-    <div class="p-toolbar-group-start">
-      <img src="path-to-your-logo.png" alt="Logo" class="logo">
-      <button pButton icon="pi pi-home" label="Inicio" [rounded]="true" routerLink="inicio" [ngClass]="{active: menuOption == 'inicio'}" (onClick)="onOption('inicio')"></button>
-    </div>
-    <div class="p-toolbar-group-end">
-      <button pButton icon="pi pi-user"  label="Iniciar Sesión" [rounded]="true" (click)="onLoginClick()"></button>
-      <!-- <button pButton icon="pi pi-sign-out"  label="Cerrar Sesión" [rounded]="true" (click)="cerrarSesion()" ></button> -->
-    </div>
-  </p-toolbar>
-  
->>>>>>> e6b539547a53cba9e96ad508ff8f36c25836bd4d
+  <div class="p-toolbar-group-end">
+    <button pButton icon="pi pi-sign-out" label="Cerrar Sesión" [rounded]="true" (click)="cerrarSesion()"
+    *ngIf='isLoggedView()'></button>
+    <button pButton icon="pi pi-user" label="Iniciar Sesión" [rounded]="true" (click)="onLoginClick()"
+      *ngIf='!isLoggedView()'></button>
+  </div>
+</p-toolbar>
+<app-menu-footer [visible]="sidebarVisible" (usersClick)="onUsersClick()"></app-menu-footer>

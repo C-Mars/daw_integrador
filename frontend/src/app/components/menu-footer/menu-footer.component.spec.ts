@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ActividadesComponent } from './actividades.component';
+import { MenuFooterComponent } from './menu-footer.component';
 
-describe('ActividadesComponent', () => {
-  let component: ActividadesComponent;
-  let fixture: ComponentFixture<ActividadesComponent>;
+describe('MenuFooterComponent', () => {
+  let component: MenuFooterComponent;
+  let fixture: ComponentFixture<MenuFooterComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ActividadesComponent]
+      imports: [MenuFooterComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(ActividadesComponent);
+    fixture = TestBed.createComponent(MenuFooterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
