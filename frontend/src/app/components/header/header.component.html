@@ -16,4 +16,4 @@
       *ngIf='!isLoggedView()'></button>
   </div>
 </p-toolbar>
-<app-menu-footer [visible]="sidebarVisible"></app-menu-footer>
+<app-menu-footer [visible]="sidebarVisible" (usersClick)="onUsersClick()"></app-menu-footer>

@@ -1,7 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
-
+import { Subject } from 'rxjs';
+import { SharedEventService } from '../../services/shared-event.service';
 @Component({
   selector: 'app-menu-footer',
   standalone: true,
@@ -10,13 +11,14 @@ import { ButtonModule } from 'primeng/button';
   styleUrl: './menu-footer.component.scss'
 })
 export class MenuFooterComponent {
-   menuOption: string = '';
-   
-   @Input({ required: true }) visible!: boolean;
-
-  onOption(menuOption: string) {
-    this.menuOption = menuOption
-  }
  
-  
+   
+  @Input({ required: true }) visible!: boolean;
+  constructor(private sharedEventService: SharedEventService) {}
+
+  onUsersClick() {
+    this.sharedEventService.emitUsersClick();
+  }
 }
+  
+

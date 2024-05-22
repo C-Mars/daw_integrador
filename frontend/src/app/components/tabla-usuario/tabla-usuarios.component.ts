@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { IUsuario } from '../../interfaces/usuario.interface';
@@ -13,7 +13,7 @@ import { ButtonModule } from 'primeng/button';
   selector: 'app-tabla-usuario',
   standalone: true,
   imports: [TableModule,CardModule,
-    CommonModule,ButtonModule],
+    CommonModule,ButtonModule,NgIf],
   templateUrl: './tabla-usuarios.component.html',
   styleUrl: './tabla-usuarios.component.scss'
 })
@@ -52,6 +52,8 @@ export class TablaUsuariosComponent implements OnInit {
   informacion(item: IUsuario): void {
     this.usuarioSeleccionado = item;
   }
+
+  
   // getSeverity(status: string) {
   //   switch (status) {
   //       case 'EJECUTOR':

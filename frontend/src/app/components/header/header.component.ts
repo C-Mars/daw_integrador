@@ -27,7 +27,7 @@ export class HeaderComponent {
    { }
 
   @Output() loginClicked = new EventEmitter<void>();
-  
+  @Output() usersClicked = new EventEmitter<void>();
 
 
 
@@ -51,4 +51,7 @@ export class HeaderComponent {
     this.cd.detectChanges(); 
   }
   
+  onUsersClick() {
+    this.usersClicked.emit();
+  }
 }
