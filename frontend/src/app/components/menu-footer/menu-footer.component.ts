@@ -11,8 +11,6 @@ import { SharedEventService } from '../../services/shared-event.service';
   styleUrl: './menu-footer.component.scss'
 })
 export class MenuFooterComponent {
- 
-   
   @Input({ required: true }) visible!: boolean;
   
   constructor(private sharedEventService: SharedEventService) {}
@@ -20,13 +18,15 @@ export class MenuFooterComponent {
   onUsersClick() {
     this.sharedEventService.emitUsersClick();
   }
+
   onCliClick() {
     this.sharedEventService.emitCliClick();
-
   }
+
   onActClick() {
     this.sharedEventService.emitActClick();
   }
+
   onAudClick() {
     this.sharedEventService.emitAudClick();
   }
