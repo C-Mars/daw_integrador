@@ -14,10 +14,21 @@ export class MenuFooterComponent {
  
    
   @Input({ required: true }) visible!: boolean;
+  
   constructor(private sharedEventService: SharedEventService) {}
 
   onUsersClick() {
     this.sharedEventService.emitUsersClick();
+  }
+  onCliClick() {
+    this.sharedEventService.emitCliClick();
+
+  }
+  onActClick() {
+    this.sharedEventService.emitActClick();
+  }
+  onAudClick() {
+    this.sharedEventService.emitAudClick();
   }
 }
   

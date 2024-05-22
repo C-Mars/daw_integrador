@@ -52,13 +52,4 @@ export class TablaUsuariosComponent implements OnInit {
   informacion(item: IUsuario): void {
     this.usuarioSeleccionado = item;
   }
-
-  
-  // getSeverity(status: string) {
-  //   switch (status) {
-  //       case 'EJECUTOR':
-  //           return 'success';
-  //       case 'ADMINISTRADOR':
-  //           return 'warning';
-  //   }
 }
