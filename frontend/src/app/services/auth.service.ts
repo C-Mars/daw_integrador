@@ -4,7 +4,8 @@ import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable } from 'rxjs';
 import { RolesEnum } from '../enums/roles.enum';
-import { IUsuario } from '../interfaces/usuario.interface';
+import { UsuarioDto } from '../dtos/usuario.dto';
+
 
 @Injectable({
   providedIn: 'root',
@@ -26,6 +27,9 @@ export class AuthService {
     });
   }
 
+//  registroUsuario(detalleUsuario: UsuarioDto) {
+//     return this._client.post(`${this.apiURL}/auth/registro`, detalleUsuario);
+//   }
   setSession(token: string) {
     sessionStorage.setItem('token', token);
   }
@@ -52,19 +56,17 @@ export class AuthService {
 
     return userRole === rol;
   }
-
-
-  getUsuarios(): Observable<IUsuario[]> {
+  getUsuarios(): Observable<UsuarioDto[]> {
     if (!this.hasRole(RolesEnum.ADMINISTRADOR)){
       throw new Error('El usuario no esta autorizado para ver esta sección')
     }
-    return this._client.get<IUsuario[]>(`${this.apiURL}/usuarios`);
+    return this._client.get<UsuarioDto[]>(`${this.apiURL}/usuarios`);
   }
 
-  getUsuario(id: number): Observable<IUsuario> {
+  getUsuario(id: number): Observable<UsuarioDto> {
     
     
-    return this._client.get<IUsuario>(`${this.apiURL}/usuarios/${id}`);
+    return this._client.get<UsuarioDto>(`${this.apiURL}/usuarios/${id}`);
   }
   
   isLogged(): boolean {

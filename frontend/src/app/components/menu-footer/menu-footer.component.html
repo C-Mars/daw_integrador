@@ -1,40 +1,41 @@
 <p-sidebar [(visible)]="visible" position="bottom">
     <div class="justify-content-center p-2">
-        <div class="flex align-items-center justify-content-between">
-            <button 
-            pButton 
-            icon="pi pi-users" 
-            label="Usuarios"  
-            severity="success" 
-            [outlined]="true" 
-            [rounded]="true"
-            (click)="onUsersClick()"
-                ></button>
-            <button pButton 
-            icon="pi pi-face-smile" 
-            label="Clientes" 
-            severity="info" 
-            [outlined]="true" 
-            [rounded]="true" 
-            (click)="onCliClick()"
-                ></button>
-            <button 
-            pButton 
-            icon="pi pi-list" 
-            label="Actividades" 
-            severity="warning" 
-            [outlined]="true" 
-            [rounded]="true" 
-            (click)="onActClick()"
-                ></button>
-            <button 
-            pButton 
-            icon="pi pi-receipt" 
-            label="Auditoria"  
-            [outlined]="true" 
-            [rounded]="true" 
-            (click)="onAudClick()"
-                ></button>
-        </div>
+      <div class="flex align-items-center justify-content-between m-2">
+        <button 
+          pButton 
+          icon="pi pi-users" 
+          label="Usuarios"  
+          severity="success" 
+          [outlined]="true" 
+          [rounded]="true"
+          (click)="onUsersClick()">
+        </button>
+        <button 
+          pButton 
+          icon="pi pi-face-smile" 
+          label="Clientes" 
+          severity="info" 
+          [outlined]="true" 
+          [rounded]="true" 
+          (click)="onCliClick()">
+        </button>
+        <button 
+          pButton 
+          icon="pi pi-list" 
+          label="Actividades" 
+          severity="warning" 
+          [outlined]="true" 
+          [rounded]="true" 
+          (click)="onActClick()">
+        </button>
+        <button 
+          pButton 
+          icon="pi pi-receipt" 
+          label="Auditoría"  
+          [outlined]="true" 
+          [rounded]="true" 
+          (click)="onAudClick()">
+        </button>
+      </div>
     </div>
-</p-sidebar>
+  </p-sidebar>

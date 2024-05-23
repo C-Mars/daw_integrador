@@ -15,8 +15,8 @@ import { TablaAuditoriaComponent } from '../tabla-auditoria/tabla-auditoria.comp
   standalone: true,
   imports: [BaseComponent,
     MenuLateralAdminComponent,
-    TablaUsuariosComponent, TablaActividadesComponent,TablaClientesComponent,TablaAuditoriaComponent,
-  NgIf],
+    TablaUsuariosComponent, TablaActividadesComponent, TablaClientesComponent, TablaAuditoriaComponent,
+    NgIf],
   templateUrl: './actividades-admin.component.html',
   styleUrl: './actividades-admin.component.scss'
 })
@@ -25,33 +25,56 @@ export class ActividadesAdminComponent implements OnInit, OnDestroy {
   tablaCliVisible: boolean = false;
   tablaActVisible: boolean = false;
   tablaAudVisible: boolean = false;
-  
-  private subscription!: Subscription;
 
-  constructor(private sharedEventService: SharedEventService) {}
+  private subscriptions = new Subscription();
+
+  constructor(private sharedEventService: SharedEventService) { }
 
   ngOnInit() {
-    this.subscription = this.sharedEventService.usersClick$.subscribe(() => {
+    this.subscriptions.add(this.sharedEventService.usersClick$.subscribe(() => {
       this.showTablaUsuarios();
-    });
+    }));
+
+    this.subscriptions.add(this.sharedEventService.cliClick$.subscribe(() => {
+      this.showTablaClientes();
+    }));
+
+    this.subscriptions.add(this.sharedEventService.actClick$.subscribe(() => {
+      this.showTablaActividades();
+    }));
+
+    this.subscriptions.add(this.sharedEventService.audClick$.subscribe(() => {
+      this.showTablaAuditorias();
+    }));
   }
 
   ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+    this.subscriptions.unsubscribe();
   }
-
   showTablaUsuarios() {
+    this.resetVisibility();
     this.tablaUsuVisible = true;
   }
+
   showTablaClientes() {
+    this.resetVisibility();
     this.tablaCliVisible = true;
   }
+
   showTablaActividades() {
+    this.resetVisibility();
     this.tablaActVisible = true;
   }
+
   showTablaAuditorias() {
+    this.resetVisibility();
     this.tablaAudVisible = true;
+  }
+
+  private resetVisibility() {
+    this.tablaUsuVisible = false;
+    this.tablaCliVisible = false;
+    this.tablaActVisible = false;
+    this.tablaAudVisible = false;
   }
 }

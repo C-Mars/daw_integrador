@@ -11,5 +11,5 @@ import { CardModule } from 'primeng/card';
 })
 export class TablaClientesComponent {
  
-  titulo: string = 'Auditoria'
+  titulo: string = 'Cliente'
 }

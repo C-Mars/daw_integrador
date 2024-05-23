@@ -1,51 +1,60 @@
 
-<p-card header="{{titulo}}" >
-    <p-table [value]="listaUsuarios" class="flex flex-warp w-min md:w-max ">
-        <ng-template pTemplate="header">
-            <tr>
-                <th>Nombres</th>
-                <th>Apellidos</th>
-                <th>Foto</th>
-                <th>Email</th>
-                <th>Rol</th>
-                <th>Estado</th>
-                <th></th>
-
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-usuario>
-            <tr (mouseover)="informacion(usuario)">
-                <td>{{ usuario.nombres }}</td>
-                <td>{{ usuario.apellidos }}</td>
-                <td> <ng-template let-usuario pTemplate="item">
-                    <div class="inline-block vertical-align-middle">
-                        <img [alt]="" src= "src/assets/{{ usuario.nombre }}" width="24" class="vertical-align-middle" />
-                        <span class="ml-1 mt-1">{{ usuario.nombre }}</span>
-                    </div>
-                </ng-template></td>
-                <td>{{ usuario.email }}</td>
-                <td>{{ usuario.rol }}</td>
-                <td>{{ usuario.estado }}</td>
-                <td class="flex flex-warp">
-                    <p-button 
-                        pRipple 
-                        icon="pi pi-pen-to-square" 
-                        class="mr-2" 
-                        [rounded]="true" 
-                        
-                        severity="primary" 
-                         />
-                    <p-button 
-                        pRipple 
-                        icon="pi pi-trash" 
-                        severity="info"
-                        [rounded]="true" 
-                        
-                        
-                        />
-                </td>
-            </tr>
-        </ng-template>
-    </p-table>
+<p-card header="{{ titulo }}">
+    <ng-template pTemplate="content">
+        <div class="mb-4  flex  flex-wrap md:align-self-auto align-self-end flex align-items-end justify-content-end">
+            <p-button
+                class="accion "
+                id="añadir"
+                label="Añadir"
+                icon="pi pi-plus"
+                [rounded]="true"
+                severity="info"
+                (onClick)="onNewRegister()"
+            ></p-button>
+        </div>
+        <p-table [value]="listaUsuarios" class="flex flex-wrap w-min md:w-max">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Nombres</th>
+                    <th>Apellidos</th>
+                    <th>Foto</th>
+                    <th>Email</th>
+                    <th>Rol</th>
+                    <th>Estado</th>
+                    <th></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-usuario>
+                <tr (mouseover)="informacion(usuario)">
+                    <td>{{ usuario.nombres }}</td>
+                    <td>{{ usuario.apellidos }}</td>
+                    <td>
+                        <div class="inline-block vertical-align-middle">
+                            <!-- <img alt="foto usuario" [src]="'src/assets/'+ usuario.foto" width="24" class="vertical-align-middle" /> -->
+                            <span class="ml-1 mt-1">{{ usuario.nombre }}</span>
+                        </div>
+                    </td>
+                    <td>{{ usuario.email }}</td>
+                    <td>{{ usuario.rol }}</td>
+                    <td>{{ usuario.estado }}</td>
+                    <td class="flex flex-wrap">
+                        <p-button 
+                            pRipple 
+                            icon="pi pi-pen-to-square" 
+                            class="mr-2" 
+                            [rounded]="true" 
+                            severity="primary"
+                        ></p-button>
+                        <p-button 
+                            pRipple 
+                            icon="pi pi-trash" 
+                            severity="info"
+                            [rounded]="true"
+                        ></p-button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </ng-template>
 </p-card>
-    
+<app-register [visible]="newRegiterVisible"></app-register>

@@ -4,7 +4,8 @@ import {
     FormControl,
     FormGroup,
     ReactiveFormsModule,
-    Validators
+    Validators,
+    FormBuilder
 } from "@angular/forms";
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
@@ -17,6 +18,7 @@ import { Router } from '@angular/router';
 import { AuthService } from "../../services/auth.service";
 import { ImageModule } from 'primeng/image';
 import { DialogModule } from 'primeng/dialog';
+import { NgIf } from "@angular/common";
 
 
 @Component({
@@ -24,7 +26,7 @@ import { DialogModule } from 'primeng/dialog';
     templateUrl: './login.component.html',
     styleUrl: './login.component.scss',
     selector: 'app-login',
-    imports: [ReactiveFormsModule, DialogModule,ToolbarModule, InputTextModule,ButtonModule,FloatLabelModule,PasswordModule,ImageModule,ToastModule]
+    imports: [ReactiveFormsModule, DialogModule,ToolbarModule,NgIf, InputTextModule,ButtonModule,FloatLabelModule,PasswordModule,ImageModule,ToastModule]
 })
 export class LoginComponent {
   
@@ -44,6 +46,7 @@ export class LoginComponent {
         private messageService: MessageService,
         private router: Router,
         private authService: AuthService
+        
       ) {}
     
       ngOnInit() {}

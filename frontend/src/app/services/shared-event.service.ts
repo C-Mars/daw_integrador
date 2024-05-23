@@ -18,7 +18,6 @@ export class SharedEventService {
   private audClickSubject = new Subject<void>();
   audClick$ = this.audClickSubject.asObservable();
 
-
   emitUsersClick() {
     this.usersClickSubject.next();
   }
