@@ -17,6 +17,7 @@ import { MenuFooterComponent } from '../menu-footer/menu-footer.component';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
+
 export class HeaderComponent {
   menuOption: string = '';
   sidebarVisible: boolean = false;
@@ -27,9 +28,8 @@ export class HeaderComponent {
    { }
 
   @Output() loginClicked = new EventEmitter<void>();
+
   @Output() usersClicked = new EventEmitter<void>();
-
-
 
   onOption(menuOption: string) {
     this.menuOption = menuOption
@@ -38,10 +38,12 @@ export class HeaderComponent {
   onLoginClick() {
     this.loginClicked.emit();
   }
+  
   isLoggedView(): boolean {
     const token = this._authService.isLogged();
     return token
   }
+
   cerrarSesion() {
     this._authService.logout();
   }

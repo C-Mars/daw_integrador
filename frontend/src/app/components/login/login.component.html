@@ -15,7 +15,8 @@ class=" w-6 " >
                 class="p-2">
                     <input 
                     id="nombre-usuario" 
-                    pInputText type="text" 
+                    pInputText 
+                    type="text" 
                     formControlName="nombreUsuario" 
                     autocomplete="off"/>
                     <label 
@@ -36,13 +37,14 @@ class=" w-6 " >
                     for="clave"
                     >Contraseña:</label>
                 </p-floatLabel>
+                
             </div>
             <div 
             class="flex justify-content-center">
                 <p-button 
                 label="Confirmar" 
                 (onClick)="login()" 
-                [rounded]="true" 
+                [rounded]="true"
                 class="p-2" />
                 <p-button 
                 label="Cancelar" 
