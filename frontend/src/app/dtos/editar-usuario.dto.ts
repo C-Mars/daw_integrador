@@ -4,7 +4,7 @@ import { RolesEnum } from "../enums/roles.enum"
 export interface UsuarioDto{
         id:number
         nombres: string |null
-        apellidos:string |null
+        apellidos:string|null
         email:string|null
         foto: string|null
         rol: RolesEnum|null

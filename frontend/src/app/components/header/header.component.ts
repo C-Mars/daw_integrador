@@ -1,8 +1,8 @@
-import { ChangeDetectorRef, Component, EventEmitter, Output, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Inject, Output, PLATFORM_ID, inject } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { AuthService } from '../../services/auth.service';
 import { ToolbarModule } from 'primeng/toolbar';
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass, NgIf, isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
 import { MenuFooterComponent } from '../menu-footer/menu-footer.component';
 
@@ -23,6 +23,7 @@ export class HeaderComponent {
   sidebarVisible: boolean = false;
   private _authService = inject(AuthService)
   private _router = inject(Router)
+  private readonly platformId = inject(PLATFORM_ID);
 
   constructor(private cd: ChangeDetectorRef)
    { }
@@ -38,12 +39,16 @@ export class HeaderComponent {
   onLoginClick() {
     this.loginClicked.emit();
   }
-  
+   
   isLoggedView(): boolean {
-    const token = this._authService.isLogged();
-    return token
+    if (isPlatformBrowser(this.platformId)){
+      const token = this._authService.isLogged();
+      return token;
+    }
+    return false;
   }
-
+  
+  
   cerrarSesion() {
     this._authService.logout();
   }

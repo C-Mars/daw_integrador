@@ -9,7 +9,7 @@
                 icon="pi pi-plus"
                 [rounded]="true"
                 severity="info"
-                (onClick)="onNewRegister()"
+                (onClick)="nuevo()"
             ></p-button>
         </div>
         <p-table [value]="listaUsuarios" class="flex flex-wrap w-min md:w-max">
@@ -44,12 +44,14 @@
                             class="mr-2" 
                             [rounded]="true" 
                             severity="primary"
+                            (onClick)="editar(usuario.id)"
                         ></p-button>
                         <p-button 
                             pRipple 
                             icon="pi pi-trash" 
                             severity="info"
                             [rounded]="true"
+                            (onClick)="eliminar(usuario.id)"
                         ></p-button>
                     </td>
                 </tr>

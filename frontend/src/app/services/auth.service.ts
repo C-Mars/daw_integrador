@@ -5,6 +5,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable } from 'rxjs';
 import { RolesEnum } from '../enums/roles.enum';
 import { UsuarioDto } from '../dtos/usuario.dto';
+import { environment } from '../environments/environment';
 
 
 @Injectable({
@@ -70,10 +71,13 @@ export class AuthService {
   }
   
   isLogged(): boolean {
-    
     return  sessionStorage.getItem('token') ? true : false;
   }
+
+  crear(usuarioDto: UsuarioDto): Observable<UsuarioDto> {
+    return this._client.post<UsuarioDto>(
+      environment?.apiUrl + '/usuarios',
+      usuarioDto
+    );
 }
-
-
-//nos devuelve el rol que estamos buscando
+}

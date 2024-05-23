@@ -28,11 +28,14 @@ export class TablaUsuariosComponent implements OnInit {
   listaUsuarios: UsuarioDto[] = [];
   usuarioSeleccionado: UsuarioDto | undefined;
   newRegiterVisible: boolean = false;
+  editRegiterVisible: boolean = false;
   // private _servicioUsuario = inject(AuthService);
   // private _route = inject(Router);
 
   constructor(private _servicioUsuario: AuthService,
-    private _route: Router) { }
+    private _route: Router
+  
+  ) { }
 
   ngOnInit(): void {
 
@@ -50,14 +53,19 @@ export class TablaUsuariosComponent implements OnInit {
     alert(id);
   }
 
-  editar(id: number): void {
-    this._route.navigate(['/usuarios', id]);
-  }
+  // editar(id: number): void {
+  //   this._route.navigate(['/usuarios', id]);
+  // }
 
   informacion(item: UsuarioDto): void {
     this.usuarioSeleccionado = item;
   }
-  onNewRegister() {
+  nuevo() {
     this.newRegiterVisible = true;
+  }
+
+ editar(id: number): void {
+    this.editRegiterVisible = true;
+    alert(id);
   }
 }
