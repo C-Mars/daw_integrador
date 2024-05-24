@@ -1,5 +1,5 @@
 import { CommonModule, NgIf } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { TableModule } from 'primeng/table';
 
 import { Router } from '@angular/router';
@@ -9,6 +9,7 @@ import { ButtonModule } from 'primeng/button';
 import { RegisterComponent } from '../register/register.component';
 import { UsuarioDto } from '../../dtos/usuario.dto';
 import { MessageService } from 'primeng/api';
+import { UsuariosService } from '../../services/usuarios.service';
 
 
 
@@ -30,8 +31,13 @@ export class TablaUsuariosComponent implements OnInit {
   newRegiterVisible: boolean = false;
   accion!: string
   usuarioSeleccionado!: UsuarioDto | null;
- 
-  constructor(private _servicioUsuario: AuthService,
+
+  @Input('filaSeleccionada') filaSeleccionada!: any;
+  @Output() filaSeleccionadaChange = new EventEmitter<any>();
+
+  constructor(
+    private _authService : AuthService,
+    private _servicioUsuario: UsuariosService,
     private messageService: MessageService,
     private _route: Router
   
@@ -73,5 +79,7 @@ export class TablaUsuariosComponent implements OnInit {
     this.accion = 'Editar';
     this.newRegiterVisible = true;
   }
-
+  seleccionar() {
+    this.filaSeleccionadaChange.emit(this.filaSeleccionada);
+  }
 }

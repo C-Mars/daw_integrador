@@ -58,38 +58,8 @@ export class AuthService {
     return userRole === rol;
   }
 
-  getUsuarios(): Observable<UsuarioDto[]> {
-    if (!this.hasRole(RolesEnum.ADMINISTRADOR)) {
-      throw new Error('El usuario no esta autorizado para ver esta sección')
-    }
-    const usuarios = this._client.get<UsuarioDto[]>(environment.apiUrl+'/usuarios');
-    return usuarios
-  }
- 
-
-
 
   isLogged(): boolean {
     return sessionStorage.getItem('token') ? true : false;
-  }
-
-  crear(usuarioDto: UsuarioDto): Observable<UsuarioDto> {
-    return this._client.post<UsuarioDto>(
-      environment?.apiUrl + '/usuarios',
-      usuarioDto
-    );
-  }
-  editar(usuarioDto: EditarUsuarioDto) {
-    return this._client.put(
-      environment?.apiUrl + '/usuarios/' +  usuarioDto.id,
-      usuarioDto
-    );
-  }
-
-  uploadFile(file: File) {
-    const formData = new FormData();
-    formData.append('file', file);
-
-    return this._client.post(environment.apiUrl +'/auth/registro', formData);
   }
 }

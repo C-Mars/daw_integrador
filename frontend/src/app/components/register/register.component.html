@@ -74,6 +74,7 @@
             (onUpload)="onUpload($event)" />
     </div>
     <p-button 
+    [label]="accion"
     label="Confirmar" 
     [rounded]="true"  
     type="submit"
@@ -81,7 +82,7 @@
     class="p-2"></p-button>
 
     <p-button 
-    [label]="accion"
+    label="Cancelar"
     [rounded]="true"  
     class="p-2"
     (onClick)="closeDialog()" 
