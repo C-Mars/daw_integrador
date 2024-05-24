@@ -78,15 +78,15 @@ export class LoginComponent {
             error: (err) => {
               this.messageService.add({
                 severity: 'error',
-                summary: 'Error al au tenticar. Verifique el usuario y la clave',
+                summary: 'Error al autenticar. Verifique el usuario y la clave',
               });
             },
           });
       }
-      
       closeDialog() {
         this.visible = false;
         this.visibleChange.emit(this.visible);
         this.form.reset();
       }
+
 }
