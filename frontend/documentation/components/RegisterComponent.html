@@ -1,0 +1,1350 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>frontend documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avaoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
+            <a href="../" class="navbar-brand">frontend documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  RegisterComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/components/register/register.component.ts</code>
+</p>
+
+
+
+
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-register</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>DialogModule</code>
+                            <code>ReactiveFormsModule</code>
+                            <code>FileUploadModule</code>
+                            <code>InputTextModule</code>
+                            <code>PasswordModule</code>
+                            <code>ButtonModule</code>
+                            <code>ToastModule</code>
+                            <code>FloatLabelModule</code>
+                            <code>CardModule</code>
+                            <code>DropdownModule</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./register.component.html</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrl</td>
+                <td class="col-md-9"><code>./register.component.scss</code></td>
+            </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#formRegistro" >formRegistro</a>
+                            </li>
+                            <li>
+                                <a href="#listUsuarios" >listUsuarios</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#cerrar" >cerrar</a>
+                            </li>
+                            <li>
+                                <a href="#closeDialog" >closeDialog</a>
+                            </li>
+                            <li>
+                                <a href="#enviar" >enviar</a>
+                            </li>
+                            <li>
+                                <a href="#listUsuariosDrop" >listUsuariosDrop</a>
+                            </li>
+                            <li>
+                                <a href="#llenarFormRegistro" >llenarFormRegistro</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnChanges" >ngOnChanges</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#onUpload" >onUpload</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#usuario" >usuario</a>
+                            </li>
+                            <li>
+                                <a href="#visible" >visible</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Outputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#refrescar" >refrescar</a>
+                            </li>
+                            <li>
+                                <a href="#visibleChange" >visibleChange</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(messageService: MessageService, router: Router, authService: <a href="../injectables/AuthService.html" target="_self">AuthService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">src/app/components/register/register.component.ts:66</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>messageService</td>
+                                                  
+                                                        <td>
+                                                                    <code>MessageService</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>router</td>
+                                                  
+                                                        <td>
+                                                                    <code>Router</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>authService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/AuthService.html" target="_self" >AuthService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+    <section data-compodoc="block-inputs">
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="usuario"></a>
+                        <b>usuario</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>UsuarioDto | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Required : </i>&nbsp;<b>true</b>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">src/app/components/register/register.component.ts:48</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="visible"></a>
+                        <b>visible</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">src/app/components/register/register.component.ts:47</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+    <section data-compodoc="block-outputs">
+    <h3 id="outputs">Outputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="refrescar"></a>
+                        <b>refrescar</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>EventEmitter</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">src/app/components/register/register.component.ts:50</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="visibleChange"></a>
+                        <b>visibleChange</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>EventEmitter</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">src/app/components/register/register.component.ts:49</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cerrar"></a>
+                    <span class="name">
+                        <span ><b>cerrar</b></span>
+                        <a href="#cerrar"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>cerrar()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="157"
+                                    class="link-to-prism">src/app/components/register/register.component.ts:157</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="closeDialog"></a>
+                    <span class="name">
+                        <span ><b>closeDialog</b></span>
+                        <a href="#closeDialog"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>closeDialog()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="161"
+                                    class="link-to-prism">src/app/components/register/register.component.ts:161</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="enviar"></a>
+                    <span class="name">
+                        <span ><b>enviar</b></span>
+                        <a href="#enviar"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>enviar()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="106"
+                                    class="link-to-prism">src/app/components/register/register.component.ts:106</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="listUsuariosDrop"></a>
+                    <span class="name">
+                        <span ><b>listUsuariosDrop</b></span>
+                        <a href="#listUsuariosDrop"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>listUsuariosDrop()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="149"
+                                    class="link-to-prism">src/app/components/register/register.component.ts:149</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="llenarFormRegistro"></a>
+                    <span class="name">
+                        <span ><b>llenarFormRegistro</b></span>
+                        <a href="#llenarFormRegistro"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>llenarFormRegistro()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="85"
+                                    class="link-to-prism">src/app/components/register/register.component.ts:85</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnChanges"></a>
+                    <span class="name">
+                        <span ><b>ngOnChanges</b></span>
+                        <a href="#ngOnChanges"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnChanges()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="99"
+                                    class="link-to-prism">src/app/components/register/register.component.ts:99</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="78"
+                                    class="link-to-prism">src/app/components/register/register.component.ts:78</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onUpload"></a>
+                    <span class="name">
+                        <span ><b>onUpload</b></span>
+                        <a href="#onUpload"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onUpload(event: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="80"
+                                    class="link-to-prism">src/app/components/register/register.component.ts:80</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formRegistro"></a>
+                    <span class="name">
+                        <span ><b>formRegistro</b></span>
+                        <a href="#formRegistro"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new FormGroup ({
+    id: new FormControl&lt;number | null&gt;(null),
+    nombres: new FormControl&lt;string | null&gt;(null,[Validators.required]),
+    apellidos:new FormControl&lt;string | null&gt;(null,[Validators.required]),
+    email:new FormControl&lt;string | null&gt;(null,[Validators.required]),
+    foto: new FormControl&lt;string | null&gt;(null,[Validators.required]),
+    rol: new FormControl&lt;RolesEnum| null&gt;(null),
+    nombreUsuario: new FormControl&lt;string | null&gt;(null,[Validators.required]),
+    clave: new FormControl&lt;string | null&gt;(null,[Validators.required]),
+    estado:  new FormControl&lt; EstadosUsuarioEnum |null&gt;(null)
+})</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">src/app/components/register/register.component.ts:54</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="listUsuarios"></a>
+                    <span class="name">
+                        <span ><b>listUsuarios</b></span>
+                        <a href="#listUsuarios"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>any[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">src/app/components/register/register.component.ts:66</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, EventEmitter, Input, Output } from &#x27;@angular/core&#x27;;
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+  FormBuilder,
+  NgModel
+} from &quot;@angular/forms&quot;;
+import { FileUploadModule, UploadEvent } from &#x27;primeng/fileupload&#x27;;
+import { InputTextModule } from &#x27;primeng/inputtext&#x27;;
+import { PasswordModule } from &#x27;primeng/password&#x27;;
+import { ButtonModule } from &#x27;primeng/button&#x27;;
+import {ToastModule} from &#x27;primeng/toast&#x27;
+import { FloatLabelModule } from &#x27;primeng/floatlabel&#x27;;
+import { CardModule } from &#x27;primeng/card&#x27;;
+import { MessageService } from &#x27;primeng/api&#x27;;
+import { Router } from &#x27;@angular/router&#x27;;
+import { AuthService } from &#x27;../../services/auth.service&#x27;;
+import { DialogModule } from &#x27;primeng/dialog&#x27;;
+import { EstadosUsuarioEnum } from &#x27;../../enums/estado-usuario.enum&#x27;;
+import { RolesEnum } from &#x27;../../enums/roles.enum&#x27;;
+import { UsuarioDto } from &#x27;../../dtos/usuario.dto&#x27;;
+import { DropdownModule } from &#x27;primeng/dropdown&#x27;;
+
+
+
+@Component({
+  selector: &#x27;app-register&#x27;,
+  standalone: true,
+  imports: [
+    DialogModule,
+    ReactiveFormsModule,
+    FileUploadModule,
+    InputTextModule,
+    PasswordModule,
+    ButtonModule, 
+    ToastModule,
+    FloatLabelModule,
+    CardModule,
+    DropdownModule],
+  templateUrl: &#x27;./register.component.html&#x27;,
+  styleUrl: &#x27;./register.component.scss&#x27;
+})
+
+export class RegisterComponent {
+  @Input() visible: boolean &#x3D; false; 
+  @Input({ required: false }) usuario!: UsuarioDto | null;
+  @Output() visibleChange &#x3D; new EventEmitter&lt;boolean&gt;();
+  @Output() refrescar &#x3D; new EventEmitter&lt;boolean&gt;();
+ 
+  
+
+  formRegistro &#x3D; new FormGroup ({
+    id: new FormControl&lt;number | null&gt;(null),
+    nombres: new FormControl&lt;string | null&gt;(null,[Validators.required]),
+    apellidos:new FormControl&lt;string | null&gt;(null,[Validators.required]),
+    email:new FormControl&lt;string | null&gt;(null,[Validators.required]),
+    foto: new FormControl&lt;string | null&gt;(null,[Validators.required]),
+    rol: new FormControl&lt;RolesEnum| null&gt;(null),
+    nombreUsuario: new FormControl&lt;string | null&gt;(null,[Validators.required]),
+    clave: new FormControl&lt;string | null&gt;(null,[Validators.required]),
+    estado:  new FormControl&lt; EstadosUsuarioEnum |null&gt;(null)
+});
+
+listUsuarios: any[] &#x3D; [];
+
+
+
+
+
+constructor(
+  private messageService: MessageService,
+  private router: Router,
+  private authService: AuthService
+) {}
+
+ngOnInit() {}
+
+onUpload(event: any) {
+  const formData &#x3D; new FormData();
+  formData.append(&#x27;file&#x27;, event.files[0]);
+}
+
+llenarFormRegistro() {
+  this.formRegistro.patchValue({
+    id:this.usuario!.id as number,
+    nombres:this.usuario!.nombres,
+    apellidos:this.usuario!.apellidos,
+    email:this.usuario!.email,
+    foto:this.usuario!.foto,
+    rol:this.usuario!.rol,
+    nombreUsuario:this.usuario!.nombreUsuario,
+    clave:this.usuario!.clave,
+    estado:this.usuario!.estado, 
+  });
+}
+
+ngOnChanges() {
+  if (this.usuario) {
+    this.llenarFormRegistro();
+  } else {
+    this.formRegistro.reset();
+  }
+}
+enviar() {
+  if (!this.formRegistro.valid) {
+    this.formRegistro.markAllAsTouched();
+    this.messageService.add({
+      severity: &#x27;error&#x27;,
+      summary: &#x27;Debe ingresar todos los campos&#x27;,
+    });
+    return;
+  }
+    const usuarioDto &#x3D; this.formRegistro.getRawValue();
+
+    if (this.usuario) {
+      this.authService
+        .crear({
+          id: usuarioDto.id!,
+          nombres:usuarioDto!.nombres,
+          apellidos:usuarioDto!.apellidos,
+          email:usuarioDto!.email,
+          foto:usuarioDto!.foto,
+          rol:usuarioDto!.rol,
+          nombreUsuario:usuarioDto!.nombreUsuario,
+          clave:usuarioDto!.clave,
+          estado:usuarioDto!.estado})
+         
+        .subscribe({
+          next: (res) &#x3D;&gt; {
+            this.cerrar();
+            this.refrescar.emit();
+            this.messageService.add({
+              severity: &#x27;success&#x27;,
+              summary: &#x27;Registro realizado con exito!&#x27;,
+            });
+          },
+          error: (err) &#x3D;&gt; {
+            this.messageService.add({
+              severity: &#x27;error&#x27;,
+              summary: &#x27;Ocurrió un error al registrar&#x27;,
+            });
+          },
+        });
+    } 
+    }
+    
+    listUsuariosDrop() {
+      this.authService.getUsuarios().subscribe(
+        response &#x3D;&gt; {
+          this.listUsuarios &#x3D; response.map(usuario &#x3D;&gt; usuario.rol);
+        }
+      );
+    }
+
+    cerrar() {
+      this.visibleChange.emit(false);
+    }
+
+    closeDialog(){
+      this.visible &#x3D; false;
+      this.visibleChange.emit(this.visible);
+      this.formRegistro.reset();
+    }
+  
+  }</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;p-dialog header&#x3D;&quot;Registro de Usuario&quot; 
+    [(visible)]&#x3D;&quot;visible&quot; 
+    [modal]&#x3D;&quot;true&quot; 
+    [closable]&#x3D;&quot;false&quot; 
+    (onHide)&#x3D;&quot;cerrar()&quot;
+    class&#x3D;&quot; w-6 &quot;&gt;
+    &lt;ng-template 
+    pTemplate&#x3D;&quot;center&quot;&gt;
+    &lt;form 
+    [formGroup]&#x3D;&quot;formRegistro&quot;  
+    class&#x3D;&quot;pt-5&quot;&gt;
+
+    &lt;div class&#x3D;&quot;flex pb-5&quot;&gt;
+        &lt;p-floatLabel class&#x3D;&quot;p-2&quot;&gt;
+          &lt;input 
+          id&#x3D;&quot;nombres-usuario&quot; 
+          pInputText 
+          type&#x3D;&quot;text&quot; 
+          formControlName&#x3D;&quot;nombres&quot; 
+          autocomplete&#x3D;&quot;off&quot; /&gt;
+          &lt;label for&#x3D;&quot;nombres-usuario&quot;&gt;Nombre Completo&lt;/label&gt;
+        &lt;/p-floatLabel&gt;
+      &lt;/div&gt;
+
+      &lt;div class&#x3D;&quot;flex pb-5&quot;&gt;
+        &lt;p-floatLabel class&#x3D;&quot;p-2&quot;&gt;
+          &lt;input 
+          id&#x3D;&quot;aplellidos-usuario&quot; 
+          pInputText 
+          type&#x3D;&quot;text&quot; 
+          formControlName&#x3D;&quot;aplellidos&quot; 
+          autocomplete&#x3D;&quot;off&quot; /&gt;
+          &lt;label for&#x3D;&quot;aplellidos-usuario&quot;&gt;Apellido Completo&lt;/label&gt;
+        &lt;/p-floatLabel&gt;
+      &lt;/div&gt;
+  &lt;p-dropdown 
+      formControlName&#x3D;&quot;selectedCity&quot; 
+      [options]&#x3D;&quot;listUsuarios&quot;
+      optionLabel&#x3D;&quot;rol&quot;
+      placeholder&#x3D;&quot;Select a City&quot; /&gt;
+
+    &lt;div class&#x3D;&quot;flex pb-5&quot;&gt;
+      &lt;p-floatLabel class&#x3D;&quot;p-2&quot;&gt;
+        &lt;input 
+        id&#x3D;&quot;nombre-usuario&quot; 
+        pInputText 
+        type&#x3D;&quot;text&quot; 
+        formControlName&#x3D;&quot;nombreUsuario&quot; 
+        autocomplete&#x3D;&quot;off&quot; /&gt;
+        &lt;label for&#x3D;&quot;nombre-usuario&quot;&gt;Nombre de Usuario&lt;/label&gt;
+      &lt;/p-floatLabel&gt;
+    &lt;/div&gt;
+
+    &lt;div class&#x3D;&quot;flex pb-5&quot;&gt;
+      &lt;p-floatLabel class&#x3D;&quot;p-2&quot;&gt;
+        &lt;p-password id&#x3D;&quot;clave&quot; formControlName&#x3D;&quot;clave&quot; autocomplete&#x3D;&quot;off&quot; /&gt;
+        &lt;label for&#x3D;&quot;clave&quot;&gt;Contraseña:&lt;/label&gt;
+      &lt;/p-floatLabel&gt;
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot;card flex justify-content-center&quot;&gt;
+        &lt;p-toast /&gt;
+        &lt;p-fileUpload  
+            mode&#x3D;&quot;basic&quot; 
+            chooseLabel&#x3D;&quot;Importar&quot; 
+            chooseIcon&#x3D;&quot;pi pi-upload&quot;
+            name&#x3D;&quot;demo[]&quot; 
+            accept&#x3D;&quot;image/*&quot; 
+            maxFileSize&#x3D;&quot;1000000&quot; 
+            (onUpload)&#x3D;&quot;onUpload($event)&quot; /&gt;
+    &lt;/div&gt;
+    &lt;p-button 
+    label&#x3D;&quot;Confirmar&quot; 
+    [rounded]&#x3D;&quot;true&quot;  
+    type&#x3D;&quot;submit&quot;
+    (onClick)&#x3D;&quot;enviar()&quot;
+    class&#x3D;&quot;p-2&quot;&gt;&lt;/p-button&gt;
+
+    &lt;p-button 
+    label&#x3D;&quot;Cancelar&quot; 
+    [rounded]&#x3D;&quot;true&quot;  
+    class&#x3D;&quot;p-2&quot;
+    (onClick)&#x3D;&quot;closeDialog()&quot; 
+    type&#x3D;&quot;submit&quot;
+    &gt;&lt;/p-button&gt;
+
+  &lt;/form&gt;  
+  &lt;/ng-template&gt;
+  
+&lt;/p-dialog&gt;
+&lt;!-- &lt;p-dialog 
+header&#x3D;&quot;Registro de Usuario&quot; 
+[(visible)]&#x3D;&quot;visible&quot; 
+[modal]&#x3D;&quot;true&quot; 
+[closable]&#x3D;&quot;false&quot; 
+class&#x3D;&quot; w-6 &quot;&gt;
+    &lt;ng-template 
+    pTemplate&#x3D;&quot;center&quot;&gt;
+        &lt;form 
+        [formGroup]&#x3D;&quot;form&quot; 
+        class&#x3D;&quot;pt-5&quot;&gt;
+            &lt;div 
+            class&#x3D;&quot;flex pb-5&quot;&gt;
+                &lt;p-floatLabel 
+                class&#x3D;&quot;p-2&quot;&gt;
+                    &lt;input 
+                    id&#x3D;&quot;nombres-usuario&quot; 
+                    pInputText 
+                    type&#x3D;&quot;text&quot; 
+                    formControlName&#x3D;&quot;nombresUsuario&quot;
+                    autocomplete&#x3D;&quot;off&quot; /&gt;
+                    &lt;label 
+                    for&#x3D;&quot;nombres-usuario&quot;&gt;Nombres&lt;/label&gt;
+                &lt;/p-floatLabel&gt;
+            &lt;/div&gt;
+            &lt;div 
+            class&#x3D;&quot;flex pb-5&quot;&gt;
+                &lt;p-floatLabel 
+                class&#x3D;&quot;p-2&quot;&gt;
+                    &lt;input 
+                    id&#x3D;&quot;apellidos-usuario&quot; 
+                    pInputText type&#x3D;&quot;text&quot; 
+                    formControlName&#x3D;&quot;apellidosUsuario&quot;
+                    autocomplete&#x3D;&quot;off&quot; /&gt;
+                    &lt;label 
+                    for&#x3D;&quot;apellidos-usuario&quot;&gt;Apellidos&lt;/label&gt;
+                &lt;/p-floatLabel&gt;
+            &lt;/div&gt;
+            &lt;div 
+            class&#x3D;&quot;flex pb-5&quot;&gt;
+                &lt;p-floatLabel 
+                class&#x3D;&quot;p-2&quot;&gt;
+                    &lt;input 
+                    id&#x3D;&quot;email-usuario&quot; 
+                    pInputText 
+                    type&#x3D;&quot;text&quot; 
+                    formControlName&#x3D;&quot;emailUsuario&quot;
+                    autocomplete&#x3D;&quot;off&quot; /&gt;
+                    &lt;label 
+                    for&#x3D;&quot;email-usuario&quot;&gt;Email&lt;/label&gt;
+                &lt;/p-floatLabel&gt;
+            &lt;/div&gt;
+            &lt;div 
+            class&#x3D;&quot;flex pb-5&quot;&gt;
+                &lt;p-floatLabel 
+                class&#x3D;&quot;p-2&quot;&gt;
+                    &lt;input 
+                    id&#x3D;&quot;nombre-usuario&quot; 
+                    pInputText type&#x3D;&quot;text&quot; 
+                    formControlName&#x3D;&quot;nombreUsuario&quot;
+                    autocomplete&#x3D;&quot;off&quot; /&gt;
+                    &lt;label 
+                    for&#x3D;&quot;apellidos-usuario&quot;&gt;Nombre de Usuario&lt;/label&gt;
+                &lt;/p-floatLabel&gt;
+            &lt;/div&gt;
+            &lt;div 
+            class&#x3D;&quot;flex pb-5&quot;&gt;
+                &lt;p-floatLabel 
+                class&#x3D;&quot;p-2&quot;&gt;
+                    &lt;p-password 
+                    id&#x3D;&quot;clave&quot; 
+                    formControlName&#x3D;&quot;clave&quot; 
+                    autocomplete&#x3D;&quot;off&quot; /&gt;
+                    &lt;label 
+                    for&#x3D;&quot;clave&quot;&gt;Contraseña:&lt;/label&gt;
+                &lt;/p-floatLabel&gt;
+            &lt;/div&gt;
+            &lt;div 
+            class&#x3D;&quot;flex justify-content-center&quot;&gt;
+                &lt;p-button 
+                label&#x3D;&quot;Confirmar&quot; 
+                (onClick)&#x3D;&quot;enviar()&quot; 
+                [rounded]&#x3D;&quot;true&quot; 
+                class&#x3D;&quot;p-2&quot; /&gt;
+                &lt;p-button 
+                label&#x3D;&quot;Cancelar&quot; 
+                (onClick)&#x3D;&quot;closeDialog()&quot; 
+                [rounded]&#x3D;&quot;true&quot; 
+                severity&#x3D;&quot;secondary&quot;
+                    class&#x3D;&quot;p-2&quot; /&gt;
+            &lt;/div&gt;
+        &lt;/form&gt;
+    &lt;/ng-template&gt;
+&lt;/p-dialog&gt;
+&lt;p-toast&gt;&lt;/p-toast&gt; --&gt;</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><p-dialog header="Registro de Usuario"     [(visible)]="visible"     [modal]="true"     [closable]="false"     (onHide)="cerrar()"    class=" w-6 ">    <ng-template     pTemplate="center">    <form     [formGroup]="formRegistro"      class="pt-5">    <div class="flex pb-5">        <p-floatLabel class="p-2">          <input           id="nombres-usuario"           pInputText           type="text"           formControlName="nombres"           autocomplete="off" />          <label for="nombres-usuario">Nombre Completo</label>        </p-floatLabel>      </div>      <div class="flex pb-5">        <p-floatLabel class="p-2">          <input           id="aplellidos-usuario"           pInputText           type="text"           formControlName="aplellidos"           autocomplete="off" />          <label for="aplellidos-usuario">Apellido Completo</label>        </p-floatLabel>      </div>  <p-dropdown       formControlName="selectedCity"       [options]="listUsuarios"      optionLabel="rol"      placeholder="Select a City" />    <div class="flex pb-5">      <p-floatLabel class="p-2">        <input         id="nombre-usuario"         pInputText         type="text"         formControlName="nombreUsuario"         autocomplete="off" />        <label for="nombre-usuario">Nombre de Usuario</label>      </p-floatLabel>    </div>    <div class="flex pb-5">      <p-floatLabel class="p-2">        <p-password id="clave" formControlName="clave" autocomplete="off" />        <label for="clave">Contraseña:</label>      </p-floatLabel>    </div>    <div class="card flex justify-content-center">        <p-toast />        <p-fileUpload              mode="basic"             chooseLabel="Importar"             chooseIcon="pi pi-upload"            name="demo[]"             accept="image/*"             maxFileSize="1000000"             (onUpload)="onUpload($event)" />    </div>    <p-button     label="Confirmar"     [rounded]="true"      type="submit"    (onClick)="enviar()"    class="p-2"></p-button>    <p-button     label="Cancelar"     [rounded]="true"      class="p-2"    (onClick)="closeDialog()"     type="submit"    ></p-button>  </form>    </ng-template>  </p-dialog><!-- <p-dialog header="Registro de Usuario" [(visible)]="visible" [modal]="true" [closable]="false" class=" w-6 ">    <ng-template     pTemplate="center">        <form         [formGroup]="form"         class="pt-5">            <div             class="flex pb-5">                <p-floatLabel                 class="p-2">                    <input                     id="nombres-usuario"                     pInputText                     type="text"                     formControlName="nombresUsuario"                    autocomplete="off" />                    <label                     for="nombres-usuario">Nombres</label>                </p-floatLabel>            </div>            <div             class="flex pb-5">                <p-floatLabel                 class="p-2">                    <input                     id="apellidos-usuario"                     pInputText type="text"                     formControlName="apellidosUsuario"                    autocomplete="off" />                    <label                     for="apellidos-usuario">Apellidos</label>                </p-floatLabel>            </div>            <div             class="flex pb-5">                <p-floatLabel                 class="p-2">                    <input                     id="email-usuario"                     pInputText                     type="text"                     formControlName="emailUsuario"                    autocomplete="off" />                    <label                     for="email-usuario">Email</label>                </p-floatLabel>            </div>            <div             class="flex pb-5">                <p-floatLabel                 class="p-2">                    <input                     id="nombre-usuario"                     pInputText type="text"                     formControlName="nombreUsuario"                    autocomplete="off" />                    <label                     for="apellidos-usuario">Nombre de Usuario</label>                </p-floatLabel>            </div>            <div             class="flex pb-5">                <p-floatLabel                 class="p-2">                    <p-password                     id="clave"                     formControlName="clave"                     autocomplete="off" />                    <label                     for="clave">Contraseña:</label>                </p-floatLabel>            </div>            <div             class="flex justify-content-center">                <p-button                 label="Confirmar"                 (onClick)="enviar()"                 [rounded]="true"                 class="p-2" />                <p-button                 label="Cancelar"                 (onClick)="closeDialog()"                 [rounded]="true"                 severity="secondary"                    class="p-2" />            </div>        </form>    </ng-template></p-dialog><p-toast></p-toast> --></div>'
+    var COMPONENTS = [{'name': 'ActividadesAdminComponent', 'selector': 'app-actividades-admin'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AuditoriaComponent', 'selector': 'app-auditoria'},{'name': 'BaseComponent', 'selector': 'app-base'},{'name': 'DetalleUsuarioComponent', 'selector': 'app-detalle-usuario'},{'name': 'HeaderComponent', 'selector': 'app-header'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'LoginComponent', 'selector': 'app-login'},{'name': 'MenuFooterComponent', 'selector': 'app-menu-footer'},{'name': 'MenuLateralAdminComponent', 'selector': 'app-menu-lateral-admin'},{'name': 'RegisterComponent', 'selector': 'app-register'},{'name': 'TablaActividadesComponent', 'selector': 'app-tabla-actividades'},{'name': 'TablaAuditoriaComponent', 'selector': 'app-tabla-auditoria'},{'name': 'TablaClientesComponent', 'selector': 'app-tabla-clientes'},{'name': 'TablaUsuariosComponent', 'selector': 'app-tabla-usuario'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'RegisterComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'RegisterComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

@@ -5,6 +5,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable } from 'rxjs';
 import { RolesEnum } from '../enums/roles.enum';
 import { UsuarioDto } from '../dtos/usuario.dto';
+import { environment } from '../environments/environment';
+import { EditarUsuarioDto } from '../dtos/editar-usuario.dto';
 
 
 @Injectable({
@@ -12,7 +14,6 @@ import { UsuarioDto } from '../dtos/usuario.dto';
 })
 export class AuthService {
 
-  private apiURL = `http://localhost:3000/api`
 
   constructor(
     private _client: HttpClient,
@@ -21,15 +22,15 @@ export class AuthService {
   }
 
   login(nombreUsuario: string, clave: string): Observable<{ token: string }> {
-    return this._client.post<{ token: string }>(`${this.apiURL}/auth/login`, {
+    return this._client.post<{ token: string }>(environment.apiUrl +'/auth/login', {
       nombreUsuario,
       clave,
     });
   }
 
-//  registroUsuario(detalleUsuario: UsuarioDto) {
-//     return this._client.post(`${this.apiURL}/auth/registro`, detalleUsuario);
-//   }
+  //  registroUsuario(detalleUsuario: UsuarioDto) {
+  //     return this._client.post(environment.apiUrl +'/auth/registro', detalleUsuario);
+  //   }
   setSession(token: string) {
     sessionStorage.setItem('token', token);
   }
@@ -56,24 +57,39 @@ export class AuthService {
 
     return userRole === rol;
   }
+
   getUsuarios(): Observable<UsuarioDto[]> {
-    if (!this.hasRole(RolesEnum.ADMINISTRADOR)){
+    if (!this.hasRole(RolesEnum.ADMINISTRADOR)) {
       throw new Error('El usuario no esta autorizado para ver esta sección')
     }
-    return this._client.get<UsuarioDto[]>(`${this.apiURL}/usuarios`);
+    const usuarios = this._client.get<UsuarioDto[]>(environment.apiUrl+'/usuarios');
+    return usuarios
+  }
+ 
+
+
+
+  isLogged(): boolean {
+    return sessionStorage.getItem('token') ? true : false;
   }
 
-  getUsuario(id: number): Observable<UsuarioDto> {
-    
-    
-    return this._client.get<UsuarioDto>(`${this.apiURL}/usuarios/${id}`);
+  crear(usuarioDto: UsuarioDto): Observable<UsuarioDto> {
+    return this._client.post<UsuarioDto>(
+      environment?.apiUrl + '/usuarios',
+      usuarioDto
+    );
   }
-  
-  isLogged(): boolean {
-    
-    return  sessionStorage.getItem('token') ? true : false;
+  editar(usuarioDto: EditarUsuarioDto) {
+    return this._client.put(
+      environment?.apiUrl + '/usuarios/' +  usuarioDto.id,
+      usuarioDto
+    );
+  }
+
+  uploadFile(file: File) {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    return this._client.post(environment.apiUrl +'/auth/registro', formData);
   }
 }
-
-
-//nos devuelve el rol que estamos buscando

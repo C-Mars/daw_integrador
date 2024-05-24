@@ -4,9 +4,9 @@ import {
   FormGroup,
   ReactiveFormsModule,
   Validators,
-  FormBuilder
+ 
 } from "@angular/forms";
-import { FileUploadModule } from 'primeng/fileupload';
+import { FileUploadModule, UploadEvent } from 'primeng/fileupload';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
@@ -19,6 +19,10 @@ import { AuthService } from '../../services/auth.service';
 import { DialogModule } from 'primeng/dialog';
 import { EstadosUsuarioEnum } from '../../enums/estado-usuario.enum';
 import { RolesEnum } from '../../enums/roles.enum';
+import { UsuarioDto } from '../../dtos/usuario.dto';
+import { DropdownModule } from 'primeng/dropdown';
+
+
 
 @Component({
   selector: 'app-register',
@@ -32,85 +36,187 @@ import { RolesEnum } from '../../enums/roles.enum';
     ButtonModule, 
     ToastModule,
     FloatLabelModule,
-    CardModule],
+    CardModule,
+    DropdownModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
+
+
 export class RegisterComponent {
   @Input() visible: boolean = false; 
+
+  @Input({ required: false }) usuario!: UsuarioDto | null;
+
+  @Input({ required: true }) accion!: string;
+
   @Output() visibleChange = new EventEmitter<boolean>();
+
+  @Output() refrescar = new EventEmitter<boolean>();
+  
+  usuarios!: UsuarioDto[];
+
+  roles = Object.values(RolesEnum);
+
+  estados = Object.values(EstadosUsuarioEnum);
+
   
   
 
   formRegistro = new FormGroup ({
     id: new FormControl<number | null>(null),
-    // nombres:['', [Validators.required, Validators.pattern(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)]],
-    // apellidos:['', [Validators.required, Validators.pattern(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)]],
-    // email: ['', [Validators.required, Validators.email]],
-    // foto:['', [Validators.required]],
-    // nombreUsuario:['', [Validators.required, Validators.pattern(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/)]],
-    // clave: ['', Validators.required],
-    // rol: RolesEnum,
-    // estado: EstadosUsuarioEnum.ACTIVO
-   
-
-
+    nombres: new FormControl<string | null>(null,[Validators.required]),
+    apellidos:new FormControl<string | null>(null,[Validators.required]),
+    email:new FormControl<string | null>(null,[Validators.required]),
+    foto: new FormControl<string | null>(null),
+    rol: new FormControl<RolesEnum| null>(null),
+    nombreUsuario: new FormControl<string | null>(null,[Validators.required]),
+    clave: new FormControl<string | null>(null,[Validators.required]),
+    estado:  new FormControl< EstadosUsuarioEnum |null>(EstadosUsuarioEnum.ACTIVO)
 });
+
+
+
+
+
+
+
 constructor(
-  private fb: FormBuilder,
   private messageService: MessageService,
   private router: Router,
   private authService: AuthService
 ) {}
 
-ngOnInit() {}
-
-
-// get nombres() {
-//   return this.formRegistro.controls['nombres'];
-// }
-// get apellidos() {
-//   return this.formRegistro.controls['nombres'];
-// }
-
-
-
-// get email() {
-//   return this.formRegistro.controls['email'];
-// }
-// get nombreUsuario() {
-//   return this.formRegistro.controls['nombres'];
-// }
-// get clave() {
-//   return this.formRegistro.controls['clave'];
-// }
+ngOnInit() {
+  this.authService.getUsuarios().subscribe({
+    next: (res) => {
+      this.usuarios = res;
+    },
+    error: (err) => {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Hubo un error al recuperar las opciones de usuario',
+      });
+    },
+  });
+}
 
 
 
-// submitDetails() {
-//   const postData = { ...this.formRegistro.value };
+llenarFormRegistro() {
+  this.formRegistro.patchValue({
+    id:this.usuario!.id as number,
+    nombres:this.usuario!.nombres,
+    apellidos:this.usuario!.apellidos,
+    email:this.usuario!.email,
+    foto:this.usuario!.foto,
+    rol:this.usuario!.rol,
+    nombreUsuario:this.usuario!.nombreUsuario,
+    clave:this.usuario!.clave,
+    estado:this.usuario!.estado, 
+  });
+}
+
+ngOnChanges() {
+  if (this.usuario) {
+    this.llenarFormRegistro();
+  } else {
+    this.formRegistro.reset();
+  }
+}
+enviar() {
+  if (!this.formRegistro.valid) {
+    this.formRegistro.markAllAsTouched();
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Debe ingresar todos los campos',
+    });
+    return;
+  }
   
-//   this.authService.registroUsuario(postData as IUsuario).subscribe(
-//     response => {
-//       console.log(response);
-//       this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Register successfully' });
-//       this.router.navigate(['inicio'])
-//     },
-//     (error) => {
-//       this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Something went wrong' });
-//     }
-//   )
-// }
+    const usuarioDto = this.formRegistro.getRawValue();
 
+    if (this.usuario) {
+      this.authService
+      .editar({
+        id: usuarioDto.id!,
+        nombres:usuarioDto!.nombres,
+        apellidos:usuarioDto!.apellidos,
+        email:usuarioDto!.email,
+        foto:usuarioDto!.foto,
+        rol:usuarioDto!.rol,
+        nombreUsuario:usuarioDto!.nombreUsuario,
+        clave:usuarioDto!.clave,
+        estado:usuarioDto!.estado
+      })
+      .subscribe({
+        next: (res) => {
+          this.cerrar();
+          this.refrescar.emit();
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Actividad editada con éxito!',
+          });
+        },
+        error: (err) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Ocurrió un error al editar la actividad',
+          });
+        },
+      });
+    }else{
+      this.authService
+          .crear({
+              id: usuarioDto.id!,
+              nombres:usuarioDto!.nombres,
+              apellidos:usuarioDto!.apellidos,
+              email:usuarioDto!.email,
+              foto:usuarioDto!.foto,
+              rol:usuarioDto!.rol,
+              nombreUsuario:usuarioDto!.nombreUsuario,
+              clave:usuarioDto!.clave,
+              estado:usuarioDto!.estado})
+            
+            .subscribe({
+              next: (res) => {
+                this.cerrar();
+                this.refrescar.emit();
+                this.messageService.add({
+                  severity: 'success',
+                  summary: 'Registro realizado con exito!',
+                });
+              },
+              error: (err) => {
+                this.messageService.add({
+                  severity: 'error',
+                  summary: 'Ocurrió un error al registrar',
+                });
+              },
+            });
+    } 
+    }
+    
+    // listUsuariosDrop() {
+    //   this.authService.getUsuarios().subscribe(
+    //     response => {
+    //       this.listUsuarios = response.map(usuario => usuario.rol);
+    //     }
+    //   );
+    // }
 
+    cerrar() {
+      this.visibleChange.emit(false);
+    }
 
-
-closeDialog() {
-  this.visible = false;
-  this.visibleChange.emit(this.visible);
-  // this.formRegistro.reset();
-}
-
-// }
-}
-
+    closeDialog(){
+      this.visible = false;
+      this.visibleChange.emit(this.visible);
+      this.formRegistro.reset();
+    }
+      // Subir los archivos
+    onUpload(event: any) {
+      const formData = new FormData();
+      formData.append('file', event.files[0]);
+    }
+  }

@@ -1,10 +1,57 @@
-<p-dialog header="Registro de Usuario" [(visible)]="visible" [modal]="true" [closable]="false" class=" w-6 ">
+<p-dialog 
+    header="{{ accion }} de Usuario" 
+    [(visible)]="visible" 
+    [modal]="true" 
+    [closable]="false" 
+    (onHide)="cerrar()"
+    class=" w-6 ">
     <ng-template 
     pTemplate="center">
-    <form [formGroup]="formRegistro"  class="pt-5">
+    <form 
+    [formGroup]="formRegistro"  
+    class="pt-5">
+
+    <div class="flex pb-5">
+        <p-floatLabel class="p-2">
+          <input 
+          id="nombres-usuario" 
+          pInputText 
+          type="text" 
+          formControlName="nombres" 
+          autocomplete="off" />
+          <label for="nombres-usuario">Nombre Completo</label>
+        </p-floatLabel>
+      </div>
+
+      <div class="flex pb-5">
+        <p-floatLabel class="p-2">
+          <input 
+          id="aplellidos-usuario" 
+          pInputText 
+          type="text" 
+          formControlName="aplellidos" 
+          autocomplete="off" />
+          <label for="aplellidos-usuario">Apellido Completo</label>
+        </p-floatLabel>
+      </div>
+  <p-dropdown 
+      formControlName="rol" 
+      [options]="roles"
+      optionLabel="rol"
+      placeholder="Rol" />
+      <p-dropdown 
+      formControlName="estado" 
+      [options]="estados"
+      optionLabel="estado"
+      placeholder="estado" />
     <div class="flex pb-5">
       <p-floatLabel class="p-2">
-        <input id="nombre-usuario" pInputText type="text" formControlName="nombreUsuario" autocomplete="off" />
+        <input 
+        id="nombre-usuario" 
+        pInputText 
+        type="text" 
+        formControlName="nombreUsuario" 
+        autocomplete="off" />
         <label for="nombre-usuario">Nombre de Usuario</label>
       </p-floatLabel>
     </div>
@@ -15,8 +62,32 @@
         <label for="clave">Contraseña:</label>
       </p-floatLabel>
     </div>
+    <div class="card flex justify-content-center">
+        <p-toast />
+        <p-fileUpload  
+            mode="basic" 
+            chooseLabel="Importar" 
+            chooseIcon="pi pi-upload"
+            name="demo[]" 
+            accept="image/*" 
+            maxFileSize="1000000" 
+            (onUpload)="onUpload($event)" />
+    </div>
+    <p-button 
+    label="Confirmar" 
+    [rounded]="true"  
+    type="submit"
+    (onClick)="enviar()"
+    class="p-2"></p-button>
 
-    <p-button label="Confirmar" [rounded]="true" styleClass="w-full" type="submit"></p-button>
+    <p-button 
+    [label]="accion"
+    [rounded]="true"  
+    class="p-2"
+    (onClick)="closeDialog()" 
+    type="submit"
+    ></p-button>
+
   </form>  
   </ng-template>
   

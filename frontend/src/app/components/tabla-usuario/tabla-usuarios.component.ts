@@ -8,6 +8,7 @@ import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { RegisterComponent } from '../register/register.component';
 import { UsuarioDto } from '../../dtos/usuario.dto';
+import { MessageService } from 'primeng/api';
 
 
 
@@ -25,39 +26,52 @@ import { UsuarioDto } from '../../dtos/usuario.dto';
 export class TablaUsuariosComponent implements OnInit {
 
   titulo: string = 'Usuarios'
-  listaUsuarios: UsuarioDto[] = [];
-  usuarioSeleccionado: UsuarioDto | undefined;
+  usuarios!: UsuarioDto[];
   newRegiterVisible: boolean = false;
-  // private _servicioUsuario = inject(AuthService);
-  // private _route = inject(Router);
-
+  accion!: string
+  usuarioSeleccionado!: UsuarioDto | null;
+ 
   constructor(private _servicioUsuario: AuthService,
-    private _route: Router) { }
+    private messageService: MessageService,
+    private _route: Router
+  
+  ) { }
 
   ngOnInit(): void {
-
-    this._servicioUsuario.getUsuarios().subscribe({
-      next: (data: UsuarioDto[]) => {
-        this.listaUsuarios = data;
-      },
-      error: (error: any) => {
-        console.log(error);
-      }
-    })
+    this.llenarTabla();
   }
+
+  llenarTabla() {
+  this._servicioUsuario.getUsuarios().subscribe({
+    next: (data: UsuarioDto[]) => {
+      this.usuarios = data;
+    },
+    error: (err) => {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Ocurrió un error al recuperar la lista de actividades',
+      });
+    },
+  })
+}
 
   eliminar(id: number): void {
     alert(id);
   }
 
-  editar(id: number): void {
-    this._route.navigate(['/usuarios', id]);
-  }
 
   informacion(item: UsuarioDto): void {
     this.usuarioSeleccionado = item;
   }
-  onNewRegister() {
+  
+  nuevo() {
+    this.usuarioSeleccionado = null;
+    this.accion = 'Crear';
     this.newRegiterVisible = true;
   }
+  editar() {
+    this.accion = 'Editar';
+    this.newRegiterVisible = true;
+  }
+
 }

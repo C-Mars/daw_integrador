@@ -3,9 +3,10 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "ng serve --configuration development",
+    "build": "ng build --configuration production ",
     "watch": "ng build --watch --configuration development",
+    "compodoc": "npx compodoc -p tsconfig.doc.json -s --port 8081",
     "test": "ng test",
     "serve:ssr:frontend": "node dist/frontend/server/server.mjs"
   },

@@ -26,7 +26,9 @@ import { NgIf } from "@angular/common";
     templateUrl: './login.component.html',
     styleUrl: './login.component.scss',
     selector: 'app-login',
-    imports: [ReactiveFormsModule, DialogModule,ToolbarModule,NgIf, InputTextModule,ButtonModule,FloatLabelModule,PasswordModule,ImageModule,ToastModule]
+    imports: [ReactiveFormsModule, 
+      DialogModule,
+      ToolbarModule,NgIf, InputTextModule,ButtonModule,FloatLabelModule,PasswordModule,ImageModule,ToastModule]
 })
 export class LoginComponent {
   
