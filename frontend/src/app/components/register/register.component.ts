@@ -21,6 +21,7 @@ import { EstadosUsuarioEnum } from '../../enums/estado-usuario.enum';
 import { RolesEnum } from '../../enums/roles.enum';
 import { UsuarioDto } from '../../dtos/usuario.dto';
 import { DropdownModule } from 'primeng/dropdown';
+import { UsuariosService } from '../../services/usuarios.service';
 
 
 
@@ -75,20 +76,15 @@ export class RegisterComponent {
     estado:  new FormControl< EstadosUsuarioEnum |null>(EstadosUsuarioEnum.ACTIVO)
 });
 
-
-
-
-
-
-
 constructor(
   private messageService: MessageService,
   private router: Router,
-  private authService: AuthService
+  private _authService: AuthService,
+  private _usuariosService : UsuariosService
 ) {}
 
 ngOnInit() {
-  this.authService.getUsuarios().subscribe({
+  this._usuariosService.getUsuarios().subscribe({
     next: (res) => {
       this.usuarios = res;
     },
@@ -137,7 +133,7 @@ enviar() {
     const usuarioDto = this.formRegistro.getRawValue();
 
     if (this.usuario) {
-      this.authService
+      this._usuariosService
       .editar({
         id: usuarioDto.id!,
         nombres:usuarioDto!.nombres,
@@ -166,7 +162,7 @@ enviar() {
         },
       });
     }else{
-      this.authService
+      this._usuariosService
           .crear({
               id: usuarioDto.id!,
               nombres:usuarioDto!.nombres,
@@ -198,7 +194,7 @@ enviar() {
     }
     
     // listUsuariosDrop() {
-    //   this.authService.getUsuarios().subscribe(
+    //   this._authService.getUsuarios().subscribe(
     //     response => {
     //       this.listUsuarios = response.map(usuario => usuario.rol);
     //     }
