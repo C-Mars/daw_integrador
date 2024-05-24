@@ -1,7 +1,7 @@
 import { EstadosUsuarioEnum } from "../enums/estado-usuario.enum"
 import { RolesEnum } from "../enums/roles.enum"
 
-export interface UsuarioDto{
+export interface EditarUsuarioDto{
         id:number
         nombres: string |null
         apellidos:string|null

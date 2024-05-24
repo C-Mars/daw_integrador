@@ -33,7 +33,16 @@
           <label for="aplellidos-usuario">Apellido Completo</label>
         </p-floatLabel>
       </div>
-      
+  <p-dropdown 
+      formControlName="rol" 
+      [options]="roles"
+      optionLabel="rol"
+      placeholder="Rol" />
+      <p-dropdown 
+      formControlName="estado" 
+      [options]="estados"
+      optionLabel="estado"
+      placeholder="estado" />
     <div class="flex pb-5">
       <p-floatLabel class="p-2">
         <input 
@@ -54,8 +63,7 @@
     </div>
     <div class="card flex justify-content-center">
         <p-toast />
-        <p-fileUpload 
-            
+        <p-fileUpload  
             mode="basic" 
             chooseLabel="Importar" 
             chooseIcon="pi pi-upload"

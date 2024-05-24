@@ -4,7 +4,7 @@ import {
   FormGroup,
   ReactiveFormsModule,
   Validators,
-  FormBuilder
+ 
 } from "@angular/forms";
 import { FileUploadModule, UploadEvent } from 'primeng/fileupload';
 import { InputTextModule } from 'primeng/inputtext';
@@ -20,6 +20,8 @@ import { DialogModule } from 'primeng/dialog';
 import { EstadosUsuarioEnum } from '../../enums/estado-usuario.enum';
 import { RolesEnum } from '../../enums/roles.enum';
 import { UsuarioDto } from '../../dtos/usuario.dto';
+import { DropdownModule } from 'primeng/dropdown';
+
 
 
 @Component({
@@ -34,12 +36,11 @@ import { UsuarioDto } from '../../dtos/usuario.dto';
     ButtonModule, 
     ToastModule,
     FloatLabelModule,
-    CardModule],
+    CardModule,
+    DropdownModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
-
-
 
 
 export class RegisterComponent {
@@ -48,7 +49,15 @@ export class RegisterComponent {
   @Output() visibleChange = new EventEmitter<boolean>();
   @Output() refrescar = new EventEmitter<boolean>();
   
- 
+  usuarios!: UsuarioDto[];
+
+  roles = Object.values(RolesEnum);
+
+  estados = Object.values(EstadosUsuarioEnum);
+
+  listaRol = []
+  
+
   formRegistro = new FormGroup ({
     id: new FormControl<number | null>(null),
     nombres: new FormControl<string | null>(null,[Validators.required]),
@@ -58,8 +67,14 @@ export class RegisterComponent {
     rol: new FormControl<RolesEnum| null>(null),
     nombreUsuario: new FormControl<string | null>(null,[Validators.required]),
     clave: new FormControl<string | null>(null,[Validators.required]),
-    estado:  new FormControl< EstadosUsuarioEnum |null>(null)
+    estado:  new FormControl< EstadosUsuarioEnum |null>(EstadosUsuarioEnum.ACTIVO)
 });
+
+
+
+
+
+
 
 constructor(
   private messageService: MessageService,
@@ -67,7 +82,24 @@ constructor(
   private authService: AuthService
 ) {}
 
-ngOnInit() {}
+ngOnInit() {
+  this.authService.getUsuarios().subscribe({
+    next: (res) => {
+      this.usuarios = res;
+    },
+    error: (err) => {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Hubo un error al recuperar las opciones de usuario',
+      });
+    },
+  });
+}
+
+onUpload(event: any) {
+  const formData = new FormData();
+  formData.append('file', event.files[0]);
+}
 
 llenarFormRegistro() {
   this.formRegistro.patchValue({
@@ -82,9 +114,7 @@ llenarFormRegistro() {
     estado:this.usuario!.estado, 
   });
 }
-onUpload(event: UploadEvent) {
-  this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded with Basic Mode' });
-}
+
 ngOnChanges() {
   if (this.usuario) {
     this.llenarFormRegistro();
@@ -134,7 +164,14 @@ enviar() {
         });
     } 
     }
-
+    
+    // listUsuariosDrop() {
+    //   this.authService.getUsuarios().subscribe(
+    //     response => {
+    //       this.listUsuarios = response.map(usuario => usuario.rol);
+    //     }
+    //   );
+    // }
 
     cerrar() {
       this.visibleChange.emit(false);

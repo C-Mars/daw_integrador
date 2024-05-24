@@ -13,7 +13,6 @@ import { environment } from '../environments/environment';
 })
 export class AuthService {
 
-  private apiURL = `http://localhost:3000/api`
 
   constructor(
     private _client: HttpClient,
@@ -22,15 +21,15 @@ export class AuthService {
   }
 
   login(nombreUsuario: string, clave: string): Observable<{ token: string }> {
-    return this._client.post<{ token: string }>(`${this.apiURL}/auth/login`, {
+    return this._client.post<{ token: string }>(environment.apiUrl +'/auth/login', {
       nombreUsuario,
       clave,
     });
   }
 
-//  registroUsuario(detalleUsuario: UsuarioDto) {
-//     return this._client.post(`${this.apiURL}/auth/registro`, detalleUsuario);
-//   }
+  //  registroUsuario(detalleUsuario: UsuarioDto) {
+  //     return this._client.post(environment.apiUrl +'/auth/registro', detalleUsuario);
+  //   }
   setSession(token: string) {
     sessionStorage.setItem('token', token);
   }
@@ -57,21 +56,20 @@ export class AuthService {
 
     return userRole === rol;
   }
+
   getUsuarios(): Observable<UsuarioDto[]> {
-    if (!this.hasRole(RolesEnum.ADMINISTRADOR)){
+    if (!this.hasRole(RolesEnum.ADMINISTRADOR)) {
       throw new Error('El usuario no esta autorizado para ver esta sección')
     }
-    return this._client.get<UsuarioDto[]>(`${this.apiURL}/usuarios`);
+    const usuarios = this._client.get<UsuarioDto[]>(environment.apiUrl+'/usuarios');
+    return usuarios
   }
+ 
 
-  getUsuario(id: number): Observable<UsuarioDto> {
-    
-    
-    return this._client.get<UsuarioDto>(`${this.apiURL}/usuarios/${id}`);
-  }
-  
+
+
   isLogged(): boolean {
-    return  sessionStorage.getItem('token') ? true : false;
+    return sessionStorage.getItem('token') ? true : false;
   }
 
   crear(usuarioDto: UsuarioDto): Observable<UsuarioDto> {
@@ -79,5 +77,12 @@ export class AuthService {
       environment?.apiUrl + '/usuarios',
       usuarioDto
     );
-}
+  }
+
+  uploadFile(file: File) {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    return this._client.post(environment.apiUrl +'/auth/registro', formData);
+  }
 }

@@ -29,8 +29,7 @@ export class TablaUsuariosComponent implements OnInit {
   usuarioSeleccionado: UsuarioDto | undefined;
   newRegiterVisible: boolean = false;
   editRegiterVisible: boolean = false;
-  // private _servicioUsuario = inject(AuthService);
-  // private _route = inject(Router);
+
 
   constructor(private _servicioUsuario: AuthService,
     private _route: Router
