@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { RolesEnum } from '../enums/roles.enum';
 import { UsuarioDto } from '../dtos/usuario.dto';
 import { environment } from '../environments/environment';
+import { EditarUsuarioDto } from '../dtos/editar-usuario.dto';
 
 
 @Injectable({
@@ -75,6 +76,12 @@ export class AuthService {
   crear(usuarioDto: UsuarioDto): Observable<UsuarioDto> {
     return this._client.post<UsuarioDto>(
       environment?.apiUrl + '/usuarios',
+      usuarioDto
+    );
+  }
+  editar(usuarioDto: EditarUsuarioDto) {
+    return this._client.put(
+      environment?.apiUrl + '/usuarios/' +  usuarioDto.id,
       usuarioDto
     );
   }

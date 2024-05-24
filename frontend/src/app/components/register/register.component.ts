@@ -45,8 +45,13 @@ import { DropdownModule } from 'primeng/dropdown';
 
 export class RegisterComponent {
   @Input() visible: boolean = false; 
+
   @Input({ required: false }) usuario!: UsuarioDto | null;
+
+  @Input({ required: true }) accion!: string;
+
   @Output() visibleChange = new EventEmitter<boolean>();
+
   @Output() refrescar = new EventEmitter<boolean>();
   
   usuarios!: UsuarioDto[];
@@ -55,7 +60,7 @@ export class RegisterComponent {
 
   estados = Object.values(EstadosUsuarioEnum);
 
-  listaRol = []
+  
   
 
   formRegistro = new FormGroup ({
@@ -63,7 +68,7 @@ export class RegisterComponent {
     nombres: new FormControl<string | null>(null,[Validators.required]),
     apellidos:new FormControl<string | null>(null,[Validators.required]),
     email:new FormControl<string | null>(null,[Validators.required]),
-    foto: new FormControl<string | null>(null,[Validators.required]),
+    foto: new FormControl<string | null>(null),
     rol: new FormControl<RolesEnum| null>(null),
     nombreUsuario: new FormControl<string | null>(null,[Validators.required]),
     clave: new FormControl<string | null>(null,[Validators.required]),
@@ -96,10 +101,7 @@ ngOnInit() {
   });
 }
 
-onUpload(event: any) {
-  const formData = new FormData();
-  formData.append('file', event.files[0]);
-}
+
 
 llenarFormRegistro() {
   this.formRegistro.patchValue({
@@ -131,37 +133,67 @@ enviar() {
     });
     return;
   }
+  
     const usuarioDto = this.formRegistro.getRawValue();
 
     if (this.usuario) {
       this.authService
-        .crear({
-          id: usuarioDto.id!,
-          nombres:usuarioDto!.nombres,
-          apellidos:usuarioDto!.apellidos,
-          email:usuarioDto!.email,
-          foto:usuarioDto!.foto,
-          rol:usuarioDto!.rol,
-          nombreUsuario:usuarioDto!.nombreUsuario,
-          clave:usuarioDto!.clave,
-          estado:usuarioDto!.estado})
-         
-        .subscribe({
-          next: (res) => {
-            this.cerrar();
-            this.refrescar.emit();
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Registro realizado con exito!',
+      .editar({
+        id: usuarioDto.id!,
+        nombres:usuarioDto!.nombres,
+        apellidos:usuarioDto!.apellidos,
+        email:usuarioDto!.email,
+        foto:usuarioDto!.foto,
+        rol:usuarioDto!.rol,
+        nombreUsuario:usuarioDto!.nombreUsuario,
+        clave:usuarioDto!.clave,
+        estado:usuarioDto!.estado
+      })
+      .subscribe({
+        next: (res) => {
+          this.cerrar();
+          this.refrescar.emit();
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Actividad editada con éxito!',
+          });
+        },
+        error: (err) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Ocurrió un error al editar la actividad',
+          });
+        },
+      });
+    }else{
+      this.authService
+          .crear({
+              id: usuarioDto.id!,
+              nombres:usuarioDto!.nombres,
+              apellidos:usuarioDto!.apellidos,
+              email:usuarioDto!.email,
+              foto:usuarioDto!.foto,
+              rol:usuarioDto!.rol,
+              nombreUsuario:usuarioDto!.nombreUsuario,
+              clave:usuarioDto!.clave,
+              estado:usuarioDto!.estado})
+            
+            .subscribe({
+              next: (res) => {
+                this.cerrar();
+                this.refrescar.emit();
+                this.messageService.add({
+                  severity: 'success',
+                  summary: 'Registro realizado con exito!',
+                });
+              },
+              error: (err) => {
+                this.messageService.add({
+                  severity: 'error',
+                  summary: 'Ocurrió un error al registrar',
+                });
+              },
             });
-          },
-          error: (err) => {
-            this.messageService.add({
-              severity: 'error',
-              summary: 'Ocurrió un error al registrar',
-            });
-          },
-        });
     } 
     }
     
@@ -182,5 +214,9 @@ enviar() {
       this.visibleChange.emit(this.visible);
       this.formRegistro.reset();
     }
-  
+      // Subir los archivos
+    onUpload(event: any) {
+      const formData = new FormData();
+      formData.append('file', event.files[0]);
+    }
   }

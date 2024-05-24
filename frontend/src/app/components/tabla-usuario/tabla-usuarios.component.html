@@ -3,7 +3,7 @@
     <ng-template pTemplate="content">
         <div class="mb-4  flex  flex-wrap md:align-self-auto align-self-end flex align-items-end justify-content-end">
             <p-button
-                class="accion "
+                class="accion"
                 id="añadir"
                 label="Añadir"
                 icon="pi pi-plus"
@@ -12,7 +12,7 @@
                 (onClick)="nuevo()"
             ></p-button>
         </div>
-        <p-table [value]="listaUsuarios" class="flex flex-wrap w-min md:w-max">
+        <p-table [value]="usuarios" class="flex flex-wrap w-min md:w-max">
             <ng-template pTemplate="header">
                 <tr>
                     <th>Nombres</th>
@@ -30,7 +30,7 @@
                     <td>{{ usuario.apellidos }}</td>
                     <td>
                         <div class="inline-block vertical-align-middle">
-                            <!-- <img alt="foto usuario" [src]="'src/assets/'+ usuario.foto" width="24" class="vertical-align-middle" /> -->
+                            <img alt="foto usuario" [src]="'src/assets/'+ usuario.foto" width="24" class="vertical-align-middle" />
                             <span class="ml-1 mt-1">{{ usuario.nombre }}</span>
                         </div>
                     </td>
@@ -39,19 +39,21 @@
                     <td>{{ usuario.estado }}</td>
                     <td class="flex flex-wrap">
                         <p-button 
+                            class="accion"
                             pRipple 
                             icon="pi pi-pen-to-square" 
                             class="mr-2" 
                             [rounded]="true" 
                             severity="primary"
-                            (onClick)="editar(usuario.id)"
+                            (onClick)="!this.usuarioSeleccionado"
                         ></p-button>
                         <p-button 
+                            class="accion"
                             pRipple 
                             icon="pi pi-trash" 
                             severity="info"
                             [rounded]="true"
-                            (onClick)="eliminar(usuario.id)"
+                            [disabled]="!this.usuarioSeleccionado"
                         ></p-button>
                     </td>
                 </tr>
@@ -59,4 +61,8 @@
         </p-table>
     </ng-template>
 </p-card>
-<app-register [visible]="newRegiterVisible"></app-register>
+<app-register 
+[(visible)]="newRegiterVisible"
+[accion]="accion"
+[usuario]="usuarioSeleccionado"
+(refrescar)="llenarTabla()" ></app-register>
