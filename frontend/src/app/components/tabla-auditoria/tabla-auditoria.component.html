@@ -1,6 +1,42 @@
 
-<p-card header="{{titulo}}" >
-    <p-table  class="flex flex-warp w-min md:w-max ">
-          
-    </p-table>
+
+<p-card header="{{ titulo }}">
+    <ng-template pTemplate="content">
+        <p-table class="flex flex-wrap w-min md:w-max">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>ID</th>
+                    <th>ID-Actividad</th>
+                    <th>ID-Cliente</th>
+                    <th>Descripción</th>
+                    <th>Encargado</th>
+                    <th>Prioridad</th>
+                    <th>Administrador</th>
+                    <th>Última modificación</th>
+                    <th>Fecha de creación</th>
+                    <th>Estado</th>
+                    <th>Operación</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-auditoria>
+                <tr>
+                    <td>{{ auditoria.idActividad }}</td>
+                    <td>{{ auditoria.idCliente }}</td>
+                    <td>{{ auditoria.descripcion }}</td>
+                    <td>{{ auditoria.idUsuarioActual }}</td>
+                    <td>{{ auditoria.prioridad }}</td>
+                    <td>{{ auditoria.idUsuarioModificacion }}</td>
+                    <td>{{ auditoria.fechaModificacion }}</td>
+                    <td>{{ auditoria.fechaInicio }}</td>
+                    <td>{{ auditoria.estado }}</td>
+                    <td>{{ auditoria.operacion }}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </ng-template>
 </p-card>
+<!--<app-register 
+[(visible)]="newRegiterVisible"
+[accion]="accion"
+[auditoria]="usuarioSeleccionado"
+(refrescar)="llenarTabla()" ></app-register>-->

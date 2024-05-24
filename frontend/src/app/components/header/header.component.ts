@@ -41,16 +41,11 @@ export class HeaderComponent {
   }
    
   isLoggedView(): boolean {
-<<<<<<< HEAD
-    const token = this._authService.isLoggedIn();
-    return token
-=======
     if (isPlatformBrowser(this.platformId)){
       const token = this._authService.isLogged();
       return token;
     }
     return false;
->>>>>>> e06e76576d264a58787025ca90ac2f8a3e5dc3e5
   }
   
   
