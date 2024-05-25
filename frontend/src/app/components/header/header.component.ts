@@ -25,16 +25,15 @@ export class HeaderComponent {
   private _router = inject(Router)
   private readonly platformId = inject(PLATFORM_ID);
 
-  constructor(private cd: ChangeDetectorRef)
+  constructor(private cd: ChangeDetectorRef,
+  )
    { }
 
   @Output() loginClicked = new EventEmitter<void>();
 
   @Output() usersClicked = new EventEmitter<void>();
 
-  onOption(menuOption: string) {
-    this.menuOption = menuOption
-  }
+
 
   onLoginClick() {
     this.loginClicked.emit();
@@ -60,5 +59,8 @@ export class HeaderComponent {
   
   onUsersClick() {
     this.usersClicked.emit();
+  }
+  onHomeClick() {
+    this._router.navigateByUrl('/inicio-admin');
   }
 }

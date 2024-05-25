@@ -8,16 +8,27 @@ import { RegisterComponent } from '../register/register.component';
 import { UsuarioDto } from '../../dtos/usuario.dto';
 import { MessageService } from 'primeng/api';
 import { UsuariosService } from '../../services/usuarios.service';
+import { EditarUsarioComponent } from '../editar-usario/editar-usario.component';
+import { EliminarUsuarioComponent } from '../eliminar-usuario/eliminar-usuario.component';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 
 
 @Component({
   selector: 'app-tabla-usuario',
   standalone: true,
-  imports: [TableModule,CardModule,
+  imports: [TableModule,
+    CardModule,
     CommonModule,
     ButtonModule,
-    NgIf,RegisterComponent
+    NgIf,
+    RegisterComponent,
+    EditarUsarioComponent,
+    EliminarUsuarioComponent,
+    ToastModule,
+     ConfirmDialogModule,
+     EliminarUsuarioComponent
   ],
   templateUrl: './tabla-usuarios.component.html',
   styleUrl: './tabla-usuarios.component.scss'
@@ -27,6 +38,8 @@ export class TablaUsuariosComponent implements OnInit {
   titulo: string = 'Usuarios'
   usuarios!: UsuarioDto[];
   newRegiterVisible: boolean = false;
+  newEditVisible: boolean = false;
+  newDeleteVisible: boolean = false;
   accion!: string
   usuarioSeleccionado!: UsuarioDto | null;
  
@@ -55,14 +68,9 @@ export class TablaUsuariosComponent implements OnInit {
   })
 }
 
-  eliminar(id: number): void {
-    alert(id);
-  }
+ 
 
 
-  informacion(item: UsuarioDto): void {
-    this.usuarioSeleccionado = item;
-  }
   
   nuevo() {
     this.usuarioSeleccionado = null;
@@ -71,12 +79,22 @@ export class TablaUsuariosComponent implements OnInit {
   }
   editar() {
     this.accion = 'Editar';
-    this.newRegiterVisible = true;
+    this.newEditVisible = true;
   }
 
-  // eliminar() {
-  //   this.accion = 'Eliminar';
-  //   this.newRegiterVisible = true;
-  // }
+ 
+
+informacion(item: UsuarioDto): void {
+    this.usuarioSeleccionado = item;
+}
+
+eliminar() {
+    if (!this.usuarioSeleccionado || !this.usuarioSeleccionado.id) {
+        console.error('No se puede eliminar el usuario seleccionado:', this.usuarioSeleccionado);
+        return;
+    }
+   
+    this.newDeleteVisible = true;
+}
 
 }

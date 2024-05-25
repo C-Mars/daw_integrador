@@ -6,9 +6,10 @@ export interface EditarUsuarioDto{
     nombres: string,
     apellidos:string,
     email:string,
-    foto: string,
+    foto?: string,
     rol: RolesEnum,
-    nombreUsuario: string,
-    clave:string,
     estado:EstadosUsuarioEnum
+    nombreUsuario?: string,
+    clave?:string,
+    
     }

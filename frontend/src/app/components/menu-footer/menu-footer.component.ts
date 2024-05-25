@@ -3,6 +3,7 @@ import { SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
 import { Subject } from 'rxjs';
 import { SharedEventService } from '../../services/shared-event.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-menu-footer',
   standalone: true,
@@ -13,22 +14,25 @@ import { SharedEventService } from '../../services/shared-event.service';
 export class MenuFooterComponent {
   @Input({ required: true }) visible!: boolean;
   
-  constructor(private sharedEventService: SharedEventService) {}
+  constructor(
+    private _router :Router
+  ) {}
 
+  
   onUsersClick() {
-    this.sharedEventService.emitUsersClick();
+    this._router.navigateByUrl('/usuarios');
   }
 
   onCliClick() {
-    this.sharedEventService.emitCliClick();
+    this._router.navigateByUrl('/clientes');
   }
 
   onActClick() {
-    this.sharedEventService.emitActClick();
+    this._router.navigateByUrl('/actividades');
   }
 
   onAudClick() {
-    this.sharedEventService.emitAudClick();
+    this._router.navigateByUrl('/auditoria');
   }
 }
   

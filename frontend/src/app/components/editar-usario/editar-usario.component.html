@@ -4,7 +4,7 @@
   (onHide)="cerrar()"
   [modal]="true"
 >
-  <form [formGroup]="formRegistro">
+  <form [formGroup]="formEditarUsuario">
     <div class="input-container">
       <p-floatLabel class="p-2">
         <input 
@@ -19,12 +19,12 @@
     <div class="input-container">
       <p-floatLabel class="p-2">
         <input 
-        id="apellidos" 
+        id="email" 
         pInputText 
         type="text" 
-        formControlName="apellidos" 
+        formControlName="email" 
         autocomplete="off" />
-        <label for="apellidos">Apellido Completo</label>
+        <label for="email">Apellido Completo</label>
       </p-floatLabel>
     </div>
     <div class="input-container">
@@ -38,7 +38,7 @@
         <label for="email">Email</label>
       </p-floatLabel>
     </div>
-    <div class="input-container">
+    <!-- <div class="input-container">
       <p-floatLabel class="p-2">
         <input 
         id="nombreUsuario" 
@@ -59,7 +59,7 @@
         autocomplete="off" />
         <label for="clave">Contraseña:</label>
       </p-floatLabel>
-    </div>
+    </div> -->
     <div class="input-container">
       <label for="rol">Rol: </label>
       <p-dropdown
@@ -70,17 +70,19 @@
         formControlName="rol"
       ></p-dropdown>
     </div>
-    <div class="input-container">
-      <label for="rol">Estado: </label>
-      <p-dropdown
-        id="estado"
-        appendTo="body"
-        placeholder="Seleccionar"
-        [options]="estados"
-        formControlName="estado"
-      ></p-dropdown>
-    </div>
-    <div class="input-container">
+    
+      <div class="input-container">
+        <label for="estado">Estado:</label>
+        <p-dropdown
+          id="estado"
+          placeholder="Seleccionar"
+          appendTo="body"
+          [options]="estados"
+          formControlName="estado"
+        ></p-dropdown>
+      </div>
+  
+    <!-- <div class="input-container">
       <p-fileUpload  
         mode="basic" 
         chooseIcon="pi pi-upload"
@@ -88,7 +90,7 @@
         accept="image/*" 
         maxFileSize="1000000" 
         (onUpload)="onUpload($event)" />
-    </div>
+    </div> -->
     <p-button 
     [rounded]="true"
     [label]="accion" 
@@ -96,4 +98,3 @@
   </form>
 </p-dialog>
 <p-toast></p-toast>
-

@@ -6,7 +6,7 @@ export interface UsuarioDto{
         nombres: string|null,
         apellidos:string|null,
         email:string|null,
-        foto: string|null,
+        foto?: string|null,
         rol: RolesEnum|null,
         nombreUsuario: string|null,
         clave:string|null,

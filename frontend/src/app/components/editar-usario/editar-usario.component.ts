@@ -22,29 +22,28 @@ import { UsuarioDto } from '../../dtos/usuario.dto';
 import { DropdownModule } from 'primeng/dropdown';
 import { UsuariosService } from '../../services/usuarios.service';
 import { EditarUsuarioDto } from '../../dtos/editar-usuario.dto';
+import { NgIf } from '@angular/common';
 
 
 
 @Component({
-  selector: 'app-register',
+  selector: 'app-editar-usario',
   standalone: true,
-  imports: [
-    DialogModule,
-    ReactiveFormsModule,
+  imports: [ToastModule,
     FileUploadModule,
     InputTextModule,
     PasswordModule,
-    ButtonModule, 
-    ToastModule,
+    ButtonModule,
     FloatLabelModule,
-    CardModule,
-    DropdownModule],
-  templateUrl: './register.component.html',
-  styleUrl: './register.component.scss'
+    DialogModule,
+    DropdownModule,
+    ReactiveFormsModule,
+  NgIf],
+  templateUrl: './editar-usario.component.html',
+  styleUrl: './editar-usario.component.scss'
 })
-
-
-export class RegisterComponent {
+export class EditarUsarioComponent {
+  
   @Input({ required: true }) visible!: boolean;
 
   @Input({ required: false }) usuario!: UsuarioDto| null;
@@ -64,7 +63,7 @@ export class RegisterComponent {
   
   
 
-  formRegistro = new FormGroup ({
+  formEditarUsuario = new FormGroup ({
     id: new FormControl<number | null>(null),
     nombres: new FormControl<string | null>(null,[Validators.required]),
     apellidos:new FormControl<string | null>(null,[Validators.required]),
@@ -73,14 +72,8 @@ export class RegisterComponent {
     rol: new FormControl<RolesEnum| null>(null),
     nombreUsuario: new FormControl<string | null>(null,[Validators.required]),
     clave: new FormControl<string | null>(null,[Validators.required]),
-    estado:  new FormControl< EstadosUsuarioEnum |null>(EstadosUsuarioEnum.ACTIVO)
+    estado: new FormControl<EstadosUsuarioEnum | null>(null),
 });
-
-
-
-
-
-
 
 constructor(
   private messageService: MessageService,
@@ -104,8 +97,8 @@ ngOnInit() {
 
 
 
-llenarFormRegistro() {
-  this.formRegistro.patchValue({
+llenarTabla() {
+  this.formEditarUsuario.patchValue({
     id:this.usuario!.id as number,
     nombres:this.usuario!.nombres,
     apellidos:this.usuario!.apellidos,
@@ -120,15 +113,15 @@ llenarFormRegistro() {
 
 ngOnChanges() {
   if (this.usuario) {
-    this.llenarFormRegistro();
+    this.llenarTabla();
   } else {
-    this.formRegistro.reset();
+    this.formEditarUsuario.reset();
   }
 }
 
 enviar() {
-  if (!this.formRegistro.valid) {
-    this.formRegistro.markAllAsTouched();
+  if (!this.formEditarUsuario.valid) {
+    this.formEditarUsuario.markAllAsTouched();
     this.messageService.add({
       severity: 'error',
       summary: 'Debe ingresar todos los campos',
@@ -136,39 +129,50 @@ enviar() {
     return;
   }
   
-    const usuarioDto = this.formRegistro.getRawValue();
+    const usuarioDto = this.formEditarUsuario.getRawValue();
 
     if (this.usuario) {
-      const crearUsuarioDto: UsuarioDto = {
+      const editarUsuarioDto: EditarUsuarioDto = {
         id: usuarioDto.id!,
         nombres: usuarioDto.nombres!,
         apellidos: usuarioDto.apellidos!,
         email: usuarioDto.email!,
-        foto: usuarioDto.foto!,
         rol: usuarioDto.rol!,
-        nombreUsuario: usuarioDto.nombreUsuario!,
-        clave: usuarioDto.clave!,
         estado: usuarioDto.estado!,
       };
+      
+      if (usuarioDto.foto) {
+        editarUsuarioDto.foto! = usuarioDto.foto;
+      }
+
+      if (usuarioDto.nombreUsuario) {
+        editarUsuarioDto.nombreUsuario! = usuarioDto.nombreUsuario
+      }
+      if (usuarioDto.clave) {
+        editarUsuarioDto.clave! = usuarioDto.clave
+      }
+
   
-      this._usuariosService.crear(crearUsuarioDto).subscribe({
+  
+      this._usuariosService.editar(editarUsuarioDto).subscribe({
         next: (res) => {
           this.cerrar();
           this.refrescar.emit(true);
           this.messageService.add({
             severity: 'success',
-            summary: 'Usuario registrado con éxito!',
+            summary: 'Usuario editado con éxito!',
           });
         },
         error: (err) => {
           this.messageService.add({
             severity: 'error',
-            summary: 'Ocurrió un error al registrar el usuario',
+            summary: 'Ocurrió un error al editar el usuario',
           });
         },
       });
+    }
   }
-}
+    
     
     // listUsuariosDrop() {
     //   this._usuariosService.getUsuarios().subscribe(
@@ -185,11 +189,11 @@ enviar() {
     closeDialog(){
       this.visible = false;
       this.visibleChange.emit(this.visible);
-      this.formRegistro.reset();
+      this.formEditarUsuario.reset();
     }
       // Subir los archivos
     onUpload(event: any) {
       const formData = new FormData();
       formData.append('file', event.files[0]);
     }
-  }
+}

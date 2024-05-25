@@ -34,7 +34,7 @@ export class UsuariosService {
       if (!this.hasRole(RolesEnum.ADMINISTRADOR)) {
         throw new Error('El usuario no esta autorizado para ver esta sección')
       }
-      const usuarios = this._client.get<UsuarioDto[]>(environment.apiUrl+'/usuarios');
+      const usuarios = this._client.get<UsuarioDto[]>(environment.apiUrl + '/usuarios');
       return usuarios
     }
 
@@ -46,23 +46,29 @@ export class UsuariosService {
     }
     
     editar(usuarioDto: EditarUsuarioDto) {
-      return this._client.put(
-        environment?.apiUrl + '/usuarios/' +  usuarioDto.id,
-        usuarioDto
-      );
+      if (!this.hasRole(RolesEnum.ADMINISTRADOR)) {
+        throw new Error('El usuario no esta autorizado para ver esta sección')
+      }
+      const usuario =this._client.put(environment?.apiUrl + '/usuarios/' +  usuarioDto.id,
+        usuarioDto);
+      return  usuario
+    
     }
 
-    // eliminar(usuarioDto: EditarUsuarioDto) {
-    //   return this._client.put(
-    //     environment?.apiUrl + '/usuarios/' +  usuarioDto.id,
-    //     usuarioDto
-    //   );
-    // }
-    uploadFile(file: File) {
-      const formData = new FormData();
-      formData.append('file', file);
-  
-      return this._client.post(environment.apiUrl +'/auth/registro', formData);
+    eliminar(usuarioDto: UsuarioDto) {
+      if (!this.hasRole(RolesEnum.ADMINISTRADOR)) {
+        throw new Error('El usuario no esta autorizado para ver esta sección')
+      }
+      const usuariodelete =this._client.delete(
+        environment?.apiUrl + '/usuarios/' +  usuarioDto.id);
+      return  usuariodelete
+      
     }
+    // uploadFile(file: File) {
+    //   const formData = new FormData();
+    //   formData.append('file', file);
+  
+    //   return this._client.post(environment.apiUrl +'/auth/registro', formData);
+    // }
    
 }
