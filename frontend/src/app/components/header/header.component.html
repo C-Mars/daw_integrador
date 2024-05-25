@@ -2,7 +2,7 @@
   <div class="p-toolbar-group-start">
     <img src="path-to-your-logo.png" alt="Logo" class="logo">
     <button pButton icon="pi pi-home" label="Inicio" [rounded]="true" routerLink="inicio" *ngIf='isLoggedView()'
-      [ngClass]="{active: menuOption == 'inicio'}" (click)="onOption('inicio')"></button>
+      [ngClass]="{active: menuOption == 'inicio'}" (click)="onHomeClick()"></button>
   </div>
   <div class="p-toolbar-group-center">
     <p-button pRipple icon="pi pi-briefcase" class="mr-2" [rounded]="true" severity="primary" (click)="onMenuFooter()"

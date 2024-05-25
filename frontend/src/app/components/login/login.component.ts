@@ -69,7 +69,7 @@ export class LoginComponent {
             next: (res) => {
               this.authService.setSession(res.token);
               if (this.authService.hasRole(RolesEnum.ADMINISTRADOR)) {
-                this.router.navigateByUrl('admin');
+                this.router.navigateByUrl('inicio-admin');
                 
               } else {
                 this.router.navigateByUrl('');

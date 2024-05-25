@@ -12,7 +12,9 @@
                 (onClick)="nuevo()"
             ></p-button>
         </div>
-        <p-table [value]="usuarios" class="flex flex-wrap w-min md:w-max">
+        <p-table 
+        [value]="usuarios" 
+        class="flex flex-wrap w-min md:w-max">
             <ng-template pTemplate="header">
                 <tr>
                     <th>Nombres</th>
@@ -45,15 +47,18 @@
                             class="mr-2" 
                             [rounded]="true" 
                             severity="primary"
-                            (onClick)="!this.usuarioSeleccionado"
+                            (onClick)="editar()"
                         ></p-button>
+                      
                         <p-button 
+                        
                             class="accion"
                             pRipple 
+                            class="mr-2" 
                             icon="pi pi-trash" 
                             severity="info"
                             [rounded]="true"
-                            [disabled]="!this.usuarioSeleccionado"
+                            (click)="eliminar()"
                         ></p-button>
                     </td>
                 </tr>
@@ -61,8 +66,27 @@
         </p-table>
     </ng-template>
 </p-card>
+
 <app-register 
 [(visible)]="newRegiterVisible"
+[usuario]="usuarioSeleccionado"
+[accion]="accion"
+(refrescar)="llenarTabla()" ></app-register>
+
+<app-editar-usario
+[(visible)]="newEditVisible"
 [accion]="accion"
 [usuario]="usuarioSeleccionado"
-(refrescar)="llenarTabla()" ></app-register>
+(refrescar)="llenarTabla()"
+></app-editar-usario>
+<!-- 
+<ng-container *ngIf="newDeleteVisible">
+    <app-eliminar-usuario
+    [(visible)]="newDeleteVisible"
+    [accion]="accion"
+    [usuario]="usuarioSeleccionado"
+    (refrescar)="llenarTabla()"
+    ></app-eliminar-usuario>
+</ng-container>
+ -->
+
