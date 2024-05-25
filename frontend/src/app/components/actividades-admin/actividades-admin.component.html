@@ -1,14 +1,21 @@
-<app-base>
-    <app-menu-lateral-admin></app-menu-lateral-admin>
-
-<app-base >
 
 <app-base>
-
     <div class="flex flex-row flex-wrap">
-        <app-tabla-usuario  *ngIf="tablaUsuVisible" class=" flex flex-warp w-min md:w-max m-4 "></app-tabla-usuario>
-        <app-tabla-clientes *ngIf="tablaCliVisible"  class=" flex flex-warp w-min md:w-max m-4 "></app-tabla-clientes>
-        <app-tabla-actividades *ngIf="tablaActVisible"  class=" flex flex-warp w-min md:w-max m-4 "></app-tabla-actividades>
-        <app-tabla-auditoria *ngIf="tablaAudVisible"  class=" flex flex-warp w-min md:w-max m-4 "></app-tabla-auditoria>
+        <app-tabla-usuario  
+        *ngIf="tablaUsuVisible"
+        class=" flex flex-warp w-min md:w-max m-4 "
+        ></app-tabla-usuario>
+        <app-tabla-clientes 
+        *ngIf="tablaCliVisible"  
+        class=" flex flex-warp w-min md:w-max m-4 "
+        ></app-tabla-clientes>
+        <app-tabla-actividades 
+        *ngIf="tablaActVisible"  
+        class=" flex flex-warp w-min md:w-max m-4 "
+        ></app-tabla-actividades>
+        <app-tabla-auditoria 
+        *ngIf="tablaAudVisible"  
+        class=" flex flex-warp w-min md:w-max m-4 "
+        ></app-tabla-auditoria>
     </div>
 </app-base>

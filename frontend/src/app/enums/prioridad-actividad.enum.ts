@@ -1,4 +1,4 @@
-export enum PrioridadActividad{
+export enum PrioridadActividadEnum{
     ALTA = 'Alta',
     MEDIA = 'Media',
     BAJA = 'Baja'

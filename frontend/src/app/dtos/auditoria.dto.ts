@@ -1,19 +1,19 @@
 import { UsuarioDto } from "./usuario.dto";
-import { EstadoActividadEnum } from "../enums/estado-actividad.enum";
 import { OperacioAuditoriaEnum } from "../enums/operacion-auditoria.enum";
-import { PrioridadActividad } from "../enums/prioridad-actividad.enum";
-
+import { PrioridadActividadEnum } from "../enums/prioridad-actividad.enum";
+import { EstadoActividadEnum } from "../enums/estado-actividad.enum";
+import { ActividadDto } from "./actividad.dto";
 
 export interface AuditoriaDto{
     id: number;
-    idActividad: number;
+    idActividad: ActividadDto|null;
     idCliente: number;
-    descripcion: string;
-    idUsuarioActual: UsuarioDto;
-    prioridad: PrioridadActividad;
-    idUsuarioModificacion: UsuarioDto;
+    descripcion: string|null;
+    idUsuarioActual: UsuarioDto|null;
+    prioridad: PrioridadActividadEnum|null;
+    idUsuarioModificacion: UsuarioDto|null;
     fechaModificacion: Date;
     fechaInicio: Date;
-    estado: EstadoActividadEnum;
-    operacion: OperacioAuditoriaEnum;
+    estado: EstadoActividadEnum|null;
+    operacion: OperacioAuditoriaEnum|null;
 }

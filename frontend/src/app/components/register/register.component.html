@@ -7,10 +7,8 @@
     class=" w-6 ">
     <ng-template 
     pTemplate="center">
-    <form 
-    [formGroup]="formRegistro"  
+    <form [formGroup]="formRegistro"  
     class="pt-5">
-
     <div class="flex pb-5">
         <p-floatLabel class="p-2">
           <input 
@@ -75,14 +73,13 @@
     </div>
     <p-button 
     [label]="accion"
-    label="Confirmar" 
     [rounded]="true"  
     type="submit"
     (onClick)="enviar()"
     class="p-2"></p-button>
 
     <p-button 
-    label="Cancelar"
+    label="Cancelar" 
     [rounded]="true"  
     class="p-2"
     (onClick)="closeDialog()" 

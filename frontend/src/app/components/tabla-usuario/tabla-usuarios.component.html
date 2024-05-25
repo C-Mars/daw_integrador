@@ -12,11 +12,7 @@
                 (onClick)="nuevo()"
             ></p-button>
         </div>
-        <p-table 
-        [value]="usuarios" 
-        (onRowSelect)="seleccionar()"
-        [selectionMode]="'single'"
-        class="flex flex-wrap w-min md:w-max">
+        <p-table [value]="usuarios" class="flex flex-wrap w-min md:w-max">
             <ng-template pTemplate="header">
                 <tr>
                     <th>Nombres</th>

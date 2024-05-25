@@ -15,13 +15,13 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { CardModule } from 'primeng/card';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
 import { DialogModule } from 'primeng/dialog';
 import { EstadosUsuarioEnum } from '../../enums/estado-usuario.enum';
 import { RolesEnum } from '../../enums/roles.enum';
 import { UsuarioDto } from '../../dtos/usuario.dto';
 import { DropdownModule } from 'primeng/dropdown';
 import { UsuariosService } from '../../services/usuarios.service';
+import { EditarUsuarioDto } from '../../dtos/editar-usuario.dto';
 
 
 
@@ -45,9 +45,9 @@ import { UsuariosService } from '../../services/usuarios.service';
 
 
 export class RegisterComponent {
-  @Input() visible: boolean = false; 
+  @Input({ required: true }) visible!: boolean;
 
-  @Input({ required: false }) usuario!: UsuarioDto | null;
+  @Input({ required: false }) usuario!: UsuarioDto| null;
 
   @Input({ required: true }) accion!: string;
 
@@ -55,7 +55,7 @@ export class RegisterComponent {
 
   @Output() refrescar = new EventEmitter<boolean>();
   
-  usuarios!: UsuarioDto[];
+  usuarios!: UsuarioDto[]
 
   roles = Object.values(RolesEnum);
 
@@ -76,11 +76,16 @@ export class RegisterComponent {
     estado:  new FormControl< EstadosUsuarioEnum |null>(EstadosUsuarioEnum.ACTIVO)
 });
 
+
+
+
+
+
+
 constructor(
   private messageService: MessageService,
-  private router: Router,
-  private _authService: AuthService,
-  private _usuariosService : UsuariosService
+  private _router: Router,
+  private _usuariosService: UsuariosService
 ) {}
 
 ngOnInit() {
@@ -120,6 +125,7 @@ ngOnChanges() {
     this.formRegistro.reset();
   }
 }
+
 enviar() {
   if (!this.formRegistro.valid) {
     this.formRegistro.markAllAsTouched();
@@ -133,68 +139,69 @@ enviar() {
     const usuarioDto = this.formRegistro.getRawValue();
 
     if (this.usuario) {
-      this._usuariosService
-      .editar({
+      const editarUsuarioDto: EditarUsuarioDto = {
         id: usuarioDto.id!,
-        nombres:usuarioDto!.nombres,
-        apellidos:usuarioDto!.apellidos,
-        email:usuarioDto!.email,
-        foto:usuarioDto!.foto,
-        rol:usuarioDto!.rol,
-        nombreUsuario:usuarioDto!.nombreUsuario,
-        clave:usuarioDto!.clave,
-        estado:usuarioDto!.estado
-      })
-      .subscribe({
+        nombres: usuarioDto.nombres!,
+        apellidos: usuarioDto.apellidos!,
+        email: usuarioDto.email!,
+        foto: usuarioDto.foto!,
+        rol: usuarioDto.rol!,
+        nombreUsuario: usuarioDto.nombreUsuario!,
+        clave: usuarioDto.clave!,
+        estado: usuarioDto.estado!,
+      };
+  
+      this._usuariosService.editar(editarUsuarioDto).subscribe({
         next: (res) => {
           this.cerrar();
-          this.refrescar.emit();
+          this.refrescar.emit(true);
           this.messageService.add({
             severity: 'success',
-            summary: 'Actividad editada con éxito!',
+            summary: 'Usuario editado con éxito!',
           });
         },
         error: (err) => {
           this.messageService.add({
             severity: 'error',
-            summary: 'Ocurrió un error al editar la actividad',
+            summary: 'Ocurrió un error al editar el usuario',
           });
         },
       });
-    }else{
-      this._usuariosService
-          .crear({
-              id: usuarioDto.id!,
-              nombres:usuarioDto!.nombres,
-              apellidos:usuarioDto!.apellidos,
-              email:usuarioDto!.email,
-              foto:usuarioDto!.foto,
-              rol:usuarioDto!.rol,
-              nombreUsuario:usuarioDto!.nombreUsuario,
-              clave:usuarioDto!.clave,
-              estado:usuarioDto!.estado})
-            
-            .subscribe({
-              next: (res) => {
-                this.cerrar();
-                this.refrescar.emit();
-                this.messageService.add({
-                  severity: 'success',
-                  summary: 'Registro realizado con exito!',
-                });
-              },
-              error: (err) => {
-                this.messageService.add({
-                  severity: 'error',
-                  summary: 'Ocurrió un error al registrar',
-                });
-              },
-            });
-    } 
+    } else {
+      const crearUsuarioDto: UsuarioDto = {
+        id: usuarioDto.id!,
+        nombres: usuarioDto.nombres!,
+        apellidos: usuarioDto.apellidos!,
+        email: usuarioDto.email!,
+        foto: usuarioDto.foto!,
+        rol: usuarioDto.rol!,
+        nombreUsuario: usuarioDto.nombreUsuario!,
+        clave: usuarioDto.clave!,
+        estado: usuarioDto.estado!,
+      };
+  
+      this._usuariosService.crear(crearUsuarioDto).subscribe({
+        next: (res) => {
+          this.cerrar();
+          this.refrescar.emit(true);
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Usuario registrado con éxito!',
+          });
+        },
+        error: (err) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Ocurrió un error al registrar el usuario',
+          });
+        },
+      });
     }
+  }
+    
     
     // listUsuariosDrop() {
-    //   this._authService.getUsuarios().subscribe(
+    //   this._usuariosService.getUsuarios().subscribe(
     //     response => {
     //       this.listUsuarios = response.map(usuario => usuario.rol);
     //     }

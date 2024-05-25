@@ -58,8 +58,8 @@ export class AuthService {
     return userRole === rol;
   }
 
-
   isLogged(): boolean {
     return sessionStorage.getItem('token') ? true : false;
   }
+
 }

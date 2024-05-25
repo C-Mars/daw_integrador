@@ -1,9 +1,7 @@
 import { CommonModule, NgIf } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { TableModule } from 'primeng/table';
-
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { RegisterComponent } from '../register/register.component';
@@ -31,14 +29,10 @@ export class TablaUsuariosComponent implements OnInit {
   newRegiterVisible: boolean = false;
   accion!: string
   usuarioSeleccionado!: UsuarioDto | null;
-
-  @Input('filaSeleccionada') filaSeleccionada!: any;
-  @Output() filaSeleccionadaChange = new EventEmitter<any>();
-
+ 
   constructor(
-    private _authService : AuthService,
-    private _servicioUsuario: UsuariosService,
     private messageService: MessageService,
+    private _usuarioService: UsuariosService,
     private _route: Router
   
   ) { }
@@ -48,7 +42,7 @@ export class TablaUsuariosComponent implements OnInit {
   }
 
   llenarTabla() {
-  this._servicioUsuario.getUsuarios().subscribe({
+  this._usuarioService.getUsuarios().subscribe({
     next: (data: UsuarioDto[]) => {
       this.usuarios = data;
     },
@@ -79,7 +73,10 @@ export class TablaUsuariosComponent implements OnInit {
     this.accion = 'Editar';
     this.newRegiterVisible = true;
   }
-  seleccionar() {
-    this.filaSeleccionadaChange.emit(this.filaSeleccionada);
-  }
+
+  // eliminar() {
+  //   this.accion = 'Eliminar';
+  //   this.newRegiterVisible = true;
+  // }
+
 }
