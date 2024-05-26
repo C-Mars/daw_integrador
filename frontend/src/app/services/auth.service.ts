@@ -1,5 +1,5 @@
 import { HttpClient, withFetch } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, PLATFORM_ID, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable } from 'rxjs';
@@ -7,13 +7,14 @@ import { RolesEnum } from '../enums/roles.enum';
 import { UsuarioDto } from '../dtos/usuario.dto';
 import { environment } from '../environments/environment';
 import { EditarUsuarioDto } from '../dtos/editar-usuario.dto';
+import { isPlatformBrowser } from '@angular/common';
 
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-
+  private readonly platformId = inject(PLATFORM_ID);
 
   constructor(
     private _client: HttpClient,
@@ -36,8 +37,11 @@ export class AuthService {
   }
 
   logout() {
+    if (isPlatformBrowser(this.platformId)) {
     sessionStorage.removeItem('token');
     this._router.navigateByUrl('inicio');
+  } 
+    return false
   }
 
   isLoggedIn(): boolean {
@@ -49,17 +53,24 @@ export class AuthService {
   }
 
   hasRole(rol: RolesEnum): boolean {
-    const token = sessionStorage.getItem('token');
-    if (!token) {
-      return false;
+    if (isPlatformBrowser(this.platformId)){
+      const token = sessionStorage.getItem('token');
+  
+      if (!token) {
+        return false;
+      };
+  
+      const userRole = new JwtHelperService().decodeToken(token).rol;
+      return userRole === rol;
     }
-    const userRole = new JwtHelperService().decodeToken(token).rol;
-
-    return userRole === rol;
+    
+    return false;
   }
 
   isLogged(): boolean {
-    return sessionStorage.getItem('token') ? true : false;
+    if (isPlatformBrowser(this.platformId)) {
+      return sessionStorage.getItem('token') ? true : false;
+    }
+    return false;
   }
-
 }

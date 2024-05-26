@@ -65,14 +65,14 @@ export class EditarUsarioComponent {
 
   formEditarUsuario = new FormGroup ({
     id: new FormControl<number | null>(null),
-    nombres: new FormControl<string | null>(null,[Validators.required]),
-    apellidos:new FormControl<string | null>(null,[Validators.required]),
-    email:new FormControl<string | null>(null,[Validators.required]),
+    nombres: new FormControl<string | null>(null), 
+    apellidos: new FormControl<string | null>(null), 
+    email: new FormControl<string | null>(null), 
     foto: new FormControl<string | null>(null),
-    rol: new FormControl<RolesEnum| null>(null),
-    nombreUsuario: new FormControl<string | null>(null,[Validators.required]),
-    clave: new FormControl<string | null>(null,[Validators.required]),
-    estado: new FormControl<EstadosUsuarioEnum | null>(null),
+    rol: new FormControl<RolesEnum| null>(null), 
+    nombreUsuario: new FormControl<string | null>(null), 
+    clave: new FormControl<string | null>(null), 
+    estado: new FormControl<EstadosUsuarioEnum | null>(null), 
 });
 
 constructor(
@@ -151,22 +151,19 @@ enviar() {
       if (usuarioDto.clave) {
         editarUsuarioDto.clave! = usuarioDto.clave
       }
-
-  
-  
       this._usuariosService.editar(editarUsuarioDto).subscribe({
         next: (res) => {
           this.cerrar();
           this.refrescar.emit(true);
           this.messageService.add({
             severity: 'success',
-            summary: 'Usuario editado con éxito!',
+            summary: 'Usuario editado con éxito!'
           });
         },
         error: (err) => {
           this.messageService.add({
             severity: 'error',
-            summary: 'Ocurrió un error al editar el usuario',
+            summary: 'Ocurrió un error al editar el usuario' ,
           });
         },
       });
@@ -194,6 +191,6 @@ enviar() {
       // Subir los archivos
     onUpload(event: any) {
       const formData = new FormData();
-      formData.append('file', event.files[0]);
+      formData.append('foto', event.files[0]);
     }
 }

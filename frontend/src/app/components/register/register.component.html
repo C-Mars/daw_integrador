@@ -4,7 +4,7 @@
   (onHide)="cerrar()"
   [modal]="true"
 >
-  <form [formGroup]="formRegistro">
+  <form [formGroup]="form">
     <div class="input-container">
       <p-floatLabel class="p-2">
         <input 
@@ -70,7 +70,7 @@
         formControlName="rol"
       ></p-dropdown>
     </div>
-    <div class="input-container">
+    <!-- <div class="input-container">
       <label for="rol">Estado: </label>
       <p-dropdown
         id="estado"
@@ -79,7 +79,7 @@
         [options]="estados"
         formControlName="estado"
       ></p-dropdown>
-    </div>
+    </div> -->
     <div class="input-container">
       <p-fileUpload  
         mode="basic" 

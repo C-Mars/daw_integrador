@@ -25,53 +25,5 @@ import { NgIf } from '@angular/common';
 })
 export class UsuariosAdminComponent  {
   
-  // ngOnInit() {
-  //   this.subscriptions.add(this.sharedEventService.usersClick$.subscribe(() => {
-  //     this._router.navigateByUrl('usuarios');
-  //   }));
-
-  //   this.subscriptions.add(this.sharedEventService.cliClick$.subscribe(() => {
-  //     this._router.navigateByUrl('clientes');
-
-  //   }));
-
-  //   this.subscriptions.add(this.sharedEventService.actClick$.subscribe(() => {
-  //     this._router.navigateByUrl('actividades');
-  //   }));
-
-  //   this.subscriptions.add(this.sharedEventService.audClick$.subscribe(() => {
-  //     this.showTablaAuditorias('auditoria');
-  //   }));
-  // }
-
-  // ngOnDestroy() {
-  //   this.subscriptions.unsubscribe();
-  // }
-  // showTablaUsuarios() {
-  //   this.resetVisibility();
-  //   this.tablaUsuVisible = true;
-  // }
-
-  // showTablaClientes() {
-  //   this.resetVisibility();
-  //   this.tablaCliVisible = true;
-  // }
-
-  // showTablaActividades() {
-  //   this.resetVisibility();
-  //   this.tablaActVisible = true;
-  // }
-
-  // showTablaAuditorias() {
-  //   this.resetVisibility();
-  //   this.tablaAudVisible = true;
-  // }
-
-  // private resetVisibility() {
-  //   this.tablaUsuVisible = false;
-  //   this.tablaCliVisible = false;
-  //   this.tablaActVisible = false;
-  //   this.tablaAudVisible = false;
-  // }
 }
 

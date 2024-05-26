@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { EstadosUsuarioEnum } from '../../auth/enums/estado-usuario.enum';
 import { CrearUsuarioDto } from '../dto/crear-usuario.dto';
 import { EditarUsuario } from '../dto/editar-usuario.dto';
+import * as bcrypt from "bcrypt";
 
 @Injectable()
 export class UsuariosService {
@@ -12,10 +13,30 @@ export class UsuariosService {
     @InjectRepository(Usuario) private usuariosRepo: Repository<Usuario>,
   ) {}
 
+
   async crearUsuario(crearUsuarioDto:CrearUsuarioDto):Promise<Usuario>{
     return await this.usuariosRepo.save(crearUsuarioDto)
   }
-  
+
+   async registroUsuario({nombres,apellidos,clave,nombreUsuario,email,foto,rol,}:CrearUsuarioDto){
+
+    const usuEmail = await this.obtenerUsuarioPorEmail(email)
+    const usuNombre = await this.obtenerUsuarioPorNombreDeUsuario(nombreUsuario)
+    
+    
+    if(usuEmail || usuNombre){
+      throw new BadRequestException('El usuario ya existe');
+    }
+    return await this.crearUsuario({
+      nombres,
+      apellidos,
+      clave: await bcrypt.hash(clave,10),
+      nombreUsuario,
+      email,
+      foto,
+      rol
+    });
+  }
   async obtenerUsuarioPorEmail(
     email: string,
   ): Promise<Usuario> {

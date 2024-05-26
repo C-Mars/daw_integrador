@@ -22,6 +22,8 @@ import { UsuarioDto } from '../../dtos/usuario.dto';
 import { DropdownModule } from 'primeng/dropdown';
 import { UsuariosService } from '../../services/usuarios.service';
 import { EditarUsuarioDto } from '../../dtos/editar-usuario.dto';
+import { environment } from '../../environments/environment';
+import { CrearUsuarioDto } from '../../dtos/crear-usuario.dto';
 
 
 
@@ -64,7 +66,7 @@ export class RegisterComponent {
   
   
 
-  formRegistro = new FormGroup ({
+  form = new FormGroup ({
     id: new FormControl<number | null>(null),
     nombres: new FormControl<string | null>(null,[Validators.required]),
     apellidos:new FormControl<string | null>(null,[Validators.required]),
@@ -104,8 +106,8 @@ ngOnInit() {
 
 
 
-llenarFormRegistro() {
-  this.formRegistro.patchValue({
+llenarForm() {
+  this.form.patchValue({
     id:this.usuario!.id as number,
     nombres:this.usuario!.nombres,
     apellidos:this.usuario!.apellidos,
@@ -120,76 +122,85 @@ llenarFormRegistro() {
 
 ngOnChanges() {
   if (this.usuario) {
-    this.llenarFormRegistro();
+    this.llenarForm();
   } else {
-    this.formRegistro.reset();
+    this.form.reset();
   }
 }
 
 enviar() {
-  if (!this.formRegistro.valid) {
-    this.formRegistro.markAllAsTouched();
+  if (!this.form.valid) {
+    this.form.markAllAsTouched();
     this.messageService.add({
       severity: 'error',
       summary: 'Debe ingresar todos los campos',
     });
     return;
   }
-  
-    const usuarioDto = this.formRegistro.getRawValue();
 
-    if (this.usuario) {
-      const crearUsuarioDto: UsuarioDto = {
-        id: usuarioDto.id!,
-        nombres: usuarioDto.nombres!,
-        apellidos: usuarioDto.apellidos!,
-        email: usuarioDto.email!,
-        foto: usuarioDto.foto!,
-        rol: usuarioDto.rol!,
-        nombreUsuario: usuarioDto.nombreUsuario!,
-        clave: usuarioDto.clave!,
-        estado: usuarioDto.estado!,
-      };
-  
-      this._usuariosService.crear(crearUsuarioDto).subscribe({
-        next: (res) => {
-          this.cerrar();
-          this.refrescar.emit(true);
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Usuario registrado con éxito!',
-          });
-        },
-        error: (err) => {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Ocurrió un error al registrar el usuario',
-          });
-        },
+  const usuarioDto = this.form.getRawValue();
+
+  const crearUsuarioDto: CrearUsuarioDto = {
+    nombres: usuarioDto.nombres,
+    apellidos: usuarioDto.apellidos,
+    email: usuarioDto.email,
+    foto: usuarioDto.foto,
+    rol: usuarioDto.rol,
+    nombreUsuario: usuarioDto.nombreUsuario,
+    clave: usuarioDto.clave,
+   
+  };
+
+  this._usuariosService.crear(crearUsuarioDto).subscribe({
+    next: (res) => {
+      this.cerrar();
+      this.refrescar.emit(true);
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Usuario registrado con éxito!',
       });
-  }
+    },
+    error: (err) => {
+      alert(err)
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Ocurrió un error al registrar el usuario',
+      });
+    },
+  });
 }
-    
-    // listUsuariosDrop() {
-    //   this._usuariosService.getUsuarios().subscribe(
-    //     response => {
-    //       this.listUsuarios = response.map(usuario => usuario.rol);
-    //     }
-    //   );
-    // }
+  
 
     cerrar() {
       this.visibleChange.emit(false);
     }
 
-    closeDialog(){
-      this.visible = false;
-      this.visibleChange.emit(this.visible);
-      this.formRegistro.reset();
-    }
+    // closeDialog(){
+    //   this.visible = false;
+    //   this.visibleChange.emit(this.visible);
+    //   this.form.reset();
+    // }
       // Subir los archivos
-    onUpload(event: any) {
-      const formData = new FormData();
-      formData.append('file', event.files[0]);
-    }
+      onUpload(event: any) {
+        const formData = new FormData();
+        formData.append('foto', event.files[0]);
+      
+        // Llama al método subirFoto del servicio UsuariosService
+        this._usuariosService.subirFoto(formData).subscribe({
+          next: (res) => {
+            // Manejar la respuesta si es necesario
+            console.log('Foto subida con éxito', res);
+            // Aquí podrías actualizar algún campo en tu formulario con la URL de la foto subida, por ejemplo
+            // this.form.patchValue({ foto: res.url });
+          },
+          error: (err) => {
+            // Manejar los errores
+            console.error('Error al subir la foto', err);
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error al subir la foto',
+            });
+          }
+        });
+      }
   }

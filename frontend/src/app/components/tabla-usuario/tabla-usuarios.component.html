@@ -32,8 +32,12 @@
                     <td>{{ usuario.apellidos }}</td>
                     <td>
                         <div class="inline-block vertical-align-middle">
-                            <img alt="foto usuario" [src]="'src/assets/'+ usuario.foto" width="24" class="vertical-align-middle" />
-                            <span class="ml-1 mt-1">{{ usuario.nombre }}</span>
+                            <p-avatar 
+                            [image]="usuario.foto"
+                            styleClass="mr-2" 
+                            size="xlarge" 
+                            shape="circle">
+                        </p-avatar>
                         </div>
                     </td>
                     <td>{{ usuario.email }}</td>

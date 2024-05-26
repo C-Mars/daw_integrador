@@ -83,6 +83,8 @@ export class LoginComponent {
             },
           });
       }
+
+      
       closeDialog() {
         this.visible = false;
         this.visibleChange.emit(this.visible);

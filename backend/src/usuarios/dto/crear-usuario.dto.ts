@@ -18,7 +18,7 @@ export class CrearUsuarioDto{
     email:string
     
     @IsOptional()
-    foto: string
+    foto?: string
     
     @IsString()
     @IsNotEmpty()
@@ -35,6 +35,5 @@ export class CrearUsuarioDto{
     clave:string
 
    
-    // @IsNotEmpty()
-    estado:EstadosUsuarioEnum.ACTIVO
+   
 }

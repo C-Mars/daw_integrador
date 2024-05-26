@@ -1,5 +1,5 @@
 import { CommonModule, NgIf } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, PLATFORM_ID, inject } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { Router } from '@angular/router';
 import { CardModule } from 'primeng/card';
@@ -12,7 +12,9 @@ import { EditarUsarioComponent } from '../editar-usario/editar-usario.component'
 import { EliminarUsuarioComponent } from '../eliminar-usuario/eliminar-usuario.component';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-
+import { Subscription } from 'rxjs';
+import { environment } from '../../environments/environment';
+import { AvatarModule } from 'primeng/avatar';
 
 
 @Component({
@@ -28,7 +30,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     EliminarUsuarioComponent,
     ToastModule,
      ConfirmDialogModule,
-     EliminarUsuarioComponent
+     EliminarUsuarioComponent,
+AvatarModule
   ],
   templateUrl: './tabla-usuarios.component.html',
   styleUrl: './tabla-usuarios.component.scss'
@@ -42,31 +45,63 @@ export class TablaUsuariosComponent implements OnInit {
   newDeleteVisible: boolean = false;
   accion!: string
   usuarioSeleccionado!: UsuarioDto | null;
- 
+  imageSrc: string | null = null;
+  private readonly platformId = inject(PLATFORM_ID);
+   
+  subscriptions!: Subscription[];
+
+  
+
+  urlApi:string  = environment.apiUrl
+
   constructor(
     private messageService: MessageService,
     private _usuarioService: UsuariosService,
     private _route: Router
-  
   ) { }
 
   ngOnInit(): void {
+    this.subscriptions = [];
     this.llenarTabla();
   }
 
-  llenarTabla() {
-  this._usuarioService.getUsuarios().subscribe({
-    next: (data: UsuarioDto[]) => {
-      this.usuarios = data;
-    },
-    error: (err) => {
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Ocurrió un error al recuperar la lista de actividades',
-      });
-    },
-  })
-}
+  ngOnDestroy(): void {
+    // Desuscribirse de todos los observables al destruir el componente
+    this.subscriptions.forEach(sub => sub.unsubscribe());
+  }
+  llenarTabla(): void {
+    const sub = this._usuarioService.getUsuarios().subscribe({
+      next: (data: UsuarioDto[]) => {
+        this.usuarios = data;
+        this.usuarios.forEach(usuario => {
+          this.cargarFotoUsuario(usuario);
+        });
+      },
+      error: (err) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Ocurrió un error al recuperar la lista de usuarios: ' + err,
+        });
+      }
+    });
+    this.subscriptions.push(sub); // Guardar la suscripción
+  }
+ 
+  cargarFotoUsuario(usuario: UsuarioDto): void {
+    const sub = this._usuarioService.getFotoUsuario(`${usuario.id}`).subscribe({
+      next: (blob) => {
+        const objectURL = URL.createObjectURL(blob);
+        usuario.foto = objectURL; // Asignar la URL al usuario específico
+      },
+      error: (error) => {
+        console.error('Error al cargar la foto del usuario:', error);
+      }
+    });
+    this.subscriptions.push(sub); // Guardar la suscripción
+  }
+
+
 
  
 
