@@ -1,10 +1,19 @@
 import { HttpClient } from "@angular/common/http";
+<<<<<<< HEAD
+import { Observable } from "rxjs";
+import { environment } from "../environments/environment";
+import { Injectable } from "@angular/core";
+import { CreateAuditoria } from "../dtos/dtos-auditoria/create-auditoria.dto";
+import { ModificacionAuditoria } from "../dtos/dtos-auditoria/edit-auditoria.dto";
+import { AuditoriaDto } from "../dtos/dtos-auditoria/auditoria.dto";
+=======
 import { AuditoriaDto } from "../dtos/auditoria.dto";
 import { Observable } from "rxjs";
 import { environment } from "../environments/environment";
 import { Injectable } from "@angular/core";
 import { CreateAuditoria } from "../dtos/create-auditoria.dto";
 import { ModificacionAuditoria } from "../dtos/edit-auditoria.dto";
+>>>>>>> 895bb6df6dd59710c083516fe048c46bef71c6d3
 
 @Injectable({
     providedIn: 'root'
