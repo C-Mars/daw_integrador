@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { SharedEventService } from '../../services/shared-event.service';
+
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { BaseComponent } from '../base/base.component';

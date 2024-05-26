@@ -3,7 +3,6 @@ import { BaseComponent } from '../base/base.component';
 import { TablaUsuariosComponent } from '../tabla-usuario/tabla-usuarios.component';
 import { NgIf } from '@angular/common';
 import { Subscription } from 'rxjs';
-import { SharedEventService } from '../../services/shared-event.service';
 import { TablaActividadesComponent } from '../tabla-actividades/tabla-actividades.component';
 import { TablaClientesComponent} from '../tabla-clientes/tabla-clientes.component';
 import { TablaAuditoriaComponent } from '../tabla-auditoria/tabla-auditoria.component';

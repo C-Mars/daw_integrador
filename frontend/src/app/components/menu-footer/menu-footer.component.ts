@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
 import { Subject } from 'rxjs';
-import { SharedEventService } from '../../services/shared-event.service';
+
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-menu-footer',
