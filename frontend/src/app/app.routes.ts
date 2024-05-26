@@ -38,7 +38,9 @@ export const routes: Routes = [
 },
 {
     path:'auditoria',
-    component:AuditoriaAdminComponent,
+    component: AuditoriaAdminComponent,
+
+    
 },
 {
     path: '**', 

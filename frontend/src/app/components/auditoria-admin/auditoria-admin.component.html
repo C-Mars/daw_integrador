@@ -1,7 +1,19 @@
 <app-base>
-    <div class="flex flex-row flex-wrap">
     <app-tabla-auditoria
-    class=" flex flex-warp w-min md:w-max m-4 "
-    ></app-tabla-auditoria>
-    </div>
-</app-base>
+      #t
+      [valores]="auditoria"
+      [columnas]="columnas"
+    >
+      <div>
+        <p-button
+          class="accion"
+          icon="pi pi-file"
+          label="Eliminar"
+          (onClick)="exportCSV()"
+          pTooltip="Exportar"
+        ></p-button>
+      </div>
+</app-tabla-auditoria>
+  </app-base>
+
+    
