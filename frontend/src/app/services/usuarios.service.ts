@@ -7,7 +7,7 @@ import { UsuarioDto } from '../dtos/usuario.dto';
 import { environment } from '../environments/environment';
 import { EditarUsuarioDto } from '../dtos/editar-usuario.dto';
 import { HttpClient } from '@angular/common/http';
-import { AuthService } from './auth.service';
+
 import { isPlatformBrowser } from '@angular/common';
 import { CrearUsuarioDto } from '../dtos/crear-usuario.dto';
 
