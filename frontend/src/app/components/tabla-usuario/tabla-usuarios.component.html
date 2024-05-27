@@ -27,7 +27,7 @@
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-usuario>
-                <tr (mouseover)="informacion(usuario)">
+                <tr>
                     <td>{{ usuario.nombres }}</td>
                     <td>{{ usuario.apellidos }}</td>
                     <td>
@@ -51,7 +51,7 @@
                             class="mr-2" 
                             [rounded]="true" 
                             severity="primary"
-                            (onClick)="editar()"
+                            (onClick)="editar(usuario)"
                         ></p-button>
                       
                         <p-button 
@@ -62,7 +62,7 @@
                             icon="pi pi-trash" 
                             severity="info"
                             [rounded]="true"
-                            (click)="eliminar()"
+                            (click)="eliminar(usuario)"
                         ></p-button>
                     </td>
                 </tr>

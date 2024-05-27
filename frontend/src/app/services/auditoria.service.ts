@@ -33,12 +33,6 @@ export class AuditoriaService{
         )
     }
 
-    deleteAuditoria(auditoriaDto: AuditoriaDto){
-        return this.client.delete(
-            environment?.apiUrl + '/auditoria' + auditoriaDto.id,
-        )
-    }
-
     auditoriaByDate(auditoriaDto: AuditoriaDto): Observable<AuditoriaDto[]>{
         return this.client.get<AuditoriaDto[]>(
             environment?.apiUrl + '/auditoria' + auditoriaDto.fechaModificacion

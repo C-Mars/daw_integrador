@@ -95,8 +95,6 @@ ngOnInit() {
   });
 }
 
-
-
 llenarTabla() {
   this.formEditarUsuario.patchValue({
     id:this.usuario!.id as number,
@@ -181,6 +179,7 @@ enviar() {
 
     cerrar() {
       this.visibleChange.emit(false);
+      this.formEditarUsuario.reset();
     }
 
     closeDialog(){

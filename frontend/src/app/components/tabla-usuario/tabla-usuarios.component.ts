@@ -45,7 +45,7 @@ export class TablaUsuariosComponent implements OnInit {
   newDeleteVisible: boolean = false;
   accion!: string
   usuarioSeleccionado!: UsuarioDto | null;
-  imageSrc: string | null = null;
+  imagenSrc: string | null = null;
   private readonly platformId = inject(PLATFORM_ID);
    
   subscriptions!: Subscription[];
@@ -101,35 +101,34 @@ export class TablaUsuariosComponent implements OnInit {
     this.subscriptions.push(sub); // Guardar la suscripción
   }
 
-
-
- 
-
-
-  
   nuevo() {
     this.usuarioSeleccionado = null;
     this.accion = 'Crear';
     this.newRegiterVisible = true;
   }
-  editar() {
-    this.accion = 'Editar';
-    this.newEditVisible = true;
-  }
 
- 
 
-informacion(item: UsuarioDto): void {
+editar(item: UsuarioDto): void {
+  this.accion = 'Editar';
     this.usuarioSeleccionado = item;
+   
+    if (this.usuarioSeleccionado.foto) {
+      this.imagenSrc = this.usuarioSeleccionado.foto;
+  } else {
+      this.imagenSrc = null;
+  }
+  this.newEditVisible = true;
 }
 
-eliminar() {
-    if (!this.usuarioSeleccionado || !this.usuarioSeleccionado.id) {
-        console.error('No se puede eliminar el usuario seleccionado:', this.usuarioSeleccionado);
-        return;
-    }
+eliminar(item: UsuarioDto): void  {
+  this.usuarioSeleccionado = item;
+  if (!this.usuarioSeleccionado || !this.usuarioSeleccionado.id) {
+    console.error('No se puede eliminar el usuario seleccionado:', this.usuarioSeleccionado);
+    return;
+}
    
-    this.newDeleteVisible = true;
+   alert(item.nombres)
+   this.newDeleteVisible = true;
 }
 
 }

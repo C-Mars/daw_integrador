@@ -1,17 +1,7 @@
 <app-base>
-    <app-tablaAuditoria
-      #t
-      >
-      <div>
-        <p-button
-          class="accion"
-          icon="pi pi-file"
-          label="Exportar"
-          (onClick)="exportarCSV()"
-          pTooltip="Exportar"
-        ></p-button>
-      </div>
-</app-tablaAuditoria>
-  </app-base>
-
-    
+    <div class="flex flex-row flex-wrap">
+    <app-tabla-auditoria
+    class=" flex flex-warp w-min md:w-max m-4 "
+    ></app-tabla-auditoria>
+    </div>
+</app-base>

@@ -1,11 +1,11 @@
-/*import { Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { BaseComponent } from '../base/base.component';
 import { NgFor, NgIf } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { AuditoriaDto } from '../../dtos/dtos-auditoria/auditoria.dto';
 import { MessageService, SelectItem } from 'primeng/api';
 import { AuditoriaService } from '../../services/auditoria.service';
-//import { Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -27,7 +27,7 @@ export class AuditoriaComponent {
   constructor(
     private auditoriaService: AuditoriaService,
     private messageService: MessageService,
-    //private router: Router
+    private router: Router
   ){}
 
   ngOnInit(){
@@ -70,4 +70,4 @@ export class AuditoriaComponent {
       }
     });
   }
-}*/
+}

@@ -1,5 +1,74 @@
-<p-card header="{{titulo}}" >
-    <p-table  class="flex flex-warp w-min md:w-max ">
-          
-    </p-table>
+<p-card header="{{ titulo }}">
+    <ng-template pTemplate="content">
+        <div class="mb-4  flex  flex-wrap md:align-self-auto align-self-end flex align-items-end justify-content-end">
+            <p-button
+                class="accion"
+                id="añadir"
+                label="Añadir"
+                icon="pi pi-plus"
+                [rounded]="true"
+                severity="info"
+                (onClick)="nuevo()"
+            ></p-button>
+        </div>
+        <p-table 
+        [value]="clientes" 
+        class="flex flex-wrap w-min md:w-max">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Nombres</th>
+                    <th>Apellidos</th>
+                    <th>Email</th>
+                    <th></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-cliente>
+                <tr (mouseover)="informacion(cliente)">
+                    <td>{{ cliente.nombres }}</td>
+                    <td>{{ cliente.apellidos }}</td>
+                    <td>
+                        <div class="inline-block vertical-align-middle">
+                            <span class="ml-1 mt-1">{{ cliente.nombre }}</span>
+                        </div>
+                    </td>
+                    <td>{{ cliente.email }}</td>
+                    <td class="flex flex-wrap">
+                        <p-button 
+                            class="accion"
+                            pRipple 
+                            icon="pi pi-pen-to-square" 
+                            class="mr-2" 
+                            [rounded]="true" 
+                            severity="primary"
+                            (onClick)="editar()"
+                        ></p-button>
+                      
+                        <p-button 
+                        
+                            class="accion"
+                            pRipple 
+                            class="mr-2" 
+                            icon="pi pi-trash" 
+                            severity="info"
+                            [rounded]="true"
+                            (click)="eliminar()"
+                        ></p-button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </ng-template>
 </p-card>
+
+<app-register 
+[(visible)]="newRegiterVisible"
+[accion]="accion"
+[cliente]="clienteSeleccionado"
+(refrescar)="llenarTabla()" ></app-register>
+
+<app-editar-cliente
+[(visible)]="newEditVisible"
+[accion]="accion"
+[cliente]="clienteSeleccionado"
+(refrescar)="llenarTabla()"
+></app-editar-cliente>
