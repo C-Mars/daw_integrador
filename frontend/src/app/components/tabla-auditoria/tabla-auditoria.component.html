@@ -2,6 +2,12 @@
 
 <p-card header="{{ titulo }}">
     <ng-template pTemplate="content">
+        <div>
+            <p-button
+            class="accion"
+            (onclick)="exportarCSV()"
+        ></p-button>
+        </div>
         <p-table class="flex flex-wrap w-min md:w-max">
             <ng-template pTemplate="header">
                 <tr>

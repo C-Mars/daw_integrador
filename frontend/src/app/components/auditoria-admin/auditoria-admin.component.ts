@@ -5,6 +5,8 @@ import { TableModule } from 'primeng/table';
 import { AuditoriaDto } from '../../dtos/dtos-auditoria/auditoria.dto';
 import { MessageService, SelectItem } from 'primeng/api';
 import { AuditoriaService } from '../../services/auditoria.service';
+import { ButtonModule } from 'primeng/button';
+import { TablaAuditoriaComponent } from '../tabla-auditoria/tabla-auditoria.component';
 //import { Router } from '@angular/router';
 
 
@@ -14,7 +16,9 @@ import { AuditoriaService } from '../../services/auditoria.service';
   imports: [BaseComponent,
     NgFor,
     NgIf,
-    TableModule
+    TableModule,
+    ButtonModule,
+    TablaAuditoriaComponent
   ],
   templateUrl: './auditoria-admin.component.html',
   styleUrl: './auditoria-admin.component.scss'
@@ -23,7 +27,6 @@ export class AuditoriaAdminComponent {
   auditorias!: AuditoriaDto[];
   accion!: string;
   columnas!: { field: string, header: string, filter?: boolean}[];
-  opcionesDeFiltro!: SelectItem[];
   
   constructor(
     private auditoriaService: AuditoriaService,
@@ -45,16 +48,6 @@ export class AuditoriaAdminComponent {
       { field: 'operacion', header: 'Operación'}
     ];
 
-    this.opcionesDeFiltro = [
-      {
-        value: 'startWith',
-        label: 'Empieza con'
-      },
-      {
-        value: 'contains',
-        label: 'Contiene'
-      }
-    ];
     this.llenarTabla();
   }
 
@@ -71,4 +64,7 @@ export class AuditoriaAdminComponent {
       }
     });
   }
+
+  exportarCSV(){}
+
 }

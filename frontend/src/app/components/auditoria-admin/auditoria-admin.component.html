@@ -1,19 +1,17 @@
 <app-base>
-    <app-tabla-auditoria
+    <app-tablaAuditoria
       #t
-      [valores]="auditoria"
-      [columnas]="columnas"
-    >
+      >
       <div>
         <p-button
           class="accion"
           icon="pi pi-file"
-          label="Eliminar"
-          (onClick)="exportCSV()"
+          label="Exportar"
+          (onClick)="exportarCSV()"
           pTooltip="Exportar"
         ></p-button>
       </div>
-</app-tabla-auditoria>
+</app-tablaAuditoria>
   </app-base>
 
     

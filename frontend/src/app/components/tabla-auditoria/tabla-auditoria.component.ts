@@ -6,12 +6,16 @@ import { environment } from '../../environments/environment';
 import { Subscription } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { AuditoriaService } from '../../services/auditoria.service';
+import { ButtonModule } from 'primeng/button';
+import { AuditoriaAdminComponent } from '../auditoria-admin/auditoria-admin.component';
 
 @Component({
-  selector: 'app-tabla-auditoria',
+  selector: 'app-tablaAuditoria',
   standalone: true,
   imports: [TableModule,
-    CardModule],
+    CardModule,
+  ButtonModule,
+  AuditoriaAdminComponent],
   templateUrl: './tabla-auditoria.component.html',
   styleUrl: './tabla-auditoria.component.scss'
 })
@@ -55,5 +59,6 @@ export class TablaAuditoriaComponent {
     this.subscription.push(sub);
   }
    
+  exportarCSV(){}
 
 }
