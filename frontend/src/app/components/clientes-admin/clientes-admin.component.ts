@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TablaClientesComponent } from '../tabla-clientes/tabla-clientes.component';
+import { TablaClientesComponent } from '../tabla-cliente/tabla-clientes.component';
 import { BaseComponent } from '../base/base.component';
 import { TablaAuditoriaComponent } from '../tabla-auditoria/tabla-auditoria.component';
 
