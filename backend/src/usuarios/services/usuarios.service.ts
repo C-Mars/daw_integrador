@@ -111,23 +111,9 @@ export class UsuariosService {
 
     return usuario
   }
-  // async eliminarUsuarioPorNombresApellidosUsuario(
-  //   nombres: string,
-  //   apellidos: string
-  // ): Promise<Usuario> {
-  //   const usuario: Usuario = await this.usuariosRepo.findOne({
-  //     where: {
-  //       nombres: nombres,
-  //       apellidos: apellidos,
-  //       estado: EstadosUsuarioEnum.ACTIVO,
-  //     },
-  //   });
-
-  //   return usuario;
-  // }
 
   async editarUsuario(id: number, editarUsuario: EditarUsuario)
-  // : Promise<Usuario> 
+  : Promise<Usuario> 
   {
     const existeUsu= await this.usuariosRepo.findOne({
       where: {
@@ -151,6 +137,22 @@ export class UsuariosService {
     return usuarioeditado
     
   }
+
+  // async eliminarUsuarioPorNombresApellidosUsuario(
+  //   nombres: string,
+  //   apellidos: string
+  // ): Promise<Usuario> {
+  //   const usuario: Usuario = await this.usuariosRepo.findOne({
+  //     where: {
+  //       nombres: nombres,
+  //       apellidos: apellidos,
+  //       estado: EstadosUsuarioEnum.ACTIVO,
+  //     },
+  //   });
+
+  //   return usuario;
+  // }
+
 
   
   

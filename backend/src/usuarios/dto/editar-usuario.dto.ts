@@ -1,8 +1,13 @@
-import { IsEmail, IsNotEmpty, IsOptional, IsString, MinLength } from "class-validator"
+import { IsEmail, IsNotEmpty, IsNumber, IsOptional, IsString, MinLength } from "class-validator"
+import { EstadosUsuarioEnum } from "src/auth/enums/estado-usuario.enum"
 import { RolesEnum } from "src/auth/enums/roles.enum"
 
 export class EditarUsuario{   
    
+    @IsOptional()
+    @IsNumber()
+    id?: number
+
     @IsOptional()
     @IsString()
     @IsNotEmpty()
@@ -35,4 +40,9 @@ export class EditarUsuario{
     @IsNotEmpty()
     @MinLength(6)
     clave?:string
+
+    @IsOptional()
+    @IsString()
+    @IsNotEmpty()
+    estado?: EstadosUsuarioEnum
 }

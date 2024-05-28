@@ -23,6 +23,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { UsuariosService } from '../../services/usuarios.service';
 import { EditarUsuarioDto } from '../../dtos/editar-usuario.dto';
 import { NgIf } from '@angular/common';
+import { Console, error } from 'node:console';
 
 
 
@@ -163,7 +164,9 @@ enviar() {
             severity: 'error',
             summary: 'Ocurrió un error al editar el usuario' ,
           });
+          
         },
+        
       });
     }
   }
@@ -191,5 +194,20 @@ enviar() {
     onUpload(event: any) {
       const formData = new FormData();
       formData.append('foto', event.files[0]);
+      this._usuariosService.subirFoto(formData).subscribe({
+        next: (res) => {
+          
+          console.log('Foto subida con éxito', res);
+         
+        },
+        error: (err) => {
+         
+          console.error('Error al subir la foto', err);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error al subir la foto',
+          });
+        }
+      });
     }
 }

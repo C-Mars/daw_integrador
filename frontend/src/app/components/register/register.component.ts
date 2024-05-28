@@ -184,17 +184,15 @@ enviar() {
       onUpload(event: any) {
         const formData = new FormData();
         formData.append('foto', event.files[0]);
-      
-        // Llama al método subirFoto del servicio UsuariosService
+        
         this._usuariosService.subirFoto(formData).subscribe({
           next: (res) => {
-            // Manejar la respuesta si es necesario
+            
             console.log('Foto subida con éxito', res);
-            // Aquí podrías actualizar algún campo en tu formulario con la URL de la foto subida, por ejemplo
-            // this.form.patchValue({ foto: res.url });
+           
           },
           error: (err) => {
-            // Manejar los errores
+           
             console.error('Error al subir la foto', err);
             this.messageService.add({
               severity: 'error',

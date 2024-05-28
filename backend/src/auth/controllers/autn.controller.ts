@@ -14,10 +14,7 @@ import { ArchivosService } from 'src/archivos/service/archivos.service';
 export class AuthController {
 
     constructor(private authService: AuthService,
-        private archivosService: ArchivosService
-    ) {
-
-    }
+    ) {}
 
    
 

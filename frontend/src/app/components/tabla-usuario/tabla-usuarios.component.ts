@@ -110,7 +110,7 @@ export class TablaUsuariosComponent implements OnInit {
 
 editar(item: UsuarioDto): void {
   this.accion = 'Editar';
-    this.usuarioSeleccionado = item;
+  this.usuarioSeleccionado = item;
    
     if (this.usuarioSeleccionado.foto) {
       this.imagenSrc = this.usuarioSeleccionado.foto;
@@ -119,6 +119,7 @@ editar(item: UsuarioDto): void {
   }
   this.newEditVisible = true;
 }
+
 
 eliminar(item: UsuarioDto): void  {
   this.usuarioSeleccionado = item;

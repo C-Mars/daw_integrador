@@ -19,8 +19,65 @@ export class UsuariosController {
   constructor(private usuariosService: UsuariosService,
     private archivosService: ArchivosService
   ) { }
-
+// Crear Usuarios-----------------------------------------------------------------------------
   @Post()
+  @ApiBearerAuth()
+  @Roles([RolesEnum.ADMINISTRADOR])
+  @UseGuards(AuthGuard)
+  @UseInterceptors(FileInterceptor('foto',
+  {
+      //Creo un filtro para que se fije que el archivo que subo sea formato imagen
+      fileFilter: fileFilter,
+      //Donde se va a guardar el archivo
+      storage: diskStorage({
+          destination: '/backend/static/usuarios',
+          filename: (req, foto, cb) => {
+              //Lo hago para que el nombre que suba y se guarde en la BD sea distinto al archivo que subio el usuario
+              const cambioNombre = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('');
+              cb(null, `${cambioNombre}${foto ? extname(foto.originalname) : ''}`);
+          },
+      })
+  }))
+async registrarUsuario(
+  @Body() crearUsuarioDto: CrearUsuarioDto,
+  @UploadedFile() foto: Express.Multer.File) {
+
+      // Verifica si se proporcionó una foto y actualiza el DTO de usuario
+      if (foto) {
+          crearUsuarioDto.foto = foto.filename;
+          // Guardar el archivo en el sistema de archivos en la carpeta static/usuarios y obtener el nombre de dicho archivo
+          await this.archivosService.guardarArchivo(foto);
+      }
+
+      // Registra por fin al usuario
+      return await this.usuariosService.registroUsuario(crearUsuarioDto);
+};
+//Trae todos los usuarios-----------------------------------------------------------------------------
+
+  @Get()
+  @ApiBearerAuth()
+  @Roles([RolesEnum.ADMINISTRADOR])
+  @UseGuards(AuthGuard)
+  async getUsuarios() {
+    return await this.usuariosService.obtenerUsuarios();
+  }
+//Trae un usuario-----------------------------------------------------------------------------
+
+  @Get(':id')
+  @ApiBearerAuth()
+  @Roles([RolesEnum.ADMINISTRADOR])
+  @UseGuards(AuthGuard)
+  async getUsuario(
+    @Param('id', ParseIntPipe) id: number): Promise<Usuario> {
+    return await this.usuariosService.findOneById(id);
+  }
+
+//Trae edita un usuario-----------------------------------------------------------------------------
+
+  @Patch('editar/:id')
+  @ApiBearerAuth()
+  @Roles([RolesEnum.ADMINISTRADOR])
+  @UseGuards(AuthGuard)
   @UseInterceptors(FileInterceptor('foto',
   {
       //Creo un filtro para que se fije que el archivo que subo sea formato imagen
@@ -36,54 +93,7 @@ export class UsuariosController {
       })
   }))
 async editarUsuario(
-  @Body() crearUsuarioDto: CrearUsuarioDto,
-  @UploadedFile() foto: Express.Multer.File) {
-
-      // Verifica si se proporcionó una foto y actualiza el DTO de usuario
-      if (foto) {
-          crearUsuarioDto.foto = foto.filename;
-          // Guardar el archivo en el sistema de archivos en la carpeta static/usuarios y obtener el nombre de dicho archivo
-          await this.archivosService.guardarArchivo(foto);
-      }
-
-      // Registra por fin al usuario
-      return await this.usuariosService.registroUsuario(crearUsuarioDto);
-};
-
-  @Get()
-  @ApiBearerAuth()
-  @Roles([RolesEnum.ADMINISTRADOR])
-  @UseGuards(AuthGuard)
-  async getUsuarios() {
-    return await this.usuariosService.obtenerUsuarios();
-  }
-
-  @Get(':id')
-  @ApiBearerAuth()
-  @Roles([RolesEnum.ADMINISTRADOR])
-  @UseGuards(AuthGuard)
-  async getUsuario(
-    @Param('id', ParseIntPipe) id: number): Promise<Usuario> {
-    return await this.usuariosService.findOneById(id);
-  }
-
-
-  @Patch(':id')
-  @UseInterceptors(FileInterceptor('foto',
-  {
-      //Creo un filtro para que se fije que el archivo que subo sea formato imagen
-      fileFilter: fileFilter,
-      //Donde se va a guardar el archivo
-      storage: diskStorage({
-          destination: '/backend/static/usuarios',
-          filename: (req, foto, cb) => {
-              //Lo hago para que el nombre que suba y se guarde en la BD sea distinto al archivo que subio el usuario
-              const cambioNombre = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('');
-              cb(null, `${cambioNombre}${foto ? extname(foto.originalname) : ''}`);
-          },
-      })
-  }))
-async registroUsuario(
+  @Param('id', ParseIntPipe) id: number,
   @Body() crearUsuarioDto: CrearUsuarioDto,
   @UploadedFile() foto: Express.Multer.File) {
 
@@ -95,9 +105,10 @@ async registroUsuario(
       }
 
       // Edita por fin al usuario
-      return await this.usuariosService.registroUsuario(crearUsuarioDto);
+      return await this.usuariosService.editarUsuario( id ,crearUsuarioDto);
 };
 
+//Editar una contraseña de un usuario en particular-----------------------------------------------------------------------------
 
   @Patch(':id')
   @ApiBearerAuth()
@@ -110,6 +121,7 @@ async registroUsuario(
     return await this.usuariosService.editarUsuario(id, editarUsuarioDto);
 
   }
+//Trae todos los usuarios-----------------------------------------------------------------------------
 
   @Delete(':id')
   @ApiBearerAuth()
