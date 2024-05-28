@@ -110,7 +110,11 @@ export class TablaUsuariosComponent implements OnInit {
 
 editar(item: UsuarioDto): void {
   this.accion = 'Editar';
+<<<<<<< Updated upstream
   this.usuarioSeleccionado = item;
+=======
+    this.usuarioSeleccionado = item;
+>>>>>>> Stashed changes
    
     if (this.usuarioSeleccionado.foto) {
       this.imagenSrc = this.usuarioSeleccionado.foto;
@@ -120,7 +124,10 @@ editar(item: UsuarioDto): void {
   this.newEditVisible = true;
 }
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 eliminar(item: UsuarioDto): void  {
   this.usuarioSeleccionado = item;
   if (!this.usuarioSeleccionado || !this.usuarioSeleccionado.id) {

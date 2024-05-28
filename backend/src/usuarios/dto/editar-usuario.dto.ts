@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsNumber, IsOptional, IsString, MinLength } from "class-validator"
+import { IsEmail, IsNotEmpty, IsOptional, IsString, MinLength } from "class-validator"
 import { EstadosUsuarioEnum } from "src/auth/enums/estado-usuario.enum"
 import { RolesEnum } from "src/auth/enums/roles.enum"
 
@@ -7,6 +7,12 @@ export class EditarUsuario{
     @IsOptional()
     @IsNumber()
     id?: number
+
+    @IsOptional()
+    @IsString()
+    @IsNotEmpty()
+    id?:number
+ 
 
     @IsOptional()
     @IsString()

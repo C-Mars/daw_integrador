@@ -18,7 +18,7 @@ export class UsuariosService {
     return await this.usuariosRepo.save(crearUsuarioDto)
   }
 
-   async registroUsuario({nombres,apellidos,clave,nombreUsuario,email,foto,rol,}:CrearUsuarioDto){
+   async registroUsuario({nombres,apellidos,clave,nombreUsuario,email,foto,rol}:CrearUsuarioDto){
 
     const usuEmail = await this.obtenerUsuarioPorEmail(email)
     const usuNombre = await this.obtenerUsuarioPorNombreDeUsuario(nombreUsuario)
@@ -28,6 +28,7 @@ export class UsuariosService {
       throw new BadRequestException('El usuario ya existe');
     }
     return await this.crearUsuario({
+
       nombres,
       apellidos,
       clave: await bcrypt.hash(clave,10),
@@ -37,6 +38,7 @@ export class UsuariosService {
       rol
     });
   }
+  
   async obtenerUsuarioPorEmail(
     email: string,
   ): Promise<Usuario> {
@@ -126,34 +128,21 @@ export class UsuariosService {
         'El usuario no existe',
       );
     }
-    await this.usuariosRepo.update({id}, editarUsuario)
-    const usuarioeditado = await this.usuariosRepo.findOne({
-      where:{
-        id,
-        estado: EstadosUsuarioEnum.ACTIVO
-      },
-    });
-    
-    return usuarioeditado
-    
-  }
-
-  // async eliminarUsuarioPorNombresApellidosUsuario(
-  //   nombres: string,
-  //   apellidos: string
-  // ): Promise<Usuario> {
-  //   const usuario: Usuario = await this.usuariosRepo.findOne({
-  //     where: {
-  //       nombres: nombres,
-  //       apellidos: apellidos,
-  //       estado: EstadosUsuarioEnum.ACTIVO,
-  //     },
-  //   });
-
-  //   return usuario;
-  // }
-
-
+    const datosActualizados = {
+      id: editarUsuario.id!as number, 
+      nombres: editarUsuario.nombres!,
+      apellidos:editarUsuario.apellidos!,
+      clave: editarUsuario.clave!,
+      nombreUsuario:editarUsuario.nombreUsuario!,
+      email: editarUsuario.email!,
+      foto: editarUsuario.foto!,
+      rol: editarUsuario.rol!,
+      estado: editarUsuario.estado!
+    }
+     
+    await this.usuariosRepo.update({ id }, datosActualizados);
   
-  
+    return existeUsu
+
+}
 }

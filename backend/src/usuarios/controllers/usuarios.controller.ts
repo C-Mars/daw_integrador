@@ -42,10 +42,10 @@ async registrarUsuario(
   @Body() crearUsuarioDto: CrearUsuarioDto,
   @UploadedFile() foto: Express.Multer.File) {
 
-      // Verifica si se proporcionó una foto y actualiza el DTO de usuario
+      
       if (foto) {
           crearUsuarioDto.foto = foto.filename;
-          // Guardar el archivo en el sistema de archivos en la carpeta static/usuarios y obtener el nombre de dicho archivo
+         
           await this.archivosService.guardarArchivo(foto);
       }
 
@@ -97,12 +97,9 @@ async editarUsuario(
   @Body() crearUsuarioDto: CrearUsuarioDto,
   @UploadedFile() foto: Express.Multer.File) {
 
-      // Verifica si se proporcionó una foto y actualiza el DTO de usuario
-      if (foto) {
-          crearUsuarioDto.foto = foto.filename;
-          // Guardar el archivo en el sistema de archivos en la carpeta static/usuarios y obtener el nombre de dicho archivo
-          await this.archivosService.guardarArchivo(foto);
-      }
+    // Registra por fin al usuario
+    return await this.usuariosService.editarUsuario(id, editarUsuarioDto);
+}
 
       // Edita por fin al usuario
       return await this.usuariosService.editarUsuario( id ,crearUsuarioDto);
@@ -123,7 +120,7 @@ async editarUsuario(
   }
 //Trae todos los usuarios-----------------------------------------------------------------------------
 
-  @Delete(':id')
+  @Delete('eliminar/:id')
   @ApiBearerAuth()
   @Roles([RolesEnum.ADMINISTRADOR])
   @UseGuards(AuthGuard)
