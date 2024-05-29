@@ -4,10 +4,7 @@ import { RolesEnum } from "src/auth/enums/roles.enum"
 
 export class EditarUsuario{   
    
-    @IsOptional()
-    @IsNumber()
-    id?: number
-
+  
     @IsOptional()
     @IsString()
     @IsNotEmpty()

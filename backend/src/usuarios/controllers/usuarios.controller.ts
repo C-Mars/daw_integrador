@@ -94,16 +94,15 @@ async registrarUsuario(
   }))
 async editarUsuario(
   @Param('id', ParseIntPipe) id: number,
-  @Body() crearUsuarioDto: CrearUsuarioDto,
+  @Body() editarUsuarioDto: CrearUsuarioDto,
   @UploadedFile() foto: Express.Multer.File) {
 
-    // Registra por fin al usuario
-    return await this.usuariosService.editarUsuario(id, editarUsuarioDto);
+  
+      // Edita por fin al usuario
+      return await this.usuariosService.editarUsuario( id ,editarUsuarioDto);
 }
 
-      // Edita por fin al usuario
-      return await this.usuariosService.editarUsuario( id ,crearUsuarioDto);
-};
+
 
 //Editar una contraseña de un usuario en particular-----------------------------------------------------------------------------
 
@@ -127,7 +126,7 @@ async editarUsuario(
   async deleteUsuarios(
     @Param('id', ParseIntPipe) id: number): Promise<Usuario> {
     return await this.usuariosService.borrarUsuario(id);
+    }
+    
+
   }
-
-}
-
