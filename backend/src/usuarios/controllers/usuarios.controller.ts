@@ -96,8 +96,11 @@ async editarUsuario(
   @Param('id', ParseIntPipe) id: number,
   @Body() editarUsuarioDto: CrearUsuarioDto,
   @UploadedFile() foto: Express.Multer.File) {
-
-  
+    if (foto) {
+     editarUsuarioDto.foto = foto.filename;
+     
+      await this.archivosService.guardarArchivo(foto);
+  }
       // Edita por fin al usuario
       return await this.usuariosService.editarUsuario( id ,editarUsuarioDto);
 }
@@ -106,7 +109,7 @@ async editarUsuario(
 
 //Editar una contraseña de un usuario en particular-----------------------------------------------------------------------------
 
-  @Patch(':id')
+  @Patch('clave/:id')
   @ApiBearerAuth()
   @Roles([RolesEnum.EJECUTOR])
   @UseGuards(AuthGuard)
@@ -117,7 +120,7 @@ async editarUsuario(
     return await this.usuariosService.editarUsuario(id, editarUsuarioDto);
 
   }
-//Trae todos los usuarios-----------------------------------------------------------------------------
+//Elimina usuario-----------------------------------------------------------------------------
 
   @Delete('eliminar/:id')
   @ApiBearerAuth()
