@@ -23,7 +23,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { UsuariosService } from '../../services/usuarios.service';
 import { EditarUsuarioDto } from '../../dtos/editar-usuario.dto';
 import { NgIf } from '@angular/common';
-import { Console, error } from 'node:console';
+
 
 
 

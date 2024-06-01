@@ -94,7 +94,7 @@ async registrarUsuario(
   }))
 async editarUsuario(
   @Param('id', ParseIntPipe) id: number,
-  @Body() editarUsuarioDto: CrearUsuarioDto,
+  @Body() editarUsuarioDto: EditarUsuario,
   @UploadedFile() foto: Express.Multer.File) {
     if (foto) {
      editarUsuarioDto.foto = foto.filename;

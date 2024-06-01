@@ -71,18 +71,18 @@ export class UsuariosService {
       );
     }
     
-    editar(usuarioDto: EditarUsuarioDto): Observable<UsuarioDto> {
+    editar(editarUsuarioDto: EditarUsuarioDto): Observable<UsuarioDto> {
       if (isPlatformBrowser(this.platformId)){
         if (!this.hasRole(RolesEnum.ADMINISTRADOR)) {
           throw new Error('El usuario no esta autorizado para ver esta sección');
         }
       }
       
-      const url = `${environment.apiUrl}/usuarios/editar/${usuarioDto.id}`;
-      return this._client.put<UsuarioDto>(url, usuarioDto);
+      const url = `${environment.apiUrl}/usuarios/editar/${editarUsuarioDto.id}`;
+      return this._client.put<UsuarioDto>(url, editarUsuarioDto);
     }
 
-    eliminar(usuarioDto: UsuarioDto): Observable<any> {
+    eliminar(usuarioDto: UsuarioDto): Observable<UsuarioDto> {
       if (isPlatformBrowser(this.platformId)){
         if (!this.hasRole(RolesEnum.ADMINISTRADOR)) {
           throw new Error('El usuario no está autorizado para ver esta sección');

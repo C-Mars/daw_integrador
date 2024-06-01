@@ -6,7 +6,6 @@ export class EditarUsuario{
    
   
     @IsOptional()
-    
     id?:number
  
 
