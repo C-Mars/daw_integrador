@@ -6,19 +6,16 @@ export class EditarUsuario{
    
   
     @IsOptional()
-    @IsString()
-    @IsNotEmpty()
+    
     id?:number
  
 
     @IsOptional()
     @IsString()
-    @IsNotEmpty()
     nombres?: string
     
     @IsOptional()
     @IsString()
-    @IsNotEmpty()
     apellidos?:string
     
     @IsOptional()
@@ -30,22 +27,18 @@ export class EditarUsuario{
     
     @IsOptional()
     @IsString()
-    @IsNotEmpty()
     rol?: RolesEnum
    
     @IsOptional()
     @IsString()
-    @IsNotEmpty()
     nombreUsuario?: string
 
     // @Transform(({value})=> value.thim())
     @IsOptional()
-    @IsNotEmpty()
     @MinLength(6)
     clave?:string
 
     @IsOptional()
     @IsString()
-    @IsNotEmpty()
     estado?: EstadosUsuarioEnum
 }

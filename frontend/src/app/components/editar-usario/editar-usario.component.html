@@ -38,28 +38,7 @@
         <label for="email">Email</label>
       </p-floatLabel>
     </div>
-    <!-- <div class="input-container">
-      <p-floatLabel class="p-2">
-        <input 
-        id="nombreUsuario" 
-        pInputText 
-        type="text" 
-        formControlName="nombreUsuario" 
-        autocomplete="off" />
-        <label for="nombreUsuario">Nombre de Usuario</label>
-      </p-floatLabel>
-    </div>
-    <div class="input-container">
-      <p-floatLabel class="p-2">
-        <input 
-        id="clave" 
-        pInputText 
-        type="password" 
-        formControlName="clave" 
-        autocomplete="off" />
-        <label for="clave">Contraseña:</label>
-      </p-floatLabel>
-    </div> -->
+
     <div class="input-container">
       <label for="rol">Rol: </label>
       <p-dropdown
@@ -71,7 +50,7 @@
       ></p-dropdown>
     </div>
     
-      <div class="input-container">
+      <!-- <div class="input-container">
         <label for="estados">Estado:</label>
         <p-dropdown
           id="estado"
@@ -80,16 +59,20 @@
           [options]="estados"
           formControlName="estado"
         ></p-dropdown>
-      </div>
+      </div> -->
   
     <div class="input-container">
-      <p-fileUpload  
-        mode="basic" 
+      <p-toast></p-toast>
+      <p-fileUpload
+        mode="advanced"
         chooseIcon="pi pi-upload"
-        name="demo[]" 
-        accept="image/*" 
-        maxFileSize="1000000" 
-        (onUpload)="onUpload($event)" />
+        name="demo[]"
+        accept="image/*"
+        maxFileSize="1000000"
+        (onUpload)="onUpload($event)"
+        [auto]="true"
+        chooseLabel="Foto"
+      ></p-fileUpload>
     </div>
     <p-button 
     [rounded]="true"

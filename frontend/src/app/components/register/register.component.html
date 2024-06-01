@@ -70,24 +70,19 @@
         formControlName="rol"
       ></p-dropdown>
     </div>
-    <!-- <div class="input-container">
-      <label for="rol">Estado: </label>
-      <p-dropdown
-        id="estado"
-        appendTo="body"
-        placeholder="Seleccionar"
-        [options]="estados"
-        formControlName="estado"
-      ></p-dropdown>
-    </div> -->
+ 
     <div class="input-container">
-      <p-fileUpload  
-        mode="basic" 
+      <p-toast></p-toast>
+      <p-fileUpload
+        mode="advanced"
         chooseIcon="pi pi-upload"
-        name="demo[]" 
-        accept="image/*" 
-        maxFileSize="1000000" 
-        (onUpload)="onUpload($event)" />
+        name="demo[]"
+        accept="image/*"
+        maxFileSize="1000000"
+        (onUpload)="onUpload($event)"
+        [auto]="true"
+        chooseLabel="Foto"
+      ></p-fileUpload>
     </div>
     <p-button 
     [rounded]="true"
