@@ -6,20 +6,23 @@ import { EstadosUsuarioEnum } from '../../auth/enums/estado-usuario.enum';
 import { CrearUsuarioDto } from '../dto/crear-usuario.dto';
 import { EditarUsuario } from '../dto/editar-usuario.dto';
 import * as bcrypt from "bcrypt";
+import { ArchivosService } from 'src/archivos/service/archivos.service';
+import { join } from 'path';
+import { existsSync } from 'fs';
 
 @Injectable()
 export class UsuariosService {
   constructor(
-    @InjectRepository(Usuario) private usuariosRepo: Repository<Usuario>,
+    @InjectRepository(Usuario) 
+    private usuariosRepo: Repository<Usuario>,
+    private archivosService: ArchivosService
   ) {}
 
 
-  async crearUsuario(crearUsuarioDto:CrearUsuarioDto):Promise<Usuario>{
-    return await this.usuariosRepo.save(crearUsuarioDto)
-  }
 
-   async registroUsuario({nombres,apellidos,clave,nombreUsuario,email,foto,rol}:CrearUsuarioDto){
 
+   async registroUsuario(crearUsuarioDto: CrearUsuarioDto):Promise<Usuario>{
+    const { nombres, apellidos, clave, nombreUsuario, email, rol } = crearUsuarioDto;
     const usuEmail = await this.obtenerUsuarioPorEmail(email)
     const usuNombre = await this.obtenerUsuarioPorNombreDeUsuario(nombreUsuario)
     
@@ -27,7 +30,10 @@ export class UsuariosService {
     if(usuEmail || usuNombre){
       throw new BadRequestException('El usuario ya existe');
     }
-    return await this.crearUsuario({
+
+    const foto = crearUsuarioDto.foto;
+
+    const usuario = await this.usuariosRepo.create({
 
       nombres,
       apellidos,
@@ -37,6 +43,7 @@ export class UsuariosService {
       foto,
       rol
     });
+    return await this.usuariosRepo.save(usuario);
   }
   
   async obtenerUsuarioPorEmail(
@@ -117,32 +124,52 @@ export class UsuariosService {
   async editarUsuario(id: number, editarUsuario: EditarUsuario)
   : Promise<Usuario> 
   {
-    const existeUsu= await this.usuariosRepo.findOne({
+    const usuario= await this.usuariosRepo.findOne({
       where: {
         id,
         estado: EstadosUsuarioEnum.ACTIVO,
       },
     });
-    if (!existeUsu) {
+    
+    if (!usuario) {
       throw new UnauthorizedException(
         'El usuario no existe',
       );
     }
-    const datosActualizados = {
-      id: editarUsuario.id!as number, 
-      nombres: editarUsuario.nombres!,
-      apellidos:editarUsuario.apellidos!,
-      clave: editarUsuario.clave!,
-      nombreUsuario:editarUsuario.nombreUsuario!,
-      email: editarUsuario.email!,
-      foto: editarUsuario.foto!,
-      rol: editarUsuario.rol!,
-      estado: editarUsuario.estado!
-    }
-     
-    await this.usuariosRepo.update({ id }, datosActualizados);
-  
-    return existeUsu
+    Object.assign(usuario, editarUsuario);
+
+   return await this.usuariosRepo.save(usuario);
 
 }
+async guardarFoto(id: number, foto: Express.Multer.File)
+  : Promise<string> 
+  {
+    const usuario= await this.usuariosRepo.findOne({
+      where: {
+        id,
+        estado: EstadosUsuarioEnum.ACTIVO,
+      },
+    });
+    
+    if (!usuario) {
+      throw new UnauthorizedException(
+        'El usuario no existe',
+      );
+    }
+    const nombreArchivo = await this.archivosService.guardarArchivo(foto);
+    
+    usuario.foto = nombreArchivo;
+    
+    await this.usuariosRepo.save(usuario);
+
+    return nombreArchivo;
+  }
+  
+  async getStaticFoto(imageName:string){
+    const path =join(__dirname, '../../../static/usuarios', imageName)
+    if(!existsSync(path)){
+      throw new BadRequestException(`No se encuentra la imagen del usuario:  ${imageName}`)
+    }
+    return path; 
+  }
 }

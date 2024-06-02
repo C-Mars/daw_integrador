@@ -1,4 +1,4 @@
-import { Controller, Delete, Get, Patch, UseGuards, Param, ParseIntPipe, Body, Post, UseInterceptors, UploadedFile, BadRequestException } from '@nestjs/common';
+import { Controller, Delete, Get, Patch, UseGuards, Param, ParseIntPipe, Body, Post, UseInterceptors, UploadedFile, BadRequestException, Res } from '@nestjs/common';
 import { UsuariosService } from '../services/usuarios.service';
 import { Roles } from '../../auth/decorators/roles.decorator';
 import { RolesEnum } from '../../auth/enums/roles.enum';
@@ -12,12 +12,14 @@ import { diskStorage } from 'multer';
 import { extname } from 'path';
 import { ArchivosService } from 'src/archivos/service/archivos.service';
 import { CrearUsuarioDto } from '../dto/crear-usuario.dto';
+import { Response } from 'express';
 
 @ApiTags('usuarios')
 @Controller('/usuarios')
-export class UsuariosController {
+export class UsuariosController  {
   constructor(private usuariosService: UsuariosService,
-    private archivosService: ArchivosService
+    private archivosService: ArchivosService,
+   
   ) { }
 // Crear Usuarios-----------------------------------------------------------------------------
   @Post()
@@ -47,7 +49,8 @@ async registrarUsuario(
           crearUsuarioDto.foto = foto.filename;
          
           await this.archivosService.guardarArchivo(foto);
-      }
+          
+  }
 
       // Registra por fin al usuario
       return await this.usuariosService.registroUsuario(crearUsuarioDto);
@@ -71,8 +74,18 @@ async registrarUsuario(
     @Param('id', ParseIntPipe) id: number): Promise<Usuario> {
     return await this.usuariosService.findOneById(id);
   }
-
-//Trae edita un usuario-----------------------------------------------------------------------------
+// Tre la foto del usuario------------------------------------------------------------------------------------------
+  @Get('foto/:imageName')
+  @ApiBearerAuth()
+  @Roles([RolesEnum.ADMINISTRADOR])
+  @UseGuards(AuthGuard)
+  async getfoto(
+    @Res() res: Response,
+    @Param('imageName') imageName: string ){
+    const path = await this.usuariosService.getStaticFoto(imageName);
+    res.sendFile(path);
+  }
+//Edita un usuario-----------------------------------------------------------------------------
 
   @Patch('editar/:id')
   @ApiBearerAuth()
@@ -92,21 +105,21 @@ async registrarUsuario(
           },
       })
   }))
-async editarUsuario(
-  @Param('id', ParseIntPipe) id: number,
-  @Body() editarUsuarioDto: EditarUsuario,
-  @UploadedFile() foto: Express.Multer.File) {
-    if (foto) {
-     editarUsuarioDto.foto = foto.filename;
+  async editarUsuario(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() editarUsuarioDto: EditarUsuario,
+    @UploadedFile() foto: Express.Multer.File) {
+      if (foto) {
+        editarUsuarioDto.foto = foto.filename;
      
-      await this.archivosService.guardarArchivo(foto);
-  }
-      // Edita por fin al usuario
-      return await this.usuariosService.editarUsuario( id ,editarUsuarioDto);
-}
-
-
-
+        await this.archivosService.guardarArchivo(foto);
+      }
+    // Edita por fin al usuario
+    return await this.usuariosService.editarUsuario( id ,editarUsuarioDto);
+    }
+   
+    
+       
 //Editar una contraseña de un usuario en particular-----------------------------------------------------------------------------
 
   @Patch('clave/:id')

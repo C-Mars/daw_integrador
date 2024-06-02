@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
-import { createReadStream, createWriteStream, writeFileSync } from 'fs';//file sistem
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { createReadStream, createWriteStream, existsSync, writeFileSync } from 'fs';//file sistem
 import { extname, join } from 'path';
 import { writeFile } from 'fs/promises';
 
@@ -25,10 +25,20 @@ export class ArchivosService {
     // Esperar a que se complete la escritura del archivo
     await new Promise<void>((resolve, reject) => {
       writeStream.on('finish', resolve);
-      writeStream.on('error', reject);
+      writeStream.on('error', reject);  
     });
 
 
    return nombreArchivo;
   }
+
+   
+  // getStaticFoto(imageName:string){
+  //   const path =join(__dirname, '../../../static/usuarios', imageName)
+  //   if(!existsSync){
+  //     throw new BadRequestException(`No se encuentra la imagen del usuario ${imageName}`)
+  //   }
+  //   return path; 
+  // }
 }
+

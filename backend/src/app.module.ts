@@ -6,6 +6,8 @@ import { AuditoriaModule } from './auditoria/auditoria.module';
 import { ClientesModule } from './clientes/clientes.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtModule } from '@nestjs/jwt';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 
 
@@ -35,7 +37,9 @@ import { JwtModule } from '@nestjs/jwt';
   ActividadesModule, 
   AuditoriaModule, 
   ClientesModule,
-  ],
+  ServeStaticModule.forRoot({
+    rootPath: join(__dirname, '..', 'static/usuarios')  
+})],
   controllers: [],
   providers: [],
 })

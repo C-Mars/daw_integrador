@@ -6,12 +6,13 @@ import { Usuario } from './entities/usuario.entity';
 
 import { ArchivosModule } from 'src/archivos/archivos.module';
 import { ArchivosService } from 'src/archivos/service/archivos.service';
+import { ConfigService } from '@nestjs/config';
 
 
 @Module({
   controllers: [UsuariosController],
-  imports:[TypeOrmModule.forFeature([Usuario]),ArchivosModule],
-  providers: [UsuariosService,ArchivosService],
+  imports:[TypeOrmModule.forFeature([Usuario]),ArchivosModule,UsuariosModule],
+  providers: [UsuariosService,ArchivosService,ConfigService],
   exports:[UsuariosService]
 })
 export class UsuariosModule {}
