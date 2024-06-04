@@ -46,16 +46,15 @@ async registrarUsuario(
 
       
       if (foto) {
-          crearUsuarioDto.foto = foto.filename;
          
-          await this.archivosService.guardarArchivo(foto);
+          crearUsuarioDto.foto  = await this.archivosService.guardarArchivo(foto);
           
   }
 
       // Registra por fin al usuario
       return await this.usuariosService.registroUsuario(crearUsuarioDto);
 };
-//Trae todos los usuarios-----------------------------------------------------------------------------
+//Trae todos los usuarios activos-----------------------------------------------------------------------------
 
   @Get()
   @ApiBearerAuth()
@@ -64,7 +63,16 @@ async registrarUsuario(
   async getUsuarios() {
     return await this.usuariosService.obtenerUsuarios();
   }
-//Trae un usuario-----------------------------------------------------------------------------
+
+//Trae todos los usuarios--------------------------------------------------------------------------------------
+@Get('/todos')
+@ApiBearerAuth()
+@Roles([RolesEnum.ADMINISTRADOR])
+@UseGuards(AuthGuard)
+async getUsuariosTodos() {
+  return await this.usuariosService.obtenerUsuariosTodos();
+}
+//Trae un usuario----------------------------------------------------------------------------------------------
 
   @Get(':id')
   @ApiBearerAuth()
@@ -110,13 +118,11 @@ async registrarUsuario(
     @Body() editarUsuarioDto: EditarUsuario,
     @UploadedFile() foto: Express.Multer.File) {
       if (foto) {
-        editarUsuarioDto.foto = foto.filename;
-     
-        await this.archivosService.guardarArchivo(foto);
+        editarUsuarioDto.foto  = await this.archivosService.guardarArchivo(foto);
       }
     // Edita por fin al usuario
     return await this.usuariosService.editarUsuario( id ,editarUsuarioDto);
-    }
+    }    
    
     
        

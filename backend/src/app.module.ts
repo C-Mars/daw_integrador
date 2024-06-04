@@ -38,7 +38,8 @@ import { join } from 'path';
   AuditoriaModule, 
   ClientesModule,
   ServeStaticModule.forRoot({
-    rootPath: join(__dirname, '..', 'static/usuarios')  
+    rootPath: join(__dirname, '..', '/static/usuarios'),
+    serveRoot: '/public/usuarios'  
 })],
   controllers: [],
   providers: [],

@@ -84,6 +84,14 @@ export class UsuariosService {
     return usuarios;
   }
 
+  async obtenerUsuariosTodos(): Promise<Usuario[]> {
+    const usuarios: Usuario[] = await this.usuariosRepo.find({
+
+    });
+    return usuarios;
+  }
+
+
   async findOneById(id: number): Promise<Usuario> {
     const usuario = await this.usuariosRepo.findOne({
       where: {
