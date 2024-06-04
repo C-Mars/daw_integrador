@@ -26,9 +26,17 @@ import { NgIf } from "@angular/common";
     templateUrl: './login.component.html',
     styleUrl: './login.component.scss',
     selector: 'app-login',
-    imports: [ReactiveFormsModule, 
+    imports: [
+      ReactiveFormsModule, 
       DialogModule,
-      ToolbarModule,NgIf, InputTextModule,ButtonModule,FloatLabelModule,PasswordModule,ImageModule,ToastModule]
+      ToolbarModule,
+      NgIf, 
+      InputTextModule,
+      ButtonModule,
+      FloatLabelModule,
+      PasswordModule,
+      ImageModule,
+      ToastModule]
 })
 export class LoginComponent {
   
@@ -72,7 +80,7 @@ export class LoginComponent {
                 this.router.navigateByUrl('inicio-admin');
                 
               } else {
-                this.router.navigateByUrl('');
+                this.router.navigateByUrl('inicio-usuarios');
               }
             },
             error: (err) => {

@@ -4,9 +4,7 @@ import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable } from 'rxjs';
 import { RolesEnum } from '../enums/roles.enum';
-import { UsuarioDto } from '../dtos/usuario.dto';
 import { environment } from '../environments/environment';
-import { EditarUsuarioDto } from '../dtos/editar-usuario.dto';
 import { isPlatformBrowser } from '@angular/common';
 
 
@@ -29,9 +27,7 @@ export class AuthService {
     });
   }
 
-  //  registroUsuario(detalleUsuario: UsuarioDto) {
-  //     return this._client.post(environment.apiUrl +'/auth/registro', detalleUsuario);
-  //   }
+ 
   setSession(token: string) {
     sessionStorage.setItem('token', token);
   }

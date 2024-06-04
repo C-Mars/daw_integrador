@@ -8,6 +8,8 @@ import { ClientesAdminComponent } from './components/clientes-admin/clientes-adm
 import { InicioAdminComponent } from './components/inicio-admin/inicio-admin.component';
 import { TablaAuditoriaComponent } from './components/tabla-auditoria/tabla-auditoria.component';
 import { AuditoriaAdminComponent } from './components/auditoria-admin/auditoria-admin.component';
+import { InicioUsuarioComponent } from './components/inicio-usuario/inicio-usuario.component';
+import { ActividadesUsuariosComponent } from './components/actividades-usuarios/actividades-usuarios.component';
 
 
 export const routes: Routes = [
@@ -25,7 +27,7 @@ export const routes: Routes = [
     component: InicioAdminComponent
 },
 {
-    path:'actividades',
+    path:'actividades-admin',
     component:ActividadesAdminComponent,
 },
 {
@@ -39,6 +41,14 @@ export const routes: Routes = [
 {
     path:'auditoria',
     component:AuditoriaAdminComponent,
+},
+{
+    path:'inicio-usuarios',
+    component: InicioUsuarioComponent,
+},
+{
+    path:'actividades-usuarios',
+    component: ActividadesUsuariosComponent,
 },
 {
     path: '**', 

@@ -7,7 +7,7 @@ import { ClienteDto } from '../dtos/cliente.dto';
 import { environment } from '../environments/environment';
 import { EditarClienteDto } from '../dtos/editar-cliente.dto';
 import { HttpClient } from '@angular/common/http';
-import { AuthService } from './auth.service';
+
 
 @Injectable({
   providedIn: 'root'

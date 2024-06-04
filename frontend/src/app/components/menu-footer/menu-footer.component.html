@@ -1,6 +1,6 @@
 <p-sidebar [(visible)]="visible" position="bottom">
     <div class="justify-content-center p-2">
-      <div class="flex align-items-center justify-content-between m-2">
+      <div class="flex align-items-center justify-content-between  m-1">
         <button 
           pButton 
           icon="pi pi-users" 
@@ -8,7 +8,8 @@
           severity="success" 
           [outlined]="true" 
           [rounded]="true"
-          (click)="onUsersClick()">
+          (click)="onUsersClick()"
+          *ngIf="isLogged() && !isEjecutor()">
         </button>
         <button 
           pButton 
@@ -17,7 +18,8 @@
           severity="info" 
           [outlined]="true" 
           [rounded]="true" 
-          (click)="onCliClick()">
+          (click)="onCliClick()"
+          *ngIf="isLogged() && !isEjecutor()">
         </button>
         <button 
           pButton 
@@ -26,7 +28,8 @@
           severity="warning" 
           [outlined]="true" 
           [rounded]="true" 
-          (click)="onActClick()">
+          (click)="onActClick()"
+          *ngIf="isLogged() && !isEjecutor()">
         </button>
         <button 
           pButton 
@@ -34,8 +37,21 @@
           label="Auditoría"  
           [outlined]="true" 
           [rounded]="true" 
-          (click)="onAudClick()">
+          (click)="onAudClick()"
+          *ngIf="isLogged() && !isEjecutor()">
         </button>
+       
+          <button class="p-d-flex p-jc-center p-ai-center"
+            pButton 
+            icon="pi pi-list" 
+            label="Actividades" 
+            severity="warning" 
+            [outlined]="true" 
+            [rounded]="true" 
+            (click)="onActUsuClick()"
+            *ngIf="isLogged() && isEjecutor()">
+          </button>
+      
       </div>
     </div>
   </p-sidebar>
