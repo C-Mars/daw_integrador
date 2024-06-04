@@ -1,8 +1,8 @@
-import { EstadoActividadEnum } from "../../enums/estado-actividad.enum";
-import { OperacioAuditoriaEnum } from "../../enums/operacion-auditoria.enum";
-import { PrioridadActividadEnum } from "../../enums/prioridad-actividad.enum";
-import { ActividadDto } from "../actividad.dto";
-import { UsuarioDto } from "../usuario.dto";
+import { EstadoActividadEnum } from "../enums/estado-actividad.enum";
+import { OperacioAuditoriaEnum } from "../enums/operacion-auditoria.enum";
+import { PrioridadActividadEnum } from "../enums/prioridad-actividad.enum";
+import { ActividadDto } from "./actividad.dto";
+import { UsuarioDto } from "./usuario.dto";
 
 
 export interface AuditoriaDto{

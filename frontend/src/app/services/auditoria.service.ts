@@ -4,7 +4,7 @@ import { environment } from "../environments/environment";
 import { Injectable } from "@angular/core";
 import { CreateAuditoria } from "../dtos/create-auditoria.dto";
 import { ModificacionAuditoria } from "../dtos/edit-auditoria.dto";
-import { AuditoriaDto } from "../dtos/dtos-auditoria/auditoria.dto";
+import { AuditoriaDto } from "../dtos/auditoria.dto";
 
 @Injectable({
     providedIn: 'root'

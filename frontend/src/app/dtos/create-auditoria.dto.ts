@@ -14,6 +14,6 @@ export interface CreateAuditoria{
     idUsuarioModificacion: UsuarioDto;
     fechaModificacion: Date;
     fechaInicio: Date;
-    estado: EstadoActividadEnum;
-    operacion: OperacioAuditoriaEnum;
+    estado: EstadoActividadEnum|null;
+    operacion: OperacioAuditoriaEnum|null;
 }
