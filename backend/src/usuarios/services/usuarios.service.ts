@@ -134,8 +134,7 @@ export class UsuariosService {
   {
     const usuario= await this.usuariosRepo.findOne({
       where: {
-        id,
-        estado: EstadosUsuarioEnum.ACTIVO,
+        id
       },
     });
     
