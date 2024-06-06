@@ -24,7 +24,6 @@ export class Usuario {
     @Column({ type: 'varchar' })
     foto: string;
 
-
     @Column({ type: 'varchar' })
     email: string;
 

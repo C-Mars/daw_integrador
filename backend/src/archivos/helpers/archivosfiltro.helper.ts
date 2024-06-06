@@ -11,9 +11,11 @@ export const fileFilter = ( req: Express.Request,
  const validExtension = ['jpg','jpeg','png'];
 
  if(validExtension.includes(fileExtension)){
-    return callback(null ,true ) //acepta el archivo
+   //acepta el archivo
+    return callback(null ,true ) 
  }
    ;
-   callback(new BadRequestException('El archivo no corresponde a una imagen'), false);//no hacepta el archivo
+   //no hacepta el archivo
+   callback(new BadRequestException('El archivo no corresponde a una imagen'), false);
 
 }

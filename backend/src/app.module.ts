@@ -39,7 +39,7 @@ import { join } from 'path';
   ClientesModule,
   ServeStaticModule.forRoot({
     rootPath: join(__dirname, '..', '/static/usuarios'),
-    serveRoot: '/public/usuarios'  
+    serveRoot: '../public/usuarios'  
 })],
   controllers: [],
   providers: [],

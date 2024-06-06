@@ -9,16 +9,19 @@ import { EditarUsuario } from '../dto/editar-usuario.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { fileFilter } from '../../archivos/helpers/archivosfiltro.helper';
 import { diskStorage } from 'multer';
-import { extname } from 'path';
+import { ConfigService } from '@nestjs/config';
 import { ArchivosService } from 'src/archivos/service/archivos.service';
 import { CrearUsuarioDto } from '../dto/crear-usuario.dto';
 import { Response } from 'express';
+import { fileNamer } from 'src/archivos/helpers/archivosnombre.helper';
+import { AjustesUsuario } from '../dto/ajustes-usuario.dto';
 
 @ApiTags('usuarios')
 @Controller('/usuarios')
 export class UsuariosController  {
   constructor(private usuariosService: UsuariosService,
     private archivosService: ArchivosService,
+    private configService:ConfigService
    
   ) { }
 // Crear Usuarios-----------------------------------------------------------------------------
@@ -32,23 +35,16 @@ export class UsuariosController  {
       fileFilter: fileFilter,
       //Donde se va a guardar el archivo
       storage: diskStorage({
-          destination: '/backend/static/usuarios',
-          filename: (req, foto, cb) => {
-              //Lo hago para que el nombre que suba y se guarde en la BD sea distinto al archivo que subio el usuario
-              const cambioNombre = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('');
-              cb(null, `${cambioNombre}${foto ? extname(foto.originalname) : ''}`);
-          },
-      })
+          destination: '../../../static/usuarios',
+          filename: fileNamer,
+  })
   }))
 async registrarUsuario(
   @Body() crearUsuarioDto: CrearUsuarioDto,
   @UploadedFile() foto: Express.Multer.File) {
-
-      
       if (foto) {
-         
-          crearUsuarioDto.foto  = await this.archivosService.guardarArchivo(foto);
-          
+          crearUsuarioDto.foto  = await this.archivosService.guardarArchivo(foto); 
+        // Creo que no va (crearUsuarioDto.fotoUrl = `${ this.configService.get('HOST_API') }/usuarios/foto/${ foto.filename }`; 
   }
 
       // Registra por fin al usuario
@@ -93,6 +89,7 @@ async getUsuariosTodos() {
     const path = await this.usuariosService.getStaticFoto(imageName);
     res.sendFile(path);
   }
+
 //Edita un usuario-----------------------------------------------------------------------------
 
   @Patch('editar/:id')
@@ -106,11 +103,7 @@ async getUsuariosTodos() {
       //Donde se va a guardar el archivo
       storage: diskStorage({
           destination: '/backend/static/usuarios',
-          filename: (req, foto, cb) => {
-              //Lo hago para que el nombre que suba y se guarde en la BD sea distinto al archivo que subio el usuario
-              const cambioNombre = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('');
-              cb(null, `${cambioNombre}${foto ? extname(foto.originalname) : ''}`);
-          },
+          filename: fileNamer,
       })
   }))
   async editarUsuario(
@@ -118,7 +111,9 @@ async getUsuariosTodos() {
     @Body() editarUsuarioDto: EditarUsuario,
     @UploadedFile() foto: Express.Multer.File) {
       if (foto) {
-        editarUsuarioDto.foto  = await this.archivosService.guardarArchivo(foto);
+        editarUsuarioDto.foto  = await this.archivosService.guardarArchivo(foto); 
+        //Extra(creo que no va)
+        // editarUsuarioDto.fotoUrl = `http://localhost:3000/api/usuarios/foto/${ foto.filename }`; 
       }
     // Edita por fin al usuario
     return await this.usuariosService.editarUsuario( id ,editarUsuarioDto);
@@ -126,19 +121,18 @@ async getUsuariosTodos() {
    
     
        
-//Editar una contraseña de un usuario en particular-----------------------------------------------------------------------------
+//Editar una contraseña  y nombre de un usuario en particular-----------------------------------------------------------------------------
 
   @Patch('clave/:id')
   @ApiBearerAuth()
-  @Roles([RolesEnum.EJECUTOR])
   @UseGuards(AuthGuard)
   async patchUsuariosContraseña(
     @Param('id', ParseIntPipe) id: number,
-    @Body() editarUsuarioDto: EditarUsuario,
+    @Body() ajustesUsuarioDto: AjustesUsuario,
   ) {
-    return await this.usuariosService.editarUsuario(id, editarUsuarioDto);
-
+    return await this.usuariosService.ajustesUsuario(id, ajustesUsuarioDto);
   }
+  
 //Elimina usuario-----------------------------------------------------------------------------
 
   @Delete('eliminar/:id')

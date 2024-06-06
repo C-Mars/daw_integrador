@@ -1,15 +1,15 @@
 import { Injectable, PLATFORM_ID, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { RolesEnum } from '../enums/roles.enum';
 import { UsuarioDto } from '../dtos/usuario.dto';
-
 import { EditarUsuarioDto } from '../dtos/editar-usuario.dto';
 import { HttpClient } from '@angular/common/http';
 import { isPlatformBrowser } from '@angular/common';
 import { CrearUsuarioDto } from '../dtos/crear-usuario.dto';
 import { environment } from '../environments/environment';
+import { AuthService } from './auth.service';
+import { AjustesUsuarioDto } from '../dtos/ajustes-usuario.dto';
 
 
 @Injectable({
@@ -17,88 +17,91 @@ import { environment } from '../environments/environment';
 })
 export class UsuariosService {
   private readonly platformId = inject(PLATFORM_ID);
-  constructor( 
+  constructor(
     private _client: HttpClient,
-    
+    private _authService: AuthService,
     private _router: Router) { }
-    
-    hasRole(rol: RolesEnum): boolean {
-        if (isPlatformBrowser(this.platformId)){
-          const token = sessionStorage.getItem('token');
-      
-          if (!token) {
-            return false;
-          };
-      
-          const userRole = new JwtHelperService().decodeToken(token).rol;
-          return userRole === rol;
-        }
-        
-        return false;
-      }
-  
-    getUsuarios(): Observable<UsuarioDto[]> {
-      if (isPlatformBrowser(this.platformId)){
-        if (!this.hasRole(RolesEnum.ADMINISTRADOR)) {
-          throw new Error('El usuario no esta autorizado para ver esta sección')
-        }
-      }
-      
-      const usuarios = this._client.get<UsuarioDto[]>(environment.apiUrl + '/usuarios');
-      return usuarios
-    }
 
-  
 
-    getFotoUsuario(id: string): Observable<Blob> {
-      if (isPlatformBrowser(this.platformId)){
-        if (!this.hasRole(RolesEnum.ADMINISTRADOR)) {
-          throw new Error('El usuario no esta autorizado para ver esta sección')
-        }
+  getUsuarios(): Observable<UsuarioDto[]> {
+    if (isPlatformBrowser(this.platformId)) {
+      if (!this._authService.hasRole(RolesEnum.ADMINISTRADOR)) {
+        throw new Error('El usuario no esta autorizado para ver esta sección')
       }
-      return this._client.get(`${environment.apiUrl}/usuarios/${id}`, { responseType: 'blob' });
     }
-    
-    crear(usuarioDto: CrearUsuarioDto): Observable<UsuarioDto> {
-      if (isPlatformBrowser(this.platformId)){
-        if (!this.hasRole(RolesEnum.ADMINISTRADOR)) {
-          throw new Error('El usuario no esta autorizado para ver esta sección')
-        }
-      }
-      return this._client.post<UsuarioDto>(
-        environment.apiUrl + '/usuarios',
-        usuarioDto
-      );
-    }
-    
-    editar(editarUsuarioDto: EditarUsuarioDto): Observable<UsuarioDto> {
-      if (isPlatformBrowser(this.platformId)){
-        if (!this.hasRole(RolesEnum.ADMINISTRADOR)) {
-          throw new Error('El usuario no esta autorizado para ver esta sección');
-        }
-      }
-      
-      const url = `${environment.apiUrl}/usuarios/editar/${editarUsuarioDto.id}`;
-      return this._client.put<UsuarioDto>(url, editarUsuarioDto);
-    }
-
-    eliminar(usuarioDto: UsuarioDto): Observable<UsuarioDto> {
-      if (isPlatformBrowser(this.platformId)){
-        if (!this.hasRole(RolesEnum.ADMINISTRADOR)) {
-          throw new Error('El usuario no está autorizado para ver esta sección');
-        }
-      }
-     
-      return this._client.delete<UsuarioDto>(`${environment.apiUrl}/usuarios/eliminar/${usuarioDto.id}`);
-    }
-
-    subirFoto(formData: FormData): Observable<any> {
-      if (isPlatformBrowser(this.platformId)){
-        if (!this.hasRole(RolesEnum.ADMINISTRADOR)) {
-          throw new Error('El usuario no esta autorizado para ver esta sección')
-        }
-      }
-      return this._client.post<any>(environment.apiUrl + '/usuarios', formData);
-    }
+    const usuarios = this._client.get<UsuarioDto[]>(`${environment?.apiUrl}/usuarios/todos`);
+    return usuarios
   }
-//
+
+
+
+  getFotoUsuario(usuarioDto: UsuarioDto): Observable<Blob> {
+    if (isPlatformBrowser(this.platformId)) {
+      if (!this._authService.hasRole(RolesEnum.ADMINISTRADOR)) {
+        throw new Error('El usuario no está autorizado para ver esta sección');
+      }
+    }
+    return this._client.get(`${environment.apiUrl}/usuarios/foto/${usuarioDto.foto}`,{ responseType: 'blob' })
+ 
+  }
+
+
+  crear(usuarioDto: CrearUsuarioDto): Observable<UsuarioDto> {
+    if (isPlatformBrowser(this.platformId)) {
+      if (!this._authService.hasRole(RolesEnum.ADMINISTRADOR)) {
+        throw new Error('El usuario no esta autorizado para ver esta sección')
+      }
+    }
+    return this._client.post<UsuarioDto>(
+      `${environment?.apiUrl}/usuarios`,
+      usuarioDto
+    );
+  }
+
+  editar(UsuarioDto: EditarUsuarioDto) {
+    if (isPlatformBrowser(this.platformId)) {
+      if (!this._authService.hasRole(RolesEnum.ADMINISTRADOR)) {
+        throw new Error('El usuario no está autorizado para ver esta sección');
+      }
+    }
+      return this._client.patch(
+        `${environment?.apiUrl}/usuarios/editar/${UsuarioDto.id}`, UsuarioDto
+      );
+    
+  }
+
+  ajustesUsuario(UsuarioDto: AjustesUsuarioDto) {
+    if (isPlatformBrowser(this.platformId)) {
+      if (!this._authService.hasRole(RolesEnum.ADMINISTRADOR)) {
+        throw new Error('El usuario no está autorizado para ver esta sección');
+      }
+    }
+      return this._client.patch(
+        `${environment?.apiUrl}/usuarios/clave/${UsuarioDto.id}`, UsuarioDto
+      );
+    
+  }
+
+  eliminar(id: number): Observable<void> {
+    if (isPlatformBrowser(this.platformId)) {
+      if (!this._authService.hasRole(RolesEnum.ADMINISTRADOR)) {
+        throw new Error('El usuario no está autorizado para ver esta sección');
+      }
+    }
+  
+    return this._client.delete<void>(`${environment.apiUrl}/usuarios/eliminar/${id}`);
+  }
+
+  subirFoto(UsuarioDto: UsuarioDto , formData: FormData): Observable<any> {
+    if (isPlatformBrowser(this.platformId)) {
+      if (!this._authService.hasRole(RolesEnum.ADMINISTRADOR)) {
+        throw new Error('El usuario no esta autorizado para ver esta sección')
+      }
+    }
+    //  return this._client.post<any>(environment?.apiUrl + '/static/usuarios', formData);
+    return this._client.post<any>(
+      `${environment.apiUrl}/usuarios/foto/${UsuarioDto.foto}`, formData, 
+    )
+  
+  }
+}

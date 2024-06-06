@@ -31,14 +31,5 @@ export class ArchivosService {
 
    return nombreArchivo;
   }
-
-   
-  // getStaticFoto(imageName:string){
-  //   const path =join(__dirname, '../../../static/usuarios', imageName)
-  //   if(!existsSync){
-  //     throw new BadRequestException(`No se encuentra la imagen del usuario ${imageName}`)
-  //   }
-  //   return path; 
-  // }
 }
 
