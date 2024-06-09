@@ -6,6 +6,16 @@ import { writeFile } from 'fs/promises';
 @Injectable()
 export class ArchivosService {
   async guardarArchivo(foto: Express.Multer.File): Promise<string> {
+    
+    if (!foto) {
+      console.error('Archivo no válido (indefinido o nulo):', foto);
+      return;
+    }
+  
+    if (!foto.originalname || !foto.path) {
+      console.error('Archivo no válido (sin propiedad originalname o path no funciona):', foto);
+      return;
+    }
     // Genera un nombre único para el archivo
     const randomName = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('');
     const extension = extname(foto.originalname);
