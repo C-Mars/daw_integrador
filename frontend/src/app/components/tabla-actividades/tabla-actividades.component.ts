@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MessageService } from 'primeng/api';
 import { ActividadesService } from '../../services/actividades.service';
 import { ActividadDto } from '../../dtos/actividad.dto';
-import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-tabla-actividades',

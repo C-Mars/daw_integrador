@@ -2,7 +2,7 @@ import { Actividades } from "src/actividades/entities/actividades.entities";
 import { Usuario } from "src/usuarios/entities/usuario.entity";
 import { PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from "typeorm";
 import { OperacionAuditoria } from "../enums/auditoriaEnum.enum";
-import { Clientes } from "src/clientes/entities/clientes.entity";
+import { Clientes } from "../../clientes/entities/cliente.entity";
 import { EstadoActividad } from "src/actividades/enums/estado-actividad.enum";
 
 export class Auditoria{

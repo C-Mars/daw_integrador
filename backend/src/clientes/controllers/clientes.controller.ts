@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Patch, Delete, Param, Body, ParseIntPipe } from '@nestjs/common';
 import { ClientesService } from '../services/clientes.service';
-import { Cliente } from '../entities/cliente.entity';
+import { Clientes } from '../entities/cliente.entity';
 import { CrearClienteDto } from '../dto/crear-cliente.dto';
 import { EditarClienteDto } from '../dto/editar-cliente.dto';
 
@@ -19,7 +19,7 @@ export class ClientesController {
   }
 
   @Get(':id')
-  async getCliente(@Param('id', ParseIntPipe) id: number): Promise<Cliente> {
+  async getCliente(@Param('id', ParseIntPipe) id: number): Promise<Clientes> {
     return await this.clientesService.findOneById(id);
   }
 
@@ -32,7 +32,7 @@ export class ClientesController {
   }
 
   @Delete('eliminar/:id')
-  async deleteCliente(@Param('id', ParseIntPipe) id: number): Promise<Cliente> {
+  async deleteCliente(@Param('id', ParseIntPipe) id: number): Promise<Clientes> {
     return await this.clientesService.borrarCliente(id);
   }
 }

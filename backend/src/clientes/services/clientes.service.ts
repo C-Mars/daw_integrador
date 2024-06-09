@@ -1,6 +1,6 @@
 import { Injectable, BadRequestException, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Cliente } from '../entities/cliente.entity';
+import { Clientes } from '../entities/cliente.entity';
 import { Repository } from 'typeorm';
 import { CrearClienteDto } from '../dto/crear-cliente.dto';
 import { EditarClienteDto } from '../dto/editar-cliente.dto';
@@ -8,11 +8,11 @@ import { EditarClienteDto } from '../dto/editar-cliente.dto';
 @Injectable()
 export class ClientesService {
   constructor(
-    @InjectRepository(Cliente)
-    private clientesRepo: Repository<Cliente>,
+    @InjectRepository(Clientes)
+    private clientesRepo: Repository<Clientes>,
   ) {}
 
-  async registroCliente(crearClienteDto: CrearClienteDto): Promise<Cliente> {
+  async registroCliente(crearClienteDto: CrearClienteDto): Promise<Clientes> {
     const { nombres, apellidos, email } = crearClienteDto;
 
     const clienteExistente = await this.clientesRepo.findOne({ where: { email } });
@@ -29,15 +29,15 @@ export class ClientesService {
     return await this.clientesRepo.save(cliente);
   }
 
-  async obtenerClientePorEmail(email: string): Promise<Cliente> {
+  async obtenerClientePorEmail(email: string): Promise<Clientes> {
     return await this.clientesRepo.findOne({ where: { email } });
   }
 
-  async obtenerClientes(): Promise<Cliente[]> {
+  async obtenerClientes(): Promise<Clientes[]> {
     return await this.clientesRepo.find();
   }
 
-  async findOneById(id: number): Promise<Cliente> {
+  async findOneById(id: number): Promise<Clientes> {
     const cliente = await this.clientesRepo.findOne({ where: { id } });
     if (!cliente) {
       throw new UnauthorizedException('El cliente no existe');
@@ -45,13 +45,13 @@ export class ClientesService {
     return cliente;
   }
 
-  async editarCliente(id: number, editarClienteDto: EditarClienteDto): Promise<Cliente> {
+  async editarCliente(id: number, editarClienteDto: EditarClienteDto): Promise<Clientes> {
     const cliente = await this.findOneById(id);
     Object.assign(cliente, editarClienteDto);
     return await this.clientesRepo.save(cliente);
   }
 
-  async borrarCliente(id: number): Promise<Cliente> {
+  async borrarCliente(id: number): Promise<Clientes> {
     const cliente = await this.findOneById(id);
     await this.clientesRepo.remove(cliente);
     return cliente;

@@ -7,10 +7,8 @@ import { ModificarAuditoriaDto } from '../dtos/modificar-auditoria.dto';
 import { OperacionAuditoria } from '../enums/auditoriaEnum.enum';
 import { Actividades } from 'src/actividades/entities/actividades.entities';
 import { Usuario } from 'src/usuarios/entities/usuario.entity';
-import { Clientes } from 'src/clientes/entities/clientes.entity';
 import { ActividadesService } from 'src/actividades/services/actividades.service';
 import { UsuariosService } from 'src/usuarios/services/usuarios.service';
-import { ClientesService } from 'src/clientes/service/clientes.service';
 import { RolesEnum } from 'src/auth/enums/roles.enum';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 

@@ -1,16 +1,21 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Actividades } from 'src/actividades/entities/actividades.entities';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+@Entity()
+export class Clientes{
 
-@Entity({ name: 'clientes' })
-export class Cliente {
-  @PrimaryGeneratedColumn()
-  id: number;
+    @PrimaryGeneratedColumn()
+    id:number;
 
-  @Column({ type: 'varchar' })
-  nombres: string;
+    @Column()
+    nombres:string;
 
-  @Column({ type: 'varchar' })
-  apellidos: string;
+    @Column()
+    apellidos:string;
 
-  @Column({ type: 'varchar' })
-  email: string;
+    @Column()
+    email:string;
+
+    @OneToMany(() => Actividades, (actividades) => actividades.idUsuarioModificacion) 
+    actividades: Actividades[]; 
+    
 }

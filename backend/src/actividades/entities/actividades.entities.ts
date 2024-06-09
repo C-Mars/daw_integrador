@@ -2,7 +2,8 @@ import { PrimaryGeneratedColumn, Column, Entity, ManyToOne, JoinColumn } from "t
 import { EstadoActividad } from "../enums/estado-actividad.enum"
 import { PrioridadActividad } from "../enums/prioridad-actividad.enum"
 import { Usuario } from "src/usuarios/entities/usuario.entity"
-import { Clientes } from "src/clientes/entities/clientes.entity";
+import { Clientes } from "src/clientes/entities/cliente.entity";
+
 
 @Entity()
 export class Actividades{
