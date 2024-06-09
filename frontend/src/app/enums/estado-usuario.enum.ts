@@ -1,6 +1,6 @@
 
 export enum EstadosUsuarioEnum{
-    ACTIVO="ACTIVO",
-    BAJA="BAJA"
+    ACTIVO="activo",
+    BAJA="baja"
 }
 

@@ -5,7 +5,9 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { NgClass, NgIf, isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
 import { MenuFooterComponent } from '../menu-footer/menu-footer.component';
-
+import { RolesEnum } from '../../enums/roles.enum';
+import { TooltipModule } from 'primeng/tooltip';
+import { AjustesUsuarioComponent } from '../ajustes-usuario/ajustes-usuario.component';
 @Component({
   selector: 'app-header',
   standalone: true,
@@ -13,7 +15,9 @@ import { MenuFooterComponent } from '../menu-footer/menu-footer.component';
     ToolbarModule, 
     NgClass, 
     NgIf,
-    MenuFooterComponent],
+    MenuFooterComponent,
+    TooltipModule,
+    AjustesUsuarioComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
@@ -21,6 +25,7 @@ import { MenuFooterComponent } from '../menu-footer/menu-footer.component';
 export class HeaderComponent {
   menuOption: string = '';
   sidebarVisible: boolean = false;
+  dialogVisible: boolean = false;
   private _authService = inject(AuthService)
   private _router = inject(Router)
   private readonly platformId = inject(PLATFORM_ID);
@@ -33,7 +38,7 @@ export class HeaderComponent {
 
   @Output() usersClicked = new EventEmitter<void>();
 
-
+  // @Output() ajustesUsuario = new EventEmitter<void>();
 
   onLoginClick() {
     this.loginClicked.emit();
@@ -46,7 +51,10 @@ export class HeaderComponent {
     }
     return false;
   }
-  
+
+  // onAjustesUsuario() {
+  //   this.ajustesUsuario.emit();
+  // }
   
   cerrarSesion() {
     this._authService.logout();
@@ -56,11 +64,23 @@ export class HeaderComponent {
     this.sidebarVisible = !this.sidebarVisible;
     this.cd.detectChanges(); 
   }
+
   
+  onAjustesUsuario(){
+    this.dialogVisible = !this.dialogVisible;
+    this.cd.detectChanges(); 
+  }
+
   onUsersClick() {
     this.usersClicked.emit();
   }
   onHomeClick() {
     this._router.navigateByUrl('/inicio-admin');
+  }
+  onHomeUsuClick() {
+    this._router.navigateByUrl('/inicio-usuarios');
+  }
+  isEjecutor(): boolean {
+    return this._authService.hasRole(RolesEnum.EJECUTOR);
   }
 }

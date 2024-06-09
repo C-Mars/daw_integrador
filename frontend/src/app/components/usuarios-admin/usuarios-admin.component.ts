@@ -24,6 +24,5 @@ import { NgIf } from '@angular/common';
   styleUrl: './usuarios-admin.component.scss'
 })
 export class UsuariosAdminComponent  {
-  
 }
 

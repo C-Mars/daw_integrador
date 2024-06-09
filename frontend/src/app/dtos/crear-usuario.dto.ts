@@ -2,6 +2,7 @@ import { EstadosUsuarioEnum } from "../enums/estado-usuario.enum"
 import { RolesEnum } from "../enums/roles.enum"
 
 export interface CrearUsuarioDto{
+        id?:number |null,
         nombres: string|null,
         apellidos:string|null,
         email:string|null,

@@ -1,5 +1,5 @@
 <p-dialog 
-header="Inicio de Sesión"  
+header="Cambiar Contraseña"  
 [(visible)]="visible" 
 [modal]="true"  
 [closable]="false" 
@@ -7,26 +7,9 @@ class=" w-6 " >
     <ng-template 
     pTemplate="center">
         <form 
-        [formGroup]="form" 
+        [formGroup]="formAjustes" 
         class="pt-5">
-            <div 
-            class="flex pb-5">
-                <p-floatLabel 
-                class="p-2">
-                    <input 
-                    id="nombre-usuario" 
-                    pInputText 
-                    type="text" 
-                    formControlName="nombreUsuario" 
-                    autocomplete="off"/>
-                    <label 
-                    for="nombre-usuario"
-                    >Nombre de Usuario</label>
-                </p-floatLabel>
-            </div>
-    
-            <div 
-            class="flex pb-5">
+            <div class="flex pb-5">
                 <p-floatLabel 
                 class="p-2">
                     <p-password 
@@ -35,20 +18,44 @@ class=" w-6 " >
                     autocomplete="off" />
                     <label 
                     for="clave"
-                    >Contraseña:</label>
+                    >Contraseña anterior:</label>
                 </p-floatLabel>
-                
             </div>
+            <div class="flex pb-5">
+                <p-floatLabel 
+                class="p-2">
+                    <p-password 
+                    id="clave" 
+                    formControlName="clave" 
+                    autocomplete="off" />
+                    <label 
+                    for="clave"
+                    >Nueva contraseña:</label>
+                </p-floatLabel>
+            </div>
+                <div class="flex pb-5">
+                    <p-floatLabel 
+                    class="p-2">
+                        <p-password 
+                        id="clave" 
+                        formControlName="clave" 
+                        autocomplete="off" />
+                        <label 
+                        for="clave"
+                        >Repetir contraseña:</label>
+                    </p-floatLabel>
+                </div>
+                
             <div 
             class="flex justify-content-center">
                 <p-button 
-                label="Confirmar" 
-                (onClick)="login()" 
+                label="Actualizar" 
+                (onClick)=" loginAjustes()" 
                 [rounded]="true"
                 class="p-2" />
                 <p-button 
                 label="Cancelar" 
-                (onClick)="closeDialog()" 
+                (onClick)=" closeDialog()" 
                 [outlined]="true" 
                 [rounded]="true" 
                 class="p-2"/>
@@ -60,4 +67,3 @@ class=" w-6 " >
 
 <p-toast></p-toast>
 
-<!--  -->

@@ -3,10 +3,12 @@
   [(visible)]="visible"
   (onHide)="cerrar()"
   [modal]="true"
+  class="flex justify-content-center flex-wrap min-w-min md:min-w-max"
 >
+<div class="flex justify-content-center flex-wrap min-w-min md:min-w-max">
   <form [formGroup]="formEditarUsuario">
-    <div class="input-container">
-      <p-floatLabel class="p-2">
+    <div class="input-container min-w-min md:min-w-max">
+      <p-floatLabel class="m-2">
         <input 
         id="nombres" 
         pInputText 
@@ -16,8 +18,8 @@
         <label for="nombres">Nombre Completo</label>
       </p-floatLabel>
     </div>
-    <div class="input-container">
-      <p-floatLabel class="p-2">
+    <div class="input-container min-w-min md:min-w-max">
+      <p-floatLabel class="m-2">
         <input 
         id="apellidos" 
         pInputText 
@@ -27,8 +29,8 @@
         <label for="apellidos">Apellido Completo</label>
       </p-floatLabel>
     </div>
-    <div class="input-container">
-      <p-floatLabel class="p-2">
+    <div class="input-container min-w-min md:min-w-max">
+      <p-floatLabel class="m-2">
         <input 
         id="email" 
         pInputText 
@@ -38,8 +40,7 @@
         <label for="email">Email</label>
       </p-floatLabel>
     </div>
-
-    <div class="input-container">
+    <div class="input-container m-2 min-w-min md:min-w-max">
       <label for="rol">Rol: </label>
       <p-dropdown
         id="rol"
@@ -49,8 +50,7 @@
         formControlName="rol"
       ></p-dropdown>
     </div>
-    
-      <!-- <div class="input-container">
+      <div class="input-container m-2 min-w-min md:min-w-max" *ngIf="isEstadoView()">
         <label for="estados">Estado:</label>
         <p-dropdown
           id="estado"
@@ -59,25 +59,29 @@
           [options]="estados"
           formControlName="estado"
         ></p-dropdown>
-      </div> -->
-  
-    <div class="input-container">
+      </div>
+      <div class="input-container m-2 min-w-min md:min-w-max">
+        <p-fileUpload
+          mode="advanced"
+          chooseIcon="pi pi-upload"
+          name="demo[]"
+          accept="image/*"
+          maxFileSize="1000000"
+          [multiple]="true"
+          [auto]="true"
+          (onSelect)="fotoSeleccionada($event)"
+          (uploadHandler)="subirArchivo($event)"
+          chooseLabel="Foto"
+        >
+        </p-fileUpload>
+      </div>
       
-      <p-fileUpload
-        mode="advanced"
-        chooseIcon="pi pi-upload"
-        name="demo[]"
-        accept="image/*"
-        maxFileSize="1000000"
-        (onUpload)="onUpload($event)"
-        [auto]="true"
-        chooseLabel="Foto"
-      ></p-fileUpload>
-    </div>
-    <p-button 
-    [rounded]="true"
-    [label]="accion" 
-    (onClick)="enviar()" />
+      <p-button 
+      class="flex justify-content-center flex-wrap min-w-min md:min-w-max"
+      [rounded]="true"
+      [label]="accion" 
+      (onClick)="editar()" />
   </form>
+</div>
 </p-dialog>
 <p-toast></p-toast>

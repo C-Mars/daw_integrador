@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, PLATFORM_ID, inject } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -22,7 +22,10 @@ import { UsuarioDto } from '../../dtos/usuario.dto';
 import { DropdownModule } from 'primeng/dropdown';
 import { UsuariosService } from '../../services/usuarios.service';
 import { EditarUsuarioDto } from '../../dtos/editar-usuario.dto';
-import { NgIf } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
+import { DomSanitizer } from '@angular/platform-browser';
+import { AuthService } from '../../services/auth.service';
+import { catchError, finalize, of, tap } from 'rxjs';
 
 
 
@@ -39,7 +42,7 @@ import { NgIf } from '@angular/common';
     DialogModule,
     DropdownModule,
     ReactiveFormsModule,
-  NgIf],
+  NgIf,NgFor],
   templateUrl: './editar-usario.component.html',
   styleUrl: './editar-usario.component.scss'
 })
@@ -60,9 +63,12 @@ export class EditarUsarioComponent {
   roles = Object.values(RolesEnum);
 
   estados = Object.values(EstadosUsuarioEnum);
-
   
+  archivos: File[] = [];
   
+  loading = false;
+  
+  private readonly platformId = inject(PLATFORM_ID);
 
   formEditarUsuario = new FormGroup ({
     id: new FormControl<number | null>(null),
@@ -79,13 +85,16 @@ export class EditarUsarioComponent {
 constructor(
   private messageService: MessageService,
   private _router: Router,
-  private _usuariosService: UsuariosService
+  private _usuariosService: UsuariosService,
+  private sanitizer: DomSanitizer, 
+  private _authService:AuthService
 ) {}
 
 ngOnInit() {
   this._usuariosService.getUsuarios().subscribe({
     next: (res) => {
       this.usuarios = res;
+      this.usuario = this.usuarios[0];
     },
     error: (err) => {
       this.messageService.add({
@@ -118,7 +127,7 @@ ngOnChanges() {
   }
 }
 
-enviar() {
+editar() {
   if (!this.formEditarUsuario.valid) {
     this.formEditarUsuario.markAllAsTouched();
     this.messageService.add({
@@ -129,40 +138,37 @@ enviar() {
   }
   
     const usuarioDto = this.formEditarUsuario.getRawValue();
-
-    if (this.usuario) {
-      const editarUsuarioDto: EditarUsuarioDto = {
+   
+        if (this.usuario) {
+        const editarUsuarioDto: EditarUsuarioDto = {
         id: usuarioDto.id!,
         nombres: usuarioDto.nombres!,
         apellidos: usuarioDto.apellidos!,
         email: usuarioDto.email!,
+        foto:usuarioDto.foto,
         rol: usuarioDto.rol!,
-        estado: usuarioDto.estado!,
+        nombreUsuario: usuarioDto.nombreUsuario!,
+        clave:usuarioDto.clave!,
+        estado:usuarioDto.estado!
       };
       
-      if (usuarioDto.foto) {
-        editarUsuarioDto.foto! = usuarioDto.foto;
-      }
-
-      if (usuarioDto.nombreUsuario) {
-        editarUsuarioDto.nombreUsuario! = usuarioDto.nombreUsuario
-      }
-      if (usuarioDto.clave) {
-        editarUsuarioDto.clave! = usuarioDto.clave
-      }
       this._usuariosService.editar(editarUsuarioDto).subscribe({
         next: (res) => {
           this.cerrar();
           this.refrescar.emit(true);
           this.messageService.add({
             severity: 'success',
-            summary: 'Usuario editado con éxito!'
+            summary: 'Usuario editado con éxito!',
+            detail: 'Se ha realizado Los cambios al usuario'
           });
+          this.llenarTabla();
         },
         error: (err) => {
           this.messageService.add({
             severity: 'error',
-            summary: 'Ocurrió un error al editar el usuario' ,
+            summary: 'Ocurrió un error al editar el usuario',
+            detail: 'Contactar al administrador'
+            // detail: 'Detalles del error: ' + err.message
           });
           
         },
@@ -170,19 +176,10 @@ enviar() {
       });
     }
   }
-    
-    
-    // listUsuariosDrop() {
-    //   this._usuariosService.getUsuarios().subscribe(
-    //     response => {
-    //       this.listUsuarios = response.map(usuario => usuario.rol);
-    //     }
-    //   );
-    // }
+
 
     cerrar() {
       this.visibleChange.emit(false);
-      this.formEditarUsuario.reset();
     }
 
     closeDialog(){
@@ -190,24 +187,61 @@ enviar() {
       this.visibleChange.emit(this.visible);
       this.formEditarUsuario.reset();
     }
-      // Subir los archivos
-    onUpload(event: any) {
-      const formData = new FormData();
-      formData.append('foto', event.files[0]);
-      this._usuariosService.subirFoto(formData).subscribe({
-        next: (res) => {
-          
-          console.log('Foto subida con éxito', res);
-         
-        },
-        error: (err) => {
-         
-          console.error('Error al subir la foto', err);
+    
+  fotoSeleccionada(event: any): void {
+        this.archivos = [];
+        for (let file of event.files) {
+          this.archivos.push(file);
+
+        }
+      }
+    
+  subirArchivo(event:any): void {
+        if (!this.archivos.length || !this.usuario) {
           this.messageService.add({
             severity: 'error',
-            summary: 'Error al subir la foto',
+            summary: 'No hay fotos seleccionadas o no se ha seleccionado un usuario',
           });
+          return;
         }
-      });
+    
+        const formData = new FormData();
+        this.archivos.forEach(archivo => {
+          formData.append('foto', archivo.name);
+        });
+    
+        this.loading = true;
+        this._usuariosService.subirFoto(this.usuario, formData).pipe(
+          tap(res => {
+            if (res && res.url) {
+              console.log('URL de la foto subida:', res.url);
+              this.archivos = [];
+            } else {
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Error al subir la foto',
+              });
+            }
+          }),
+          catchError(err => {
+            console.error('Error al subir la foto', err);
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error al subir la foto',
+              detail: err.message ? err.message : 'Error desconocido (no se)',
+            });
+            return of(null);
+          }),
+          finalize(() => {
+            this.loading = false;
+          })
+        ).subscribe();
+      }
+    
+    
+    isEstadoView(): boolean {
+      return this.usuario?.estado === EstadosUsuarioEnum.BAJA;
     }
+
+    
 }

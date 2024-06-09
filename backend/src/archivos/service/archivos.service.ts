@@ -5,16 +5,15 @@ import { writeFile } from 'fs/promises';
 
 @Injectable()
 export class ArchivosService {
-  async guardarArchivo(file: Express.Multer.File): Promise<string> {
+  async guardarArchivo(foto: Express.Multer.File): Promise<string> {
     // Genera un nombre único para el archivo
     const randomName = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('');
-    const extension = extname(file.originalname);
+    const extension = extname(foto.originalname);
     const nombreArchivo = `${randomName}${extension}`;
     const rutaArchivo = join(__dirname, '..', '..','..', 'static', 'usuarios', nombreArchivo);
     
-   
     // Crea un flujo de lectura del archivo
-    const readStream = createReadStream(file.path);
+    const readStream = createReadStream(foto.path);
 
     // Crea un flujo de escritura para el archivo
     const writeStream = createWriteStream(rutaArchivo);
@@ -28,8 +27,8 @@ export class ArchivosService {
       writeStream.on('error', reject);  
     });
 
-
-   return nombreArchivo;
+    return nombreArchivo;
   }
 }
+
 

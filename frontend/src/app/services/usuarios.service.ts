@@ -9,7 +9,6 @@ import { isPlatformBrowser } from '@angular/common';
 import { CrearUsuarioDto } from '../dtos/crear-usuario.dto';
 import { environment } from '../environments/environment';
 import { AuthService } from './auth.service';
-import { AjustesUsuarioDto } from '../dtos/ajustes-usuario.dto';
 
 
 @Injectable({
@@ -46,17 +45,28 @@ export class UsuariosService {
   }
 
 
-  crear(usuarioDto: CrearUsuarioDto): Observable<UsuarioDto> {
+  // crearv(usuarioDto: CrearUsuarioDto): Observable<UsuarioDto> {
+  //   if (isPlatformBrowser(this.platformId)) {
+  //     if (!this._authService.hasRole(RolesEnum.ADMINISTRADOR)) {
+  //       throw new Error('El usuario no esta autorizado para ver esta sección')
+  //     }
+  //   }
+  //   return this._client.post<UsuarioDto>(
+  //     `${environment?.apiUrl}/usuarios`,
+  //     usuarioDto
+  //   );
+  // }
+  crear(formData: FormData): Observable<UsuarioDto> {
     if (isPlatformBrowser(this.platformId)) {
       if (!this._authService.hasRole(RolesEnum.ADMINISTRADOR)) {
         throw new Error('El usuario no esta autorizado para ver esta sección')
       }
     }
     return this._client.post<UsuarioDto>(
-      `${environment?.apiUrl}/usuarios`,
-      usuarioDto
+        `${environment.apiUrl}/usuarios`,
+        formData
     );
-  }
+}
 
   editar(UsuarioDto: EditarUsuarioDto) {
     if (isPlatformBrowser(this.platformId)) {
@@ -66,18 +76,6 @@ export class UsuariosService {
     }
       return this._client.patch(
         `${environment?.apiUrl}/usuarios/editar/${UsuarioDto.id}`, UsuarioDto
-      );
-    
-  }
-
-  ajustesUsuario(UsuarioDto: AjustesUsuarioDto) {
-    if (isPlatformBrowser(this.platformId)) {
-      if (!this._authService.hasRole(RolesEnum.ADMINISTRADOR)) {
-        throw new Error('El usuario no está autorizado para ver esta sección');
-      }
-    }
-      return this._client.patch(
-        `${environment?.apiUrl}/usuarios/clave/${UsuarioDto.id}`, UsuarioDto
       );
     
   }

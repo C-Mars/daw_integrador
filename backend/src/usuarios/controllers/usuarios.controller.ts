@@ -14,7 +14,6 @@ import { ArchivosService } from 'src/archivos/service/archivos.service';
 import { CrearUsuarioDto } from '../dto/crear-usuario.dto';
 import { Response } from 'express';
 import { fileNamer } from 'src/archivos/helpers/archivosnombre.helper';
-import { AjustesUsuario } from '../dto/ajustes-usuario.dto';
 
 @ApiTags('usuarios')
 @Controller('/usuarios')
@@ -44,7 +43,7 @@ async registrarUsuario(
   @UploadedFile() foto: Express.Multer.File) {
       if (foto) {
           crearUsuarioDto.foto  = await this.archivosService.guardarArchivo(foto); 
-        // Creo que no va (crearUsuarioDto.fotoUrl = `${ this.configService.get('HOST_API') }/usuarios/foto/${ foto.filename }`; 
+        
   }
 
       // Registra por fin al usuario
@@ -121,18 +120,19 @@ async getUsuariosTodos() {
    
     
        
-//Editar una contraseña  y nombre de un usuario en particular-----------------------------------------------------------------------------
+//Editar una contraseña de un usuario en particular-----------------------------------------------------------------------------
 
   @Patch('clave/:id')
   @ApiBearerAuth()
+  @Roles([RolesEnum.EJECUTOR])
   @UseGuards(AuthGuard)
   async patchUsuariosContraseña(
     @Param('id', ParseIntPipe) id: number,
-    @Body() ajustesUsuarioDto: AjustesUsuario,
+    @Body() editarUsuarioDto: EditarUsuario,
   ) {
-    return await this.usuariosService.ajustesUsuario(id, ajustesUsuarioDto);
+    return await this.usuariosService.editarUsuario(id, editarUsuarioDto);
+
   }
-  
 //Elimina usuario-----------------------------------------------------------------------------
 
   @Delete('eliminar/:id')

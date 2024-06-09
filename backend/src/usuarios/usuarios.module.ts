@@ -16,3 +16,4 @@ import { ConfigService } from '@nestjs/config';
   exports:[UsuariosService]
 })
 export class UsuariosModule {}
+// 

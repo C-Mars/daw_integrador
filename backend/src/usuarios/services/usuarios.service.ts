@@ -9,7 +9,6 @@ import * as bcrypt from "bcrypt";
 import { ArchivosService } from 'src/archivos/service/archivos.service';
 import { join } from 'path';
 import { existsSync } from 'fs';
-import { AjustesUsuario } from '../dto/ajustes-usuario.dto';
 
 @Injectable()
 export class UsuariosService {
@@ -148,27 +147,6 @@ export class UsuariosService {
    return await this.usuariosRepo.save(usuario);
 
 }
-
-async ajustesUsuario(id: number, ajustesUsuario: AjustesUsuario)
-: Promise<Usuario> 
-{
-  const usuario= await this.usuariosRepo.findOne({
-    where: {
-      id
-    },
-  });
-  
-  if (!usuario) {
-    throw new UnauthorizedException(
-      'El usuario no existe',
-    );
-  }
-  Object.assign(usuario, ajustesUsuario);
-
- return await this.usuariosRepo.save(usuario);
-
-}
-
 async guardarFoto(id: number, foto: Express.Multer.File)
   : Promise<string> 
   {

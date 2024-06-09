@@ -32,6 +32,8 @@ export class AuthService {
     sessionStorage.setItem('token', token);
   }
 
+  
+
   logout() {
     if (isPlatformBrowser(this.platformId)) {
     sessionStorage.removeItem('token');
