@@ -1,6 +1,93 @@
+<p-card header="{{ titulo }}">
+  <ng-template pTemplate="content">
+      <div class="mb-4 flex flex-wrap md:align-self-auto align-self-end flex align-items-end justify-content-end">
+          <p-button
+              class="accion"
+              id="añadir"
+              label="Añadir"
+              icon="pi pi-plus"
+              [rounded]="true"
+              severity="info"
+              (click)="nuevo()"
+          ></p-button>
+      </div>
+      <p-table [value]="actividades" class="flex flex-wrap w-min md:w-max">
+          <ng-template pTemplate="header">
+              <tr>
+                  <th>Descripción</th>
+                  <th>ID Cliente</th>
+                  <th>Estado</th>
+                  <th>Fecha Inicio</th>
+                  <th>Fecha Modificación</th>
+                  <th>Prioridad</th>
+                  <th></th>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-actividad>
+              <tr>
+                  <td>{{ actividad.descripcion }}</td>
+                  <td>{{ actividad.idCliente }}</td>
+                  <td>{{ actividad.estado }}</td>
+                  <td>{{ actividad.fechaInicio | date:'short' }}</td>
+                  <td>{{ actividad.fechaModificacion | date:'short' }}</td>
+                  <td>{{ actividad.prioridad }}</td>
+                  <td class="flex flex-wrap">
+                      <p-button
+                          class="accion"
+                          pRipple
+                          icon="pi pi-pen-to-square"
+                          class="mr-2"
+                          [rounded]="true"
+                          severity="primary"
+                          (click)="onEdit(actividad)"
+                      ></p-button>
 
-<p-card header="{{titulo}}" >
-    <p-table  class="flex flex-warp w-min md:w-max ">
-          
-    </p-table>
+                      <p-button
+                          class="accion"
+                          pRipple
+                          class="mr-2"
+                          icon="pi pi-trash"
+                          severity="info"
+                          [rounded]="true"
+                          (click)="onDelete(actividad)"
+                      ></p-button>
+                  </td>
+              </tr>
+          </ng-template>
+      </p-table>
+  </ng-template>
 </p-card>
+
+<p-dialog header="Editar Actividad" [(visible)]="displayDialog" [responsive]="true" [style]="{width: '300px'}">
+  <div class="p-fluid">
+      <div class="p-field">
+          <label for="descripcion">Descripción</label>
+          <input id="descripcion" type="text" pInputText [(ngModel)]="actividad.descripcion">
+      </div>
+      <div class="p-field">
+          <label for="idCliente">ID Cliente</label>
+          <input id="idCliente" type="number" pInputText [(ngModel)]="actividad.idCliente">
+      </div>
+      <div class="p-field">
+          <label for="estado">Estado</label>
+          <input id="estado" type="text" pInputText [(ngModel)]="actividad.estado">
+      </div>
+      <div class="p-field">
+          <label for="fechaInicio">Fecha Inicio</label>
+          <p-calendar id="fechaInicio" [(ngModel)]="actividad.fechaInicio" dateFormat="yy-mm-dd"></p-calendar>
+      </div>
+      <div class="p-field">
+          <label for="fechaModificacion">Fecha Modificación</label>
+          <p-calendar id="fechaModificacion" [(ngModel)]="actividad.fechaModificacion" dateFormat="yy-mm-dd"></p-calendar>
+      </div>
+      <div class="p-field">
+          <label for="prioridad">Prioridad</label>
+          <input id="prioridad" type="text" pInputText [(ngModel)]="actividad.prioridad">
+      </div>
+  </div>
+  <p-footer>
+      <button type="button" pButton label="Guardar" icon="pi pi-check" (click)="save()"></button>
+  </p-footer>
+</p-dialog>
+
+<p-toast></p-toast>

@@ -1,0 +1,6 @@
+<p-confirmDialog header="Confirmar Eliminación" icon="pi pi-exclamation-triangle" [visible]="displayDialog" (onHide)="onDialogHide()">
+  <p-footer>
+    <button type="button" pButton label="Sí" icon="pi pi-check" (click)="confirmDelete()"></button>
+    <button type="button" pButton label="No" icon="pi pi-times" (click)="rejectDelete()"></button>
+  </p-footer>
+</p-confirmDialog>

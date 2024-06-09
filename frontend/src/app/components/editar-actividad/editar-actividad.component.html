@@ -1,0 +1,32 @@
+<p-dialog header="Editar Actividad" [(visible)]="displayDialog" [responsive]="true" [style]="{width: '500px'}">
+  <div class="p-fluid">
+    <div class="p-field">
+      <label for="descripcion">Descripción</label>
+      <input id="descripcion" type="text" pInputText [(ngModel)]="actividad.descripcion">
+    </div>
+    <div class="p-field">
+      <label for="idCliente">ID Cliente</label>
+      <input id="idCliente" type="number" pInputText [(ngModel)]="actividad.idCliente">
+    </div>
+    <div class="p-field">
+      <label for="estado">Estado</label>
+      <input id="estado" type="text" pInputText [(ngModel)]="actividad.estado">
+    </div>
+    <div class="p-field">
+      <label for="fechaInicio">Fecha Inicio</label>
+      <p-calendar id="fechaInicio" [(ngModel)]="actividad.fechaInicio" dateFormat="yy-mm-dd"></p-calendar>
+    </div>
+    <div class="p-field">
+      <label for="fechaModificacion">Fecha Modificación</label>
+      <p-calendar id="fechaModificacion" [(ngModel)]="actividad.fechaModificacion" dateFormat="yy-mm-dd"></p-calendar>
+    </div>
+    <div class="p-field">
+      <label for="prioridad">Prioridad</label>
+      <input id="prioridad" type="text" pInputText [(ngModel)]="actividad.prioridad">
+    </div>
+  </div>
+  <p-footer>
+    <button type="button" pButton label="Guardar" icon="pi pi-check" (click)="save()"></button>
+    <button type="button" pButton label="Cancelar" icon="pi pi-times" (click)="cancel()"></button>
+  </p-footer>
+</p-dialog>

@@ -4,10 +4,11 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { BaseComponent } from '../base/base.component';
 import { TablaUsuariosComponent } from '../tabla-usuario/tabla-usuarios.component';
-import { TablaActividadesComponent } from '../tabla-actividades/tabla-actividades.component';
+//import { TablaActividadesComponent } from '../tabla-actividades/tabla-actividades.component';
 import { TablaClientesComponent } from '../tabla-clientes/tabla-clientes.component';
 import { TablaAuditoriaComponent } from '../tabla-auditoria/tabla-auditoria.component';
 import { NgIf } from '@angular/common';
+import { TablaActividadesModule } from '../tabla-actividades/tabla-actividades.module';
 
 @Component({
   selector: 'app-usuarios-admin',
@@ -15,7 +16,8 @@ import { NgIf } from '@angular/common';
   imports: [
     BaseComponent,
     TablaUsuariosComponent, 
-    TablaActividadesComponent, 
+    //TablaActividadesComponent, 
+    TablaActividadesModule,
     TablaClientesComponent, 
     TablaAuditoriaComponent,
     NgIf

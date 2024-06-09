@@ -1,27 +1,24 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { BaseComponent } from '../base/base.component';
-import { TablaUsuariosComponent } from '../tabla-usuario/tabla-usuarios.component';
 import { NgIf } from '@angular/common';
-import { Subscription } from 'rxjs';
-import { TablaActividadesComponent } from '../tabla-actividades/tabla-actividades.component';
-import { TablaClientesComponent} from '../tabla-clientes/tabla-clientes.component';
 import { TablaAuditoriaComponent } from '../tabla-auditoria/tabla-auditoria.component';
-import { Router } from '@angular/router';
+import { TablaUsuariosComponent } from '../tabla-usuario/tabla-usuarios.component';
+import { TablaClientesComponent } from '../tabla-clientes/tabla-clientes.component';
+import { TablaActividadesModule } from '../tabla-actividades/tabla-actividades.module';
+import { TablaActividadesComponent } from '../tabla-actividades/tabla-actividades.component';
 
 @Component({
   selector: 'app-actividades-admin',
   standalone: true,
   imports: [
     BaseComponent,
-    TablaActividadesComponent, 
+    TablaUsuariosComponent,
+    TablaClientesComponent,
+    TablaAuditoriaComponent,
+    NgIf,
+    TablaActividadesModule
   ],
   templateUrl: './actividades-admin.component.html',
-  styleUrl: './actividades-admin.component.scss'
+  styleUrls: ['./actividades-admin.component.scss']
 })
-export class ActividadesAdminComponent {
-  
-  constructor() { }
-
- 
-  
-}
+export class ActividadesAdminComponent {}
