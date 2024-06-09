@@ -34,7 +34,7 @@ import { EditarClienteComponent } from '../editar-cliente/editar-cliente.compone
 })
 export class TablaClientesComponent implements OnInit {
 
-  titulo: string = 'Clientes'
+  titulo: string = 'CLIENTES'
   clientes!: ClienteDto[];
   newRegiterVisible: boolean = false;
   newEditVisible: boolean = false;

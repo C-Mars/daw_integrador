@@ -10,5 +10,5 @@ import { TableModule } from 'primeng/table';
   styleUrl: './tabla-actividades-usuario.component.scss'
 })
 export class TablaActividadesUsuarioComponent {
-  titulo: string = 'Actividades Usuario'
+  titulo: string = 'ACTIVIDADES EJECUTOR'
 }

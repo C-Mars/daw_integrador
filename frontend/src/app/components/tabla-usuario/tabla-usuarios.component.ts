@@ -38,7 +38,7 @@ import { TooltipModule } from 'primeng/tooltip';
 })
 export class TablaUsuariosComponent implements OnInit {
 
-  titulo: string = 'Usuarios'
+  titulo: string = 'USUARIOS'
   usuarios!: UsuarioDto[];
   newRegiterVisible: boolean = false;
   newEditVisible: boolean = false;
@@ -50,9 +50,6 @@ export class TablaUsuariosComponent implements OnInit {
 
   private readonly platformId = inject(PLATFORM_ID);
  
-
-
-  // urlApi:string  = environment.apiUrl
 
   constructor(
     private messageService: MessageService,

@@ -1,3 +1,4 @@
+
 import { EstadoActividadEnum } from "../enums/estado-actividad.enum";
 import { PrioridadActividadEnum } from "../enums/prioridad-actividad.enum";
 import { UsuarioDto } from "./usuario.dto";
@@ -22,6 +23,6 @@ export class ActividadDto {
         this.idUsuarioModificacion = null;
         this.fechaModificacion = null;
         this.fechaInicio = null;
-        this.estado = null;
-    }
+        this.estado = null;
+    }
 }
