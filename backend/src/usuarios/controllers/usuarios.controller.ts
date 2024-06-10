@@ -16,6 +16,7 @@ import { Response } from 'express';
 import { fileNamer } from 'src/archivos/helpers/archivosnombre.helper';
 
 @ApiTags('usuarios')
+@ApiBearerAuth()
 @Controller('/usuarios')
 export class UsuariosController  {
   constructor(private usuariosService: UsuariosService,
@@ -52,7 +53,7 @@ async registrarUsuario(
 //Trae todos los usuarios activos-----------------------------------------------------------------------------
 
   @Get()
-  @ApiBearerAuth()
+  // @ApiBearerAuth()
   @Roles([RolesEnum.ADMINISTRADOR])
   @UseGuards(AuthGuard)
   async getUsuarios() {
@@ -70,14 +71,13 @@ async getUsuariosTodos() {
 //Trae un usuario----------------------------------------------------------------------------------------------
 
   @Get(':id')
-  @ApiBearerAuth()
+  // @ApiBearerAuth()
   @Roles([RolesEnum.ADMINISTRADOR])
   @UseGuards(AuthGuard)
   async getUsuario(
     @Param('id', ParseIntPipe) id: number): Promise<Usuario> {
     return await this.usuariosService.findOneById(id);
   }
-// Tre la foto del usuario------------------------------------------------------------------------------------------
   @Get('foto/:imageName')
   @ApiBearerAuth()
   @Roles([RolesEnum.ADMINISTRADOR])
