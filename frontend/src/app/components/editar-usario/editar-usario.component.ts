@@ -211,7 +211,7 @@ editar() {
         });
     
         this.loading = true;
-        this._usuariosService.subirFoto(this.usuario, formData).pipe(
+        this._usuariosService.subirFoto(formData).pipe(
           tap(res => {
             if (res && res.url) {
               console.log('URL de la foto subida:', res.url);

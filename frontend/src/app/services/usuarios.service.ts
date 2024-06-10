@@ -90,7 +90,7 @@ export class UsuariosService {
     return this._client.delete<void>(`${environment.apiUrl}/usuarios/eliminar/${id}`);
   }
 
-subirFoto(UsuarioDto: UsuarioDto , formData: FormData): Observable<any> {
+subirFoto( formData: FormData): Observable<any> {
     if (isPlatformBrowser(this.platformId)) {
       if (!this._authService.hasRole(RolesEnum.ADMINISTRADOR)) {
         throw new Error('El usuario no esta autorizado para ver esta sección')
