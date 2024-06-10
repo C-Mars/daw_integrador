@@ -125,14 +125,14 @@ eliminar(item: UsuarioDto): void {
   this.usuarioSeleccionado = item;
   this.confirmacionService.confirm({
     header: '¿Estás seguro?',
-    message: `Confirme si desea eliminar a ${item.apellidos}, ${item.nombres}.`,
+    message: `Confirme si desea dar de baja a ${item.apellidos}, ${item.nombres}.`,
     accept: () => {
       this._usuarioService.eliminar(item.id).subscribe({
         next: () => {
           this.messageService.add({
             severity: 'info',
             summary: 'Confirmado',
-            detail: `Se ha eliminado a ${item.apellidos}, ${item.nombres}`,
+            detail: `Se ha dado de baja a ${item.apellidos}, ${item.nombres}`,
           });
           this.llenarTabla();
         },

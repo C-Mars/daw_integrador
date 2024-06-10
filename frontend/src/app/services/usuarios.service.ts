@@ -65,7 +65,7 @@ export class UsuariosService {
     return this._client.post<UsuarioDto>(
         `${environment.apiUrl}/usuarios`,
         formData
-    );
+);
 }
 
   editar(UsuarioDto: EditarUsuarioDto) {
@@ -76,8 +76,8 @@ export class UsuariosService {
     }
       return this._client.patch(
         `${environment?.apiUrl}/usuarios/editar/${UsuarioDto.id}`, UsuarioDto
-      );
-    
+    );
+
   }
 
   eliminar(id: number): Observable<void> {
@@ -90,16 +90,16 @@ export class UsuariosService {
     return this._client.delete<void>(`${environment.apiUrl}/usuarios/eliminar/${id}`);
   }
 
-  subirFoto(UsuarioDto: UsuarioDto , formData: FormData): Observable<any> {
+subirFoto(UsuarioDto: UsuarioDto , formData: FormData): Observable<any> {
     if (isPlatformBrowser(this.platformId)) {
       if (!this._authService.hasRole(RolesEnum.ADMINISTRADOR)) {
         throw new Error('El usuario no esta autorizado para ver esta sección')
       }
     }
-    //  return this._client.post<any>(environment?.apiUrl + '/static/usuarios', formData);
+
     return this._client.post<any>(
-      `${environment.apiUrl}/usuarios/foto/${UsuarioDto.foto}`, formData, 
+      `${environment.apiUrl}/usuarios/foto/`, formData, 
     )
   
-  }
+      }
 }

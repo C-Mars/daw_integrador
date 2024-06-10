@@ -176,6 +176,7 @@ enviar() {
           this.messageService.add({
               severity: 'error',
               summary: 'Ocurrió un error al registrar el usuario',
+              detail: err.message ? err.message : 'Ocurrió un error al registrar'
           });
       },
   });

@@ -86,7 +86,7 @@ constructor(
   private messageService: MessageService,
   private _router: Router,
   private _usuariosService: UsuariosService,
-  private sanitizer: DomSanitizer, 
+private sanitizer: DomSanitizer, 
   private _authService:AuthService
 ) {}
 
@@ -136,22 +136,22 @@ editar() {
     });
     return;
   }
-  
-    const usuarioDto = this.formEditarUsuario.getRawValue();
-   
-        if (this.usuario) {
-        const editarUsuarioDto: EditarUsuarioDto = {
-        id: usuarioDto.id!,
-        nombres: usuarioDto.nombres!,
-        apellidos: usuarioDto.apellidos!,
-        email: usuarioDto.email!,
-        foto:usuarioDto.foto,
-        rol: usuarioDto.rol!,
-        nombreUsuario: usuarioDto.nombreUsuario!,
-        clave:usuarioDto.clave!,
-        estado:usuarioDto.estado!
-      };
-      
+
+  const usuarioDto = this.formEditarUsuario.getRawValue();
+
+  if (this.usuario) {
+    const editarUsuarioDto: EditarUsuarioDto = {
+      id: usuarioDto.id!,
+      nombres: usuarioDto.nombres!,
+      apellidos: usuarioDto.apellidos!,
+      email: usuarioDto.email!,
+      foto:usuarioDto.foto,
+      rol: usuarioDto.rol!,
+      nombreUsuario: usuarioDto.nombreUsuario!,
+      clave:usuarioDto.clave!,
+      estado:usuarioDto.estado!
+    };
+    
       this._usuariosService.editar(editarUsuarioDto).subscribe({
         next: (res) => {
           this.cerrar();
@@ -170,12 +170,12 @@ editar() {
             detail: 'Contactar al administrador'
             // detail: 'Detalles del error: ' + err.message
           });
-          
+        
         },
         
       });
-    }
-  }
+      }
+}
 
 
     cerrar() {

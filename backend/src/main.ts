@@ -7,7 +7,7 @@ import * as multer from 'multer';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('api');
-  app.use(multer().single('foto'));
+  // app.use(multer().single('foto'));
   app.enableCors({origin:'*'});//habilita todos los origenes
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));// Defino un interceptor(estructura de nest -milware) que intercepta las solicitudesuna vez que estan volviendo al cliente- intercepta las respuestas
   app.useGlobalPipes(new ValidationPipe({
