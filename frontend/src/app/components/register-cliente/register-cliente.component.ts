@@ -19,7 +19,7 @@ import { RolesEnum } from '../../enums/roles.enum';
 import { ClienteDto } from '../../dtos/cliente.dto';
 import { DropdownModule } from 'primeng/dropdown';
 
-import { EditarClienteDto } from '../../dtos/editar-cliente.dto';
+
 import { ClientesService } from '../../services/clientes.service';
 
 @Component({
@@ -109,49 +109,49 @@ export class RegisterClienteComponent {
 
     const clienteDto: ClienteDto = this.formRegistro.value as ClienteDto;
 
-    if (this.accion === 'crear') {
-      this._clientesService.crear(clienteDto).subscribe({
-        next: (res) => {
-          this.cerrar();
-          this.refrescar.emit(true);
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Cliente registrado con éxito!',
-          });
-        },
-        error: (err) => {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Ocurrió un error al registrar el Cliente',
-          });
-        },
-      });
-    } else if (this.accion === 'editar' && this.cliente) {
-      const editarClienteDto: EditarClienteDto = {
-        id: this.cliente.id,
-        nombres: clienteDto.nombres!, // Usamos el operador de no-null assertion
-        apellidos: clienteDto.apellidos!, // Usamos el operador de no-null assertion
-        email: clienteDto.email! // Usamos el operador de no-null assertion
-      };
+    // if (this.accion === 'crear') {
+    //   this._clientesService.crear(clienteDto).subscribe({
+    //     next: (res) => {
+    //       this.cerrar();
+    //       this.refrescar.emit(true);
+    //       this.messageService.add({
+    //         severity: 'success',
+    //         summary: 'Cliente registrado con éxito!',
+    //       });
+    //     },
+    //     error: (err) => {
+    //       this.messageService.add({
+    //         severity: 'error',
+    //         summary: 'Ocurrió un error al registrar el Cliente',
+    //       });
+    //     },
+    //   });
+    // } else if (this.accion === 'editar' && this.cliente) {
+    //   const editarClienteDto: EditarClienteDto = {
+    //     id: this.cliente.id,
+    //     nombres: clienteDto.nombres!, // Usamos el operador de no-null assertion
+    //     apellidos: clienteDto.apellidos!, // Usamos el operador de no-null assertion
+    //     email: clienteDto.email! // Usamos el operador de no-null assertion
+    //   };
 
-      this._clientesService.editar(editarClienteDto).subscribe({
-        next: (res) => {
-          this.cerrar();
-          this.refrescar.emit(true);
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Cliente editado con éxito!',
-          });
-        },
-        error: (err) => {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Ocurrió un error al editar el Cliente',
-          });
-        },
-      });
+    //   this._clientesService.editar(editarClienteDt).subscribe({
+    //     next: (res) => {
+    //       this.cerrar();
+    //       this.refrescar.emit(true);
+    //       this.messageService.add({
+    //         severity: 'success',
+    //         summary: 'Cliente editado con éxito!',
+    //       });
+    //     },
+    //     error: (err) => {
+    //       this.messageService.add({
+    //         severity: 'error',
+    //         summary: 'Ocurrió un error al editar el Cliente',
+    //       });
+    //     },
+    //   });
     }
-  }
+  
 
   cerrar() {
     this.visibleChange.emit(false);

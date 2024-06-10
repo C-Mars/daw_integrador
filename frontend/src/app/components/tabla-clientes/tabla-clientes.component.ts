@@ -6,7 +6,7 @@ import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 
 import { ClienteDto } from '../../dtos/cliente.dto';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 import { EliminarClienteComponent } from '../eliminar-cliente/eliminar-cliente.component';
 import { ToastModule } from 'primeng/toast';
@@ -45,6 +45,7 @@ export class TablaClientesComponent implements OnInit {
   constructor(
     private messageService: MessageService,
     private _clienteService: ClientesService,
+    private confirmacionService:  ConfirmationService,
     private _route: Router
   
   ) { }
@@ -87,13 +88,41 @@ informacion(item: ClienteDto): void {
     this.clienteSeleccionado = item;
 }
 
-eliminar() {
-    if (!this.clienteSeleccionado || !this.clienteSeleccionado.id) {
-        console.error('No se puede eliminar el cliente seleccionado:', this.clienteSeleccionado);
-        return;
+eliminar(item: ClienteDto): void {
+  this.clienteSeleccionado = item;
+  this.confirmacionService.confirm({
+    header: '¿Estás seguro?',
+    message: `Confirme si desea eliminar a ${item.apellidos}, ${item.nombres}.`,
+    accept: () => {
+      this._clienteService.eliminar(item.id).subscribe({
+        next: () => {
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Confirmado',
+            detail: `Se ha eliminado a ${item.apellidos}, ${item.nombres}`,
+          });
+          this.llenarTabla();
+        },
+        error: (error) => {
+          console.error('Error al eliminar el Cliente:', error);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'No se pudo eliminar el Cliente'
+          });
+          
+        }
+      });
+    },
+    reject: () => {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Cancelado',
+        detail: ''
+      });
     }
-   
-    this.newDeleteVisible = true;
+  });
+  
+}
 }
 
-}

@@ -49,7 +49,7 @@ export class EliminarClienteComponent {
         acceptButtonStyleClass: 'p-button-outlined p-button-sm',
         accept: () => {
           if (this.cliente) { // Verificamos que usuario sea distinto de null
-            this._clientesService.eliminar(this.cliente).subscribe({
+            this._clientesService.eliminar(this.cliente.id).subscribe({
               next: () => {
                 this.cerrar();
                 this.refrescar.emit(true);
@@ -78,6 +78,7 @@ export class EliminarClienteComponent {
         },
       });
     }
+
 
 cerrar() {
   this.visibleChange.emit(false);

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, PLATFORM_ID, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable, of } from 'rxjs';
@@ -7,80 +7,62 @@ import { ClienteDto } from '../dtos/cliente.dto';
 import { environment } from '../environments/environment';
 import { EditarClienteDto } from '../dtos/editar-cliente.dto';
 import { HttpClient } from '@angular/common/http';
+import { isPlatformBrowser } from '@angular/common';
+import { AuthService } from './auth.service';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClientesService {
-  private jwtHelper = new JwtHelperService();
-
+  private readonly platformId = inject(PLATFORM_ID);
   constructor(
     private _client: HttpClient,
-    private _router: Router
-  ) { }
+    private _authService: AuthService,
+    private _router: Router) { }
 
-  private getToken(): string | null {
-    if (typeof window !== 'undefined' && window.sessionStorage) {
-      return sessionStorage.getItem('token');
-    }
-    console.error('sessionStorage is not available');
-    return null;
-  }
-
-  hasRole(rol: RolesEnum): boolean {
-    const token = this.getToken();
-    if (!token) {
-      return false;
-    }
-
-    try {
-      const userRole = this.jwtHelper.decodeToken(token).rol;
-      console.log('Rol del usuario:', userRole);
-
-      if (userRole !== rol) {
-        console.error('El usuario no tiene el rol necesario:', rol);
-        return false;
-      }
-
-      return true;
-    } catch (e) {
-      console.error('Error decodificando el token', e);
-      return false;
-    }
-  }
 
   getClientes(): Observable<ClienteDto[]> {
-    if (!this.hasRole(RolesEnum.ADMINISTRADOR)) {
-      console.error('El usuario no está autorizado para ver esta sección');
-      return of([]);  // Devuelve un observable vacío para evitar errores adicionales
+    if (isPlatformBrowser(this.platformId)) {
+      if (!this._authService.hasRole(RolesEnum.ADMINISTRADOR)) {
+        throw new Error('El usuario no esta autorizado para ver esta sección')
+      }
     }
-    return this._client.get<ClienteDto[]>(environment.apiUrl + '/clientes');
+    const clientes = this._client.get<ClienteDto[]>(`${environment?.apiUrl}/clientes`);
+    return clientes
   }
 
-  crear(clienteDto: ClienteDto): Observable<ClienteDto> {
+
+  crear(ClienteDto: FormData): Observable<ClienteDto> {
+    if (isPlatformBrowser(this.platformId)) {
+      if (!this._authService.hasRole(RolesEnum.ADMINISTRADOR)) {
+        throw new Error('El usuario no esta autorizado para ver esta sección')
+      }
+    }
     return this._client.post<ClienteDto>(
-      environment.apiUrl + '/clientes',
-      clienteDto
+        `${environment.apiUrl}/clientes`,
+        ClienteDto
     );
+}
+  editar(ClienteDto: EditarClienteDto) {
+    if (isPlatformBrowser(this.platformId)) {
+      if (!this._authService.hasRole(RolesEnum.ADMINISTRADOR)) {
+        throw new Error('El usuario no está autorizado para ver esta sección');
+      }
+    }
+      return this._client.patch(
+        `${environment?.apiUrl}/clientes/editar/${ClienteDto.id}`, ClienteDto
+      );
+    
   }
 
-  editar(clienteDto: EditarClienteDto): Observable<ClienteDto> {
-    if (!this.hasRole(RolesEnum.ADMINISTRADOR)) {
-      throw new Error('El usuario no está autorizado para ver esta sección');
+  eliminar(id: number): Observable<void> {
+    if (isPlatformBrowser(this.platformId)) {
+      if (!this._authService.hasRole(RolesEnum.ADMINISTRADOR)) {
+        throw new Error('El usuario no está autorizado para ver esta sección');
+      }
     }
-    return this._client.put<ClienteDto>(
-      environment.apiUrl + '/clientes/' + clienteDto.id,
-      clienteDto
-    );
-  }
-
-  eliminar(clienteDto: ClienteDto): Observable<void> {
-    if (!this.hasRole(RolesEnum.ADMINISTRADOR)) {
-      throw new Error('El usuario no está autorizado para ver esta sección');
-    }
-    return this._client.delete<void>(
-      environment.apiUrl + '/clientes/' + clienteDto.id
-    );
+  
+    return this._client.delete<void>(`${environment.apiUrl}/clientes/eliminar/${id}`);
   }
 }
