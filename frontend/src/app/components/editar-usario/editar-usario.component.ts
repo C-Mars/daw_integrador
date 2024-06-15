@@ -3,7 +3,6 @@ import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
-  Validators,
  
 } from "@angular/forms";
 import { FileUploadModule, } from 'primeng/fileupload';
@@ -12,7 +11,6 @@ import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
 import {ToastModule} from 'primeng/toast'
 import { FloatLabelModule } from 'primeng/floatlabel';
-import { CardModule } from 'primeng/card';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { DialogModule } from 'primeng/dialog';

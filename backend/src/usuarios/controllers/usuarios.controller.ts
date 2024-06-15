@@ -35,7 +35,7 @@ export class UsuariosController  {
       fileFilter: fileFilter,
       //Donde se va a guardar el archivo
       storage: diskStorage({
-          destination: '../../../static/usuarios',
+          destination: '/backend/static/usuarios',
           filename: fileNamer,
   })
   }))
@@ -71,7 +71,7 @@ async getUsuariosTodos() {
 //Trae un usuario----------------------------------------------------------------------------------------------
 
   @Get(':id')
-  // @ApiBearerAuth()
+  @ApiBearerAuth()
   @Roles([RolesEnum.ADMINISTRADOR])
   @UseGuards(AuthGuard)
   async getUsuario(
@@ -99,7 +99,7 @@ async getUsuariosTodos() {
       fileFilter: fileFilter,
       //Donde se va a guardar el archivo
       storage: diskStorage({
-          destination: '../../../static/usuarios',
+          destination: '/backend/static/usuarios',
           filename: fileNamer,
   })
   }))

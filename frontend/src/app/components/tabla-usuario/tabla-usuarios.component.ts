@@ -66,7 +66,7 @@ export class TablaUsuariosComponent implements OnInit {
 
   
   llenarTabla(): void {
-    const sub = this._usuarioService.getUsuarios()
+    this._usuarioService.getUsuarios()
     .subscribe({
       next: (data: UsuarioDto[]) => {
         this.usuarios = data;
