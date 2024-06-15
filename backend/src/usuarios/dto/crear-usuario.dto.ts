@@ -19,10 +19,7 @@ export class CrearUsuarioDto{
     
     @IsOptional()
     foto?: string
-    
-    // @IsOptional()
-    // fotoUrl?: string
-    
+
     @IsString()
     @IsNotEmpty()
     rol: RolesEnum

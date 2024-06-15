@@ -24,9 +24,7 @@ export class EditarUsuario{
     @IsOptional()
     foto?:string
 
-    // @IsOptional()
-    // fotoUrl?: string
-    
+
     @IsOptional()
     @IsString()
     rol?: RolesEnum

@@ -12,7 +12,8 @@ import { ActividadDto } from '../../dtos/actividad.dto';
 export class TablaActividadesComponent implements OnInit {
   actividades: ActividadDto[] = [];
   displayDialog: boolean = false;
-  actividad: ActividadDto = new ActividadDto();
+  // actividad: ActividadDto = new ActividadDto();
+  actividad!: ActividadDto
   titulo: string = 'ACTIVIDADES';
 
   constructor(private actividadesService: ActividadesService, private messageService: MessageService) { }
@@ -56,7 +57,7 @@ export class TablaActividadesComponent implements OnInit {
   }
 
   nuevo() {
-    this.actividad = new ActividadDto();
+    // this.actividad = new ActividadDto();
     this.displayDialog = true;
   }
 }
