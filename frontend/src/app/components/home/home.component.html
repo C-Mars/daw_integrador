@@ -1,28 +1,31 @@
 <app-header (loginClicked)="displayLogin = true"></app-header>
 <app-login [(visible)]="displayLogin"></app-login>
-<div class="flex justify-content-center ailin-items-center mt-4">
-    <p-image class="flex flex-draw"
-    src="../../../assets/images/lutherapia.png" 
-    alt="Image" 
-    width="250" />
-    <p-galleria 
-    [value]="images" 
-    [showItemNavigators]="true" 
-    [showThumbnails]="false" 
-    [showIndicators]="true" 
-    [showIndicatorsOnItem]="true" 
-    [responsiveOptions]="responsiveOptions" 
-    [containerStyle]="{ 'max-width': '640px', 'margin-top': '2em' }">
-        <ng-template pTemplate="item" let-item>
-            <img [src]="item.itemImageSrc" style="width: 100%; display: block;" />
-        </ng-template>
-        <ng-template pTemplate="thumbnail" let-item>
-            <div class="grid grid-nogutter justify-content-center">
-                <img [src]="item.thumbnailImageSrc" style="display: block;" />
-            </div>
-        </ng-template>
-</p-galleria>
+<div class="flex justify-content-center align-content-between m-4 ">
+    <div class="flex justify-between align-content-between m-4 border-dashed border-primary-500  min-width-4 max-width-6 border-round-xl surface-100 p-4">
+        <p-image class="flex flex-draw w-6"
+        src="../../../assets/images/lutherapia.png" 
+        alt="Image" 
+        width="500" />
+        <p-galleria class="flex flex-draw min-width-6 max-width-12  mt-8"
+        [value]="images" 
+        [showItemNavigators]="true" 
+        [showThumbnails]="false" 
+        [showIndicators]="true" 
+        [showIndicatorsOnItem]="true" 
+        [responsiveOptions]="responsiveOptions" 
+        [containerStyle]="{ 'max-width': '900px', 'margin-top': '2em' }">
+            <ng-template pTemplate="item" let-item>
+                <img [src]="item.itemImageSrc" style="width: 100%; display: block;" />
+            </ng-template>
+            <ng-template pTemplate="thumbnail" let-item>
+                <div class="grid grid-nogutter justify-content-center">
+                    <img [src]="item.thumbnailImageSrc" style="display: block;" />
+                </div>
+            </ng-template>
+    </p-galleria>
+    </div>
 </div>
+
     
 
 
