@@ -1,15 +1,14 @@
 import { EstadoActividad } from "src/actividades/enums/estado-actividad.enum";
 import { PrioridadActividad } from "src/actividades/enums/prioridad-actividad.enum";
 import { OperacionAuditoria } from "../enums/auditoriaEnum.enum";
-import { IsDate, IsNotEmpty, IsString } from "class-validator";
+import { IsNotEmpty, IsOptional, IsString } from "class-validator";
 
-
-export class CrearAuditoriaDto{
+export class AuditoriaActividadDto{
 
     @IsNotEmpty()
     idActividad: number;
 
-    @IsNotEmpty()
+    @IsOptional()
     idCliente: number;
 
     @IsString()
@@ -19,19 +18,19 @@ export class CrearAuditoriaDto{
     @IsNotEmpty()
     idUsuarioActual: number
 
-    @IsNotEmpty()
+    @IsOptional()
     prioridad: PrioridadActividad;
     
     @IsNotEmpty()
-    idUsuarioModificion: number;
+    idUsuarioModificacion: number;
     
-    @IsDate()
-    @IsNotEmpty()
-    fechaModificacion: Date;
+    //@IsDate()
+    //@IsNotEmpty()
+    //fechaModificacion: Date;
 
-    @IsDate()
-    @IsNotEmpty()
-    fechaInicio: Date;
+    //@IsDate()
+    //@IsNotEmpty()
+    //fechaInicio: Date;
 
     @IsNotEmpty()
     estado: EstadoActividad;

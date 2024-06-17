@@ -1,8 +1,16 @@
 
 
 <p-card header="{{ titulo }}">
+    <!--<div>
+    <button type="button" pButton pRipple 
+    icon="pi pi-file" 
+    (click)="exportCSV()" 
+    class="mr-2" 
+    pTooltip="CSV" 
+    tooltipPosition="bottom"></button></div>-->
     <ng-template pTemplate="content">
-        <p-table class="flex flex-wrap w-min md:w-max">
+        <p-table 
+        class="flex flex-wrap w-min md:w-max">
             <ng-template pTemplate="header">
                 <tr>
                     <th>ID</th>

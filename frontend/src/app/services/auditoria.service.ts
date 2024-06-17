@@ -1,53 +1,34 @@
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { environment } from "../environments/environment";
-import { Injectable } from "@angular/core";
-import { CreateAuditoria } from "../dtos/create-auditoria.dto";
-import { ModificacionAuditoria } from "../dtos/edit-auditoria.dto";
+import { Injectable, PLATFORM_ID, inject } from "@angular/core";
 import { AuditoriaDto } from "../dtos/auditoria.dto";
+import { isPlatformBrowser } from "@angular/common";
+import { AuthService } from "./auth.service";
+import { Router } from "@angular/router";
+import { environment } from "../environments/environment";
+import { RolesEnum } from "../enums/roles.enum";
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuditoriaService{
+    private readonly platformId = inject(PLATFORM_ID);
+    constructor(private client: HttpClient,
+        private _authService: AuthService,
+        private _router: Router) { }
+    
+    
 
-    constructor(private client: HttpClient){}
-
-    getAuditoria(): Observable<AuditoriaDto[]>{
-        return this.client.get<AuditoriaDto[]>(
-            environment?.apiUrl + '/auditoria',
-        );
+    getAuditoriaActividad(): Observable<AuditoriaDto[]>{
+        if(isPlatformBrowser(this.platformId)){
+            if(this._authService.hasRole(RolesEnum.ADMINISTRADOR)){
+                throw new Error('El usuario no tiene permisos para ver esta sección')
+            }
+        }
+        const auditoria = this.client.get<AuditoriaDto[]>(`${environment?.apiUrl}/auditoria/todo`);
+        return auditoria;
     }
 
-    createAuditoria(auditoriaDto: CreateAuditoria): Observable<AuditoriaDto>{
-        return this.client.post<AuditoriaDto>(
-            environment?.apiUrl + '/auditoria',
-            auditoriaDto
-        );
-    }
-
-    editAuditoria(auditoriaDto: ModificacionAuditoria){
-        return this.client.put(
-            environment?.apiUrl + '/auditoria' + auditoriaDto.id,
-            auditoriaDto
-        )
-    }
-
-    auditoriaByDate(auditoriaDto: AuditoriaDto): Observable<AuditoriaDto[]>{
-        return this.client.get<AuditoriaDto[]>(
-            environment?.apiUrl + '/auditoria' + auditoriaDto.fechaModificacion
-        );
-    }
-
-    auditoriaByUser(auditoriaDto: AuditoriaDto): Observable<AuditoriaDto[]>{
-        return this.client.get<AuditoriaDto[]>(
-            environment?.apiUrl + '/auditoria' + auditoriaDto.idUsuarioActual
-        )
-    }
-
-    auditoriaByMod(auditoriaDto: AuditoriaDto): Observable<AuditoriaDto[]>{
-        return this.client.get<AuditoriaDto[]>(
-            environment?.apiUrl + '/auditoria' + auditoriaDto.idUsuarioModificacion
-        )
-    }
+    
+    
 }
