@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class ActividadesService {
-  private apiUrl = 'http://localhost:3000/api/actividades';
+ 
   private readonly platformId = inject(PLATFORM_ID);
   constructor(private _client: HttpClient,
     private _authService: AuthService,
@@ -30,7 +30,7 @@ export class ActividadesService {
     return actividades;
   }
   
-
+// Es getActividadById
   getActividad(id: number): Observable<ActividadDto> {
     if (isPlatformBrowser(this.platformId)) {
       if (!this._authService.hasRole(RolesEnum.ADMINISTRADOR)) {
@@ -40,7 +40,7 @@ export class ActividadesService {
     return this._client.get<ActividadDto>(`${environment?.apiUrl}/actividades/${id}`);
   }
 
-  createActividad(actividad: ActividadDto): Observable<ActividadDto> {
+  crearActividad(actividad: ActividadDto): Observable<ActividadDto> {
     if (isPlatformBrowser(this.platformId)) {
       if (!this._authService.hasRole(RolesEnum.ADMINISTRADOR)) {
         throw new Error('El usuario no esta autorizado para ver esta sección')
@@ -49,7 +49,7 @@ export class ActividadesService {
     return this._client.post<ActividadDto>(environment?.apiUrl, actividad);
   }
 
-  updateActividad(actividad: ActividadDto): Observable<ActividadDto> {
+  editarActividad(actividad: ActividadDto): Observable<ActividadDto> {
     if (isPlatformBrowser(this.platformId)) {
       if (!this._authService.hasRole(RolesEnum.ADMINISTRADOR)) {
         throw new Error('El usuario no esta autorizado para ver esta sección')
@@ -58,7 +58,7 @@ export class ActividadesService {
     return this._client.patch<ActividadDto>(`${environment?.apiUrl}/${actividad.id}`, actividad);
   }
 
-  deleteActividad(id: number): Observable<void> {
+  eliminarActividad(id: number): Observable<void> {
     if (isPlatformBrowser(this.platformId)) {
       if (!this._authService.hasRole(RolesEnum.ADMINISTRADOR)) {
         throw new Error('El usuario no esta autorizado para ver esta sección')
