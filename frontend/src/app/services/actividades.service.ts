@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ActividadDto } from '../dtos/actividad.dto';
+//import { environment } from '../../environments/environments';
 
 @Injectable({
   providedIn: 'root'
@@ -15,19 +16,19 @@ export class ActividadesService {
     return this.http.get<ActividadDto[]>(this.apiUrl);
   }
 
-  getActividad(id: number): Observable<ActividadDto> {
+  getActividadById(id: number): Observable<ActividadDto> {
     return this.http.get<ActividadDto>(`${this.apiUrl}/${id}`);
   }
 
-  createActividad(actividad: ActividadDto): Observable<ActividadDto> {
+  crearActividad(actividad: ActividadDto): Observable<ActividadDto> {
     return this.http.post<ActividadDto>(this.apiUrl, actividad);
   }
 
-  updateActividad(actividad: ActividadDto): Observable<ActividadDto> {
-    return this.http.patch<ActividadDto>(`${this.apiUrl}/${actividad.id}`, actividad);
+  editarActividad(actividad: ActividadDto): Observable<ActividadDto> {
+    return this.http.put<ActividadDto>(`${this.apiUrl}/${actividad.id}`, actividad);
   }
 
-  deleteActividad(id: number): Observable<void> {
+  eliminarActividad(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

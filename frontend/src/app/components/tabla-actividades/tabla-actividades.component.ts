@@ -1,63 +1,109 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { MessageService } from 'primeng/api';
+import { TableModule } from 'primeng/table';
+import { Router } from '@angular/router';
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { Subscription } from 'rxjs';
+import { TagModule } from 'primeng/tag';
+import { TooltipModule } from 'primeng/tooltip';
 import { ActividadesService } from '../../services/actividades.service';
 import { ActividadDto } from '../../dtos/actividad.dto';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-tabla-actividades',
+  standalone: true,
+  imports: [
+    TableModule,
+    CardModule,
+    CommonModule,
+    ButtonModule,
+    ToastModule,
+    ConfirmDialogModule,
+    TagModule,
+    TooltipModule,
+  ],
   templateUrl: './tabla-actividades.component.html',
   styleUrls: ['./tabla-actividades.component.scss'],
-  providers: [MessageService]
 })
 export class TablaActividadesComponent implements OnInit {
-  actividades: ActividadDto[] = [];
-  displayDialog: boolean = false;
-  // actividad: ActividadDto = new ActividadDto();
-  actividad!: ActividadDto
-  titulo: string = 'ACTIVIDADES';
+  actividades!: ActividadDto[];
+  selectedActividad!: ActividadDto;
+  displayEditDialog: boolean = false;
+  displayNewDialog: boolean = false;
 
-  constructor(private actividadesService: ActividadesService, private messageService: MessageService) { }
+  constructor(
+    private messageService: MessageService,
+    private actividadesService: ActividadesService,
+    private confirmacionService: ConfirmationService,
+    private _route: Router
+  ) {}
 
   ngOnInit() {
-    this.loadActividades();
+    this.cargarActividades();
   }
 
-  loadActividades() {
-    this.actividadesService.getActividades().subscribe(data => {
+  cargarActividades() {
+    this.actividadesService.getActividades().subscribe((data) => {
       this.actividades = data;
     });
   }
 
-  onEdit(actividad: ActividadDto) {
-    this.actividad = { ...actividad };
-    this.displayDialog = true;
-  }
-
-  onDelete(actividad: ActividadDto) {
-    this.actividadesService.deleteActividad(actividad.id).subscribe(() => {
-      this.loadActividades();
-      this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Actividad eliminada' });
+  eliminarActividad(id: number) {
+    this.confirmacionService.confirm({
+      message: '¿Estás seguro de que quieres eliminar esta actividad?',
+      accept: () => {
+        this.actividadesService.eliminarActividad(id).subscribe(() => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Éxito',
+            detail: 'Actividad eliminada',
+          });
+          this.cargarActividades();
+        });
+      },
     });
   }
 
-  save() {
-    if (this.actividad.id) {
-      this.actividadesService.updateActividad(this.actividad).subscribe(() => {
-        this.loadActividades();
-        this.displayDialog = false;
-        this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Actividad actualizada' });
+  editarActividad(actividad: ActividadDto) {
+    this.selectedActividad = { ...actividad };
+    this.displayEditDialog = true;
+  }
+
+  nuevo() {
+    this.selectedActividad = {} as ActividadDto;
+    this.displayNewDialog = true;
+  }
+
+  saveActividad() {
+    if (this.selectedActividad.id) {
+      this.actividadesService.editarActividad(this.selectedActividad).subscribe(() => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Éxito',
+          detail: 'Actividad actualizada',
+        });
+        this.cargarActividades();
+        this.displayEditDialog = false;
       });
     } else {
-      this.actividadesService.createActividad(this.actividad).subscribe(() => {
-        this.loadActividades();
-        this.displayDialog = false;
-        this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Actividad creada' });
+      this.actividadesService.crearActividad(this.selectedActividad).subscribe(() => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Éxito',
+          detail: 'Actividad creada',
+        });
+        this.cargarActividades();
+        this.displayNewDialog = false;
       });
     }
   }
 
-  nuevo() {
-    // this.actividad = new ActividadDto();
-    this.displayDialog = true;
+  cancel() {
+    this.displayEditDialog = false;
+    this.displayNewDialog = false;
   }
 }

@@ -1,9 +1,20 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { DialogModule } from 'primeng/dialog';
+import { CalendarModule } from 'primeng/calendar';
 import { ActividadDto } from '../../dtos/actividad.dto';
 import { ActividadesService } from '../../services/actividades.service';
 
 @Component({
   selector: 'app-editar-actividad',
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    DialogModule,
+    CalendarModule
+  ],
   templateUrl: './editar-actividad.component.html',
   styleUrls: ['./editar-actividad.component.scss']
 })
@@ -16,7 +27,7 @@ export class EditarActividadComponent {
   constructor(private actividadesService: ActividadesService) { }
 
   save() {
-    this.actividadesService.updateActividad(this.actividad).subscribe(() => {
+    this.actividadesService.editarActividad(this.actividad).subscribe(() => {
       this.refresh.emit();
       this.closeDialog();
     });
