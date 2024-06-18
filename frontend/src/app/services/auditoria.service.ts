@@ -21,11 +21,12 @@ export class AuditoriaService{
 
     getAuditoriaActividad(): Observable<AuditoriaDto[]>{
         if(isPlatformBrowser(this.platformId)){
-            if(this._authService.hasRole(RolesEnum.ADMINISTRADOR)){
+            if(!this._authService.hasRole(RolesEnum.ADMINISTRADOR)){
                 throw new Error('El usuario no tiene permisos para ver esta sección')
             }
         }
         const auditoria = this.client.get<AuditoriaDto[]>(`${environment?.apiUrl}/auditoria/todo`);
+       
         return auditoria;
     }
 

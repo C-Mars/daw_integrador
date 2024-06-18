@@ -26,9 +26,7 @@ export class AuditoriaService {
     }
 
     async obtenerAuditorias(): Promise<Auditoria[]>{
-        const auditoria: Auditoria[] = await this.auditoriaRepo.find({
-            
-        });
+        const auditoria: Auditoria[] = await this.auditoriaRepo.find();
         return auditoria;
     }
 }

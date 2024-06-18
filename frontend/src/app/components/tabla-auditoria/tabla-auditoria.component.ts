@@ -4,13 +4,14 @@ import { CardModule } from 'primeng/card';
 import { AuditoriaDto } from '../../dtos/auditoria.dto';
 import { AuditoriaService } from '../../services/auditoria.service';
 import { MessageService } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
 
 
 @Component({
   selector: 'app-tabla-auditoria',
   standalone: true,
   imports: [TableModule,
-    CardModule],
+    CardModule,ButtonModule],
   templateUrl: './tabla-auditoria.component.html',
   styleUrl: './tabla-auditoria.component.scss'
 })
@@ -36,6 +37,7 @@ export class TablaAuditoriaComponent implements OnInit {
     return this.auditoriaService.getAuditoriaActividad().subscribe({
       next: (res) =>{
         this.auditorias = res;
+    
       },
       error: (err) =>{
         this.messageService.add({

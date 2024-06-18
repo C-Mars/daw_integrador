@@ -13,6 +13,14 @@ import { AuthGuard } from 'src/auth/guards/auth.guard';
 @Controller('auditoria')
 export class AuditoriaController {
     constructor(private readonly auditoriaService: AuditoriaService){}
+    
+    @Get('/todo')
+    @ApiBearerAuth()
+    @Roles([RolesEnum.ADMINISTRADOR])
+    @UseGuards(AuthGuard)
+    async getAuditorias(): Promise<Auditoria[]>{
+       return await this.auditoriaService.obtenerAuditorias();
+    }
 
     @Get(':id')
     @ApiBearerAuth()
@@ -21,14 +29,7 @@ export class AuditoriaController {
     async auditoriaActividad(@Param('id', ParseIntPipe) id:Actividades): Promise<Auditoria[]>{
         return  await this.auditoriaService.getAuditoriaActividad(id);
      }
+    
+   }
      
-
-     @Get('/todo')
-     @ApiBearerAuth()
-     @Roles([RolesEnum.ADMINISTRADOR])
-     @UseGuards(AuthGuard)
-     async getAuditorias(): Promise<Auditoria[]>{
-        return await this.auditoriaService.obtenerAuditorias();
-     }
-} 
 
