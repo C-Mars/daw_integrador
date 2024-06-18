@@ -34,7 +34,7 @@ export class ActividadesController {
   async getActividad(
     @Param('id', ParseIntPipe) id: number,
   ): Promise<Actividades> {
-    return this.actividadService.obtenerActividadPorId(id);
+    return await this.actividadService.obtenerActividadPorId(id);
   }
 
   @Get()
@@ -42,7 +42,7 @@ export class ActividadesController {
   @Roles([RolesEnum.ADMINISTRADOR])
   @UseGuards(AuthGuard)
   async getActividades(): Promise<Actividades[]> {
-    return this.actividadService.obtenerTodasLasActividades();
+    return await this.actividadService.obtenerTodasLasActividades();
   }
 
   @Patch(':id')

@@ -9,7 +9,6 @@ import { EditarUsuario } from '../dto/editar-usuario.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { fileFilter } from '../../archivos/helpers/archivosfiltro.helper';
 import { diskStorage } from 'multer';
-import { ConfigService } from '@nestjs/config';
 import { ArchivosService } from 'src/archivos/service/archivos.service';
 import { CrearUsuarioDto } from '../dto/crear-usuario.dto';
 import { Response } from 'express';
@@ -20,10 +19,7 @@ import { fileNamer } from 'src/archivos/helpers/archivosnombre.helper';
 @Controller('/usuarios')
 export class UsuariosController  {
   constructor(private usuariosService: UsuariosService,
-    private archivosService: ArchivosService,
-    private configService:ConfigService
-   
-  ) { }
+    private archivosService: ArchivosService) { }
 // Crear Usuarios-----------------------------------------------------------------------------
   @Post()
   @ApiBearerAuth()
@@ -53,7 +49,7 @@ async registrarUsuario(
 //Trae todos los usuarios activos-----------------------------------------------------------------------------
 
   @Get()
-  // @ApiBearerAuth()
+  @ApiBearerAuth()
   @Roles([RolesEnum.ADMINISTRADOR])
   @UseGuards(AuthGuard)
   async getUsuarios() {
