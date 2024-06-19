@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
 import { CalendarModule } from 'primeng/calendar';
-import { ActividadDto } from '../../dtos/actividad.dto';
+import { ActividadDto } from '../../dtos/Actividad.dto';
 import { ActividadesService } from '../../services/actividades.service';
 
 @Component({

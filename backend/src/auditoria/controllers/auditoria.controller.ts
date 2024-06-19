@@ -18,7 +18,7 @@ export class AuditoriaController {
     @ApiBearerAuth()
     @Roles([RolesEnum.ADMINISTRADOR])
     @UseGuards(AuthGuard)
-    async getAuditorias(): Promise<Auditoria[]>{
+    async getAuditorias(): Promise<Auditoria[]> {
        return await this.auditoriaService.obtenerAuditorias();
     }
 
@@ -26,10 +26,9 @@ export class AuditoriaController {
     @ApiBearerAuth()
     @Roles([RolesEnum.ADMINISTRADOR])
     @UseGuards(AuthGuard)
-    async auditoriaActividad(@Param('id', ParseIntPipe) id:Actividades): Promise<Auditoria[]>{
-        return  await this.auditoriaService.getAuditoriaActividad(id);
-     }
-    
+    async auditoriaActividad(@Param('id', ParseIntPipe) id: Actividades): Promise<Auditoria[]> {
+        return await this.auditoriaService.getAuditoriaActividad(id);
+    }
    }
      
 

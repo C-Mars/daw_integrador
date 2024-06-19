@@ -13,23 +13,30 @@ import { RolesEnum } from "../enums/roles.enum";
 })
 export class AuditoriaService{
     private readonly platformId = inject(PLATFORM_ID);
-    constructor(private client: HttpClient,
+    constructor(private _client: HttpClient,
         private _authService: AuthService,
         private _router: Router) { }
     
     
 
-    getAuditoriaActividad(): Observable<AuditoriaDto[]>{
-        if(isPlatformBrowser(this.platformId)){
-            if(!this._authService.hasRole(RolesEnum.ADMINISTRADOR)){
-                throw new Error('El usuario no tiene permisos para ver esta sección')
+        getAuditoriaActividad(id: number): Observable<AuditoriaDto[]> {
+            if (isPlatformBrowser(this.platformId)) {
+              if (!this._authService.hasRole(RolesEnum.ADMINISTRADOR)) {
+                throw new Error('El usuario no tiene permisos para ver esta sección');
+              }
             }
-        }
-        const auditoria = this.client.get<AuditoriaDto[]>(`${environment?.apiUrl}/auditoria/todo`);
-       
-        return auditoria;
-    }
-
-    
-    
+            return this._client.get<AuditoriaDto[]>(`${environment.apiUrl}/auditoria/${id}`);
+          }
+        
+          getTodasAuditorias(): Observable<AuditoriaDto[]> {
+            if (isPlatformBrowser(this.platformId)) {
+              if (!this._authService.hasRole(RolesEnum.ADMINISTRADOR)) {
+                throw new Error('El usuario no tiene permisos para ver esta sección');
+              }
+            }
+            return this._client.get<AuditoriaDto[]>(`${environment.apiUrl}/auditoria/todo`);
+          }
 }
+    
+    
+

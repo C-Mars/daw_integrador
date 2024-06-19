@@ -1,7 +1,7 @@
 import { Injectable, PLATFORM_ID, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ActividadDto } from '../dtos/actividad.dto';
+import { ActividadDto } from '../dtos/Actividad.dto';
 import { isPlatformBrowser } from '@angular/common';
 import { environment } from '../environments/environment';
 import { RolesEnum } from '../enums/roles.enum';

@@ -1,26 +1,31 @@
 
-
 <p-card header="{{ titulo }}">
-    <!-- <div>
-    <button type="button" pButton pRipple 
-    icon="pi pi-file" 
-    (click)="exportCSV()"  GRACIAS PROFES!!!!!!!!  No por suerte el servidor funciona. muchas gracias 
-    class="mr-2" 
-    pTooltip="CSV" 
-    tooltipPosition="bottom"></button></div> -->
+    <div class="mb-4  flex  flex-wrap md:align-self-auto align-self-end flex align-items-end justify-content-end">
+    <p-button
+        class="accion"
+        icon="pi pi-file"
+        label="Exportar"
+        (click)="exportarCSV()"
+        [rounded]="true"
+        severity="info"
+        pTooltip="Exportar"
+      />
+    </div>
     <ng-template pTemplate="content">
         <p-table 
+        #dt
+        [columns]="cols"
         [value]="auditorias"
-        class="flex flex-wrap w-min md:w-max">
+        class="flex flex-wrap w-min md:w-max"
+        >
             <ng-template pTemplate="header">
                 <tr>
-                    <th>ID</th>
-                    <th>ID-Actividad</th>
-                    <th>ID-Cliente</th>
+                    <th>Actividad</th>
+                    <th>Cliente</th>
                     <th>Descripción</th>
-                    <th>Encargado</th>
-                    <th>Prioridad</th>
                     <th>Administrador</th>
+                    <th>Prioridad</th>
+                    <th>Encargado</th>
                     <th>Última modificación</th>
                     <th>Fecha de creación</th>
                     <th>Estado</th>
@@ -29,12 +34,12 @@
             </ng-template>
             <ng-template pTemplate="body" let-auditoria>
                 <tr>
-                    <td>{{ auditoria.idActividad }}</td>
-                    <td>{{ auditoria.idCliente }}</td>
+                    <td>{{ auditoria.actividadActual?.id }}</td> 
+                    <td>{{ auditoria.clienteActual?.nombres }}</td> 
                     <td>{{ auditoria.descripcion }}</td>
-                    <td>{{ auditoria.idUsuarioActual }}</td>
+                    <td>{{ auditoria.usuarioActual?.nombres }}</td> 
                     <td>{{ auditoria.prioridad }}</td>
-                    <td>{{ auditoria.idUsuarioModificacion }}</td>
+                    <td>{{ auditoria.usuarioModificacion?.nombres }}</td> 
                     <td>{{ auditoria.fechaModificacion }}</td>
                     <td>{{ auditoria.fechaInicio }}</td>
                     <td>{{ auditoria.estado }}</td>

@@ -9,20 +9,27 @@ export class AuditoriaService {
 
     constructor(@InjectRepository(Auditoria) private auditoriaRepo: Repository<Auditoria>){}
 
-
-    async getAuditoriaActividad(id: Actividades): Promise<Auditoria[]>{
-    
-
-        const consulta = this.auditoriaRepo
-        .createQueryBuilder('auditoria')
-        .innerJoin('auditoria.actividadActual', 'actividad')
-
+    // async getAuditoriaActividad(id: Actividades): Promise<Auditoria[]>{
+    //     const consulta = this.auditoriaRepo
+    //     .createQueryBuilder('auditoria')
+    //     .innerJoin('auditoria.actividadActual', 'actividad')  
+    //         consulta.where('actividad.id = :idActividad', {
+    //             idActividad: id
+    //         });
         
-            consulta.where('actividad.id = :idActividad', {
-                idActividad: id
-            });
+    //     return await consulta.getMany();
+    // }
+    async getAuditoriaActividad(id: Actividades): Promise<Auditoria[]> {
+        const auditorias = await this.auditoriaRepo
+            .createQueryBuilder('auditoria')
+            .leftJoinAndSelect('auditoria.actividadActual', 'actividad')
+            .leftJoinAndSelect('auditoria.clienteActual', 'cliente')
+            .leftJoinAndSelect('auditoria.usuarioActual', 'usuarioActual')
+            .leftJoinAndSelect('auditoria.usuarioModificacion', 'usuarioModificacion')
+            .where('actividad.id = :idActividad', { idActividad: id })
+            .getMany();
         
-        return await consulta.getMany();
+        return auditorias;
     }
 
     async obtenerAuditorias(): Promise<Auditoria[]>{
