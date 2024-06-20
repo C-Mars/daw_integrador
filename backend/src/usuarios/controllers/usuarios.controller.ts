@@ -85,27 +85,7 @@ async getUsuariosTodos() {
     res.sendFile(path);
   }
 
-  @Post('foto/')
-  @ApiBearerAuth()
-  @Roles([RolesEnum.ADMINISTRADOR])
-  @UseGuards(AuthGuard)
-  @UseInterceptors(FileInterceptor('foto',
-  {
-      //Creo un filtro para que se fije que el archivo que subo sea formato imagen
-      fileFilter: fileFilter,
-      //Donde se va a guardar el archivo
-      storage: diskStorage({
-          destination: '/backend/static/usuarios',
-          filename: fileNamer,
-  })
-  }))
-async postfoto(
-  @Body() crearUsuarioDto: CrearUsuarioDto,
-  @UploadedFile() foto: Express.Multer.File) {
-  const fotoUsu =    crearUsuarioDto.foto
-  crearUsuarioDto.foto  = await this.archivosService.guardarArchivo(foto);      
-  return fotoUsu
-};
+
 //Edita un usuario-----------------------------------------------------------------------------
 
   @Patch('editar/:id')

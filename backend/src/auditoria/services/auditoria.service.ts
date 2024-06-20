@@ -9,16 +9,7 @@ export class AuditoriaService {
 
     constructor(@InjectRepository(Auditoria) private auditoriaRepo: Repository<Auditoria>){}
 
-    // async getAuditoriaActividad(id: Actividades): Promise<Auditoria[]>{
-    //     const consulta = this.auditoriaRepo
-    //     .createQueryBuilder('auditoria')
-    //     .innerJoin('auditoria.actividadActual', 'actividad')  
-    //         consulta.where('actividad.id = :idActividad', {
-    //             idActividad: id
-    //         });
-        
-    //     return await consulta.getMany();
-    // }
+
     async getAuditoriaActividad(id: Actividades): Promise<Auditoria[]> {
         const auditorias = await this.auditoriaRepo
             .createQueryBuilder('auditoria')

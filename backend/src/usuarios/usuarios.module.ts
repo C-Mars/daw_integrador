@@ -12,8 +12,7 @@ import { ConfigService } from '@nestjs/config';
 @Module({
   controllers: [UsuariosController],
   imports:[TypeOrmModule.forFeature([Usuario]),ArchivosModule,UsuariosModule,
-  // MulterModule.register({
-  //   dest: '../../static/usuarios',})
+ 
   ],
   providers: [UsuariosService,ArchivosService,ConfigService],
   exports:[UsuariosService]
