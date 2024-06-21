@@ -43,11 +43,16 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
+    if (!isPlatformBrowser(this.platformId)) {
+      return false;
+    }
     const token = sessionStorage.getItem('token');
     if (!token) {
       return false;
     }
+  
     return !new JwtHelperService().isTokenExpired(token);
+    
   }
 
   hasRole(rol: RolesEnum): boolean {

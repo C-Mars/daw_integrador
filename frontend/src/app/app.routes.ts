@@ -10,6 +10,8 @@ import { TablaAuditoriaComponent } from './components/tabla-auditoria/tabla-audi
 import { AuditoriaAdminComponent } from './components/auditoria-admin/auditoria-admin.component';
 import { InicioUsuarioComponent } from './components/inicio-usuario/inicio-usuario.component';
 import { ActividadesUsuariosComponent } from './components/actividades-usuarios/actividades-usuarios.component';
+import { adminGuard } from './guards/admin.guard';
+import { usuarioGuard } from './guards/usuario.guard';
 
 
 export const routes: Routes = [
@@ -24,31 +26,64 @@ export const routes: Routes = [
 },
 {
     path: 'inicio-admin',
-    component: InicioAdminComponent
+    loadComponent: () =>
+        import('./components/inicio-admin/inicio-admin.component').then(
+          (mod) => mod.InicioAdminComponent
+        ),
+      canActivate: [adminGuard],
+
 },
 {
     path:'actividades-admin',
-    component:ActividadesAdminComponent,
+    loadComponent: () =>
+        import('./components/actividades-admin/actividades-admin.component').then(
+          (mod) => mod.ActividadesAdminComponent
+        ),
+      canActivate: [adminGuard],
 },
 {
     path:'usuarios',
-    component:UsuariosAdminComponent,
+    loadComponent: () =>
+        import('./components/usuarios-admin/usuarios-admin.component').then(
+          (mod) => mod.UsuariosAdminComponent
+        ),
+      canActivate: [adminGuard],
+    
 },
 {
     path:'clientes',
-    component: ClientesAdminComponent,
+    loadComponent: () =>
+        import('./components/clientes-admin/clientes-admin.component').then(
+          (mod) => mod.ClientesAdminComponent
+        ),
+      canActivate: [adminGuard],
 },
 {
     path:'auditoria',
-    component:AuditoriaAdminComponent,
+    loadComponent: () =>
+        import('./components/auditoria-admin/auditoria-admin.component').then(
+          (mod) => mod.AuditoriaAdminComponent
+        ),
+      canActivate: [adminGuard],
+    
 },
 {
     path:'inicio-usuarios',
-    component: InicioUsuarioComponent,
+    loadComponent: () =>
+        import('./components/inicio-usuario/inicio-usuario.component').then(
+          (mod) => mod.InicioUsuarioComponent
+        ),
+      canActivate: [usuarioGuard],
+    
 },
 {
     path:'actividades-usuarios',
-    component: ActividadesUsuariosComponent,
+    loadComponent: () =>
+        import('./components/actividades-usuarios/actividades-usuarios.component').then(
+          (mod) => mod.ActividadesUsuariosComponent
+        ),
+      canActivate: [usuarioGuard],
+   
 },
 {
     path: '**', 
