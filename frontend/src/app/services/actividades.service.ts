@@ -26,8 +26,7 @@ export class ActividadesService {
         throw new Error('El usuario no esta autorizado para ver esta sección')
       }
     }
-    const actividades =  this._client.get<ActividadDto[]>(`${environment?.apiUrl}/actividades`);
-    return actividades;
+    return this._client.get<ActividadDto[]>(`${environment?.apiUrl}/actividades`);;
   }
   
 // Es getActividadById

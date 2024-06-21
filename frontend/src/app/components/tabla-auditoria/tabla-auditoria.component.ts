@@ -62,6 +62,7 @@ export class TablaAuditoriaComponent implements OnInit {
           this.auditoriaService.getAuditoriaActividad(actividad.id).subscribe({
             next: (res: AuditoriaDto[]) => {
               this.auditorias.push(...res);
+              console.log(res)
               this.datosCargados = true;
             },
             error: (err) => {

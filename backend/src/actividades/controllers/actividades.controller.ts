@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Patch, Post, Req, UseGuards, } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Req, UseGuards, } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { ActividadesService } from '../services/actividades.service';
@@ -55,4 +55,15 @@ export class ActividadesController {
   ) {
     return await this.actividadService.editarActividad(id, editarActividadDto);
   }
+
+  @Delete(':id')
+  @ApiBearerAuth()
+  @Roles([RolesEnum.ADMINISTRADOR])
+  @UseGuards(AuthGuard)
+  async borrarActividad(
+    @Param('id', ParseIntPipe) id: number,
+    @Req() request: Request,
+  ) {
+    await this.actividadService.borrarActividad(id, request['usuario']);
+  }
 }

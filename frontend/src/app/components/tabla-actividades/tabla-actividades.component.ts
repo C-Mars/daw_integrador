@@ -49,6 +49,7 @@ export class TablaActividadesComponent implements OnInit {
   cargarActividades() {
     this.actividadesService.getActividades().subscribe((data) => {
       this.actividades = data;
+      console.log(data)
     });
   }
 
