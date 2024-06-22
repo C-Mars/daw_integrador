@@ -1,8 +1,8 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators,} from "@angular/forms";
+import { DialogModule } from 'primeng/dialog';
 import { ActividadDto } from '../../dtos/Actividad.dto';
 import { ActividadesService } from '../../services/actividades.service';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators,} from '@angular/forms';
-import { DialogModule } from 'primeng/dialog';
 import { PrioridadActividadEnum } from '../../enums/prioridad-actividad.enum';
 import { EstadoActividadEnum } from '../../enums/estado-actividad.enum';
 import { CardModule } from 'primeng/card';
@@ -14,53 +14,56 @@ import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-editar-actividad',
+  selector: 'app-crear-actividad',
   standalone: true,
   imports: [
-    CardModule,
-    ToastModule,
+    DialogModule,
+    ReactiveFormsModule,
     InputTextModule,
     ButtonModule,
+    ToastModule,
     FloatLabelModule,
-    DialogModule,
+    CardModule,
     DropdownModule,
-    ReactiveFormsModule,
     FormsModule
   ],
-  templateUrl: './editar-actividad.component.html',
-  styleUrl: './editar-actividad.component.scss',
+  templateUrl: './crear-actividad.component.html',
+  styleUrls: ['./crear-actividad.component.scss']
 })
-export class EditarActividadComponent {
-  @Input() actividad!: ActividadDto;
-  @Output() actividadChange = new EventEmitter<ActividadDto>();
+export class CrearActividadComponent {
   @Input() displayDialog: boolean = false;
   @Output() displayDialogChange = new EventEmitter<boolean>();
-
   @Output() refresh = new EventEmitter<void>();
   @Output() close = new EventEmitter<void>();
+
+  actividad: ActividadDto = {
+    id: 0,
+    descripcion: '',
+    idCliente: 0,
+    idUsuarioActual: 0,
+    prioridad: PrioridadActividadEnum.BAJA,
+    estado: EstadoActividadEnum.EN_PROCESO,
+    idUsuarioModificacion: 0,
+    fechaModificacion: new Date(),
+    fechaInicio: new Date()
+  };
 
   constructor(private actividadesService: ActividadesService) {}
 
   save() {
-    this.actividadesService
-      .actualizarActividad(this.actividad)
-      .subscribe(() => {
-        this.refresh.emit();
-        this.closeDialog();
-      });
+    this.actividadesService.crearActividad(this.actividad).subscribe(() => {
+      this.refresh.emit();
+      this.closeDialog();
+    });
   }
 
   cancel() {
     this.closeDialog();
   }
 
-  private closeDialog() {
+  closeDialog() {
     this.displayDialog = false;
     this.displayDialogChange.emit(this.displayDialog);
     this.close.emit();
-  }
-
-  onActividadChange() {
-    this.actividadChange.emit(this.actividad);
   }
 }

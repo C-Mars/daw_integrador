@@ -81,5 +81,18 @@
   </ng-template>
 </p-card>
 
+<app-crear-actividad
+  [(displayDialog)]="displayNewDialog"
+  (refresh)="cargarActividades()"
+  (close)="displayNewDialog = false"
+></app-crear-actividad>
+
+<app-editar-actividad
+  [(actividad)]="selectedActividad"
+  [(displayDialog)]="displayEditDialog"
+  (refresh)="cargarActividades()"
+  (close)="displayEditDialog = false"
+></app-editar-actividad>
+
 <p-toast></p-toast>
 <p-confirmDialog></p-confirmDialog>

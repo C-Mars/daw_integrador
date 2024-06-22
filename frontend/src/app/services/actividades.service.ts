@@ -13,9 +13,10 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class ActividadesService {
- 
+
   private readonly platformId = inject(PLATFORM_ID);
-  constructor(private _client: HttpClient,
+  constructor(
+    private _client: HttpClient,
     private _authService: AuthService,
     private _router: Router
   ) { }
@@ -28,7 +29,7 @@ export class ActividadesService {
     }
     return this._client.get<ActividadDto[]>(`${environment?.apiUrl}/actividades`);;
   }
-  
+
 // Es getActividadById
   getActividad(id: number): Observable<ActividadDto> {
     if (isPlatformBrowser(this.platformId)) {
@@ -48,6 +49,11 @@ export class ActividadesService {
     return this._client.post<ActividadDto>(environment?.apiUrl, actividad);
   }
 
+  actualizarActividad(actividad: ActividadDto): Observable<ActividadDto> {
+    this.verificarAutorizacion();
+    return this._client.put<ActividadDto>(`${environment.apiUrl}/actividades/${actividad.id}`, actividad);
+  }
+
   editarActividad(actividad: ActividadDto): Observable<ActividadDto> {
     if (isPlatformBrowser(this.platformId)) {
       if (!this._authService.hasRole(RolesEnum.ADMINISTRADOR)) {
@@ -64,5 +70,13 @@ export class ActividadesService {
       }
     }
     return this._client.delete<void>(`${environment?.apiUrl}/${id}`);
+  }
+
+  private verificarAutorizacion(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      if (!this._authService.hasRole(RolesEnum.ADMINISTRADOR)) {
+        throw new Error('El usuario no está autorizado para ver esta sección');
+      }
+    }
   }
 }
