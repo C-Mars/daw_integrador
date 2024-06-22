@@ -126,7 +126,7 @@ ngOnChanges() {
 }
 
 editar() {
-  this.archivos = []
+
   if (!this.formEditarUsuario.valid) {
     this.formEditarUsuario.markAllAsTouched();
     this.messageService.add({
@@ -227,7 +227,6 @@ editar() {
         }
       }
     
-
     
     isEstadoView(): boolean {
       return this.usuario?.estado === EstadosUsuarioEnum.BAJA;
