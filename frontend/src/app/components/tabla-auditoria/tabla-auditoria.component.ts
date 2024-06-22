@@ -35,7 +35,7 @@ export class TablaAuditoriaComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.loadAuditorias();
+    this.cargarAuditorias();
     this.cols = [
       { field: 'actividadActual.id', header: 'Actividad' },
       { field: 'clienteActual.nombres', header: 'Cliente' },
@@ -55,7 +55,7 @@ export class TablaAuditoriaComponent implements OnInit {
     }));
   }
 
-  loadAuditorias(): void {
+  cargarAuditorias(): void {
     this.actividadesService.getActividades().subscribe({
       next: (actividades: ActividadDto[]) => {
         actividades.forEach(actividad => {
