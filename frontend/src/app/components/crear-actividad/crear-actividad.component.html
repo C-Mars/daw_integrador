@@ -1,29 +1,22 @@
-<p-dialog header="Crear Actividad" [(visible)]="displayDialog" (onHide)="closeDialog()" [modal]="true"
-  class="flex justify-content-center flex-wrap min-w-min md:min-w-max">
+<!--
+<p-dialog header="Crear Actividad" [(visible)]="displayDialog" (onHide)="closeDialog()" [modal]="true" class="flex justify-content-center flex-wrap min-w-min md:min-w-max">
   <div class="flex justify-content-center flex-wrap" autocomplete="off">
     <form autocomplete="off">
       <div class="input-container min-w-min md:min-w-max">
         <p-floatLabel class="m-2">
-          <input id="descripcion" pInputText type="text" [(ngModel)]="actividad.descripcion" name="descripcion"
-            autocomplete="off" />
+          <input id="descripcion" pInputText type="text" [(ngModel)]="actividad.descripcion" name="descripcion" autocomplete="off" />
           <label for="descripcion">Descripción</label>
         </p-floatLabel>
       </div>
 
       <div class="input-container min-w-min md:min-w-max">
-        <p-floatLabel class="m-2">
-          <input id="idCliente" pInputText type="number" [(ngModel)]="actividad.idCliente" name="idCliente"
-            autocomplete="off" />
-          <label for="idCliente">ID Cliente</label>
-        </p-floatLabel>
+        <label for="idCliente">Cliente</label>
+        <p-dropdown id="idCliente" appendTo="body" placeholder="Seleccionar" [options]="clientes" [(ngModel)]="actividad.idCliente" name="idCliente"></p-dropdown>
       </div>
 
       <div class="input-container min-w-min md:min-w-max">
-        <p-floatLabel class="m-2">
-          <input id="idUsuarioActual" pInputText type="number" [(ngModel)]="actividad.idUsuarioActual"
-            name="idUsuarioActual" autocomplete="off" />
-          <label for="idUsuarioActual">ID Usuario Actual</label>
-        </p-floatLabel>
+        <label for="idUsuarioActual">Usuario</label>
+        <p-dropdown id="idUsuarioActual" appendTo="body" placeholder="Seleccionar" [options]="usuarios" [(ngModel)]="actividad.idUsuarioActual" name="idUsuarioActual"></p-dropdown>
       </div>
 
       <div class="input-container m-2 min-w-min md:min-w-max">
@@ -44,27 +37,64 @@
           ]" [(ngModel)]="actividad.estado" name="estado"></p-dropdown>
       </div>
 
+
       <div class="input-container min-w-min md:min-w-max">
         <p-floatLabel class="m-2">
-          <input id="fechaInicio" pInputText type="date" [(ngModel)]="actividad.fechaInicio" name="fechaInicio"
-            autocomplete="off" />
+          <input id="fechaInicio" pInputText type="date" [(ngModel)]="actividad.fechaInicio" name="fechaInicio" autocomplete="off" />
           <label for="fechaInicio">Fecha Inicio</label>
         </p-floatLabel>
       </div>
 
+      <p-button class="flex justify-content-center flex-wrap min-w-min md:min-w-max" rounded="true" label="Guardar" (click)="save()"></p-button>
+      <p-button class="flex justify-content-center flex-wrap min-w-min md:min-w-max" rounded="true" label="Cancelar" (click)="cancel()"></p-button>
+    </form>
+  </div>
+</p-dialog>
+
+<p-toast></p-toast>
+-->
+<p-dialog header="Crear Actividad" [(visible)]="displayDialog" (onHide)="closeDialog()" [modal]="true" class="flex justify-content-center flex-wrap min-w-min md:min-w-max">
+  <div class="flex justify-content-center flex-wrap" autocomplete="off">
+    <form [formGroup]="actividadForm" (ngSubmit)="save()" autocomplete="off">
       <div class="input-container min-w-min md:min-w-max">
         <p-floatLabel class="m-2">
-          <input id="fechaModificacion" pInputText type="date" [(ngModel)]="actividad.fechaModificacion"
-            name="fechaModificacion" autocomplete="off" />
-          <label for="fechaModificacion">Fecha Modificación</label>
+          <input id="descripcion" pInputText type="text" formControlName="descripcion" autocomplete="off" />
+          <label for="descripcion">Descripción</label>
         </p-floatLabel>
       </div>
 
-      <p-button class="flex justify-content-center flex-wrap min-w-min md:min-w-max" rounded="true" label="Guardar"
-        (click)="save()"></p-button>
+      <div class="input-container min-w-min md:min-w-max">
+        <label for="idCliente">Cliente</label>
+        <p-dropdown id="idCliente" appendTo="body" placeholder="Seleccionar" [options]="clientes" formControlName="idCliente"></p-dropdown>
+      </div>
 
-      <p-button class="flex justify-content-center flex-wrap min-w-min md:min-w-max" rounded="true" label="Cancelar"
-        (click)="cancel()"></p-button>
+      <div class="input-container min-w-min md:min-w-max">
+        <label for="idUsuarioActual">Usuario</label>
+        <p-dropdown id="idUsuarioActual" appendTo="body" placeholder="Seleccionar" [options]="usuarios" formControlName="idUsuarioActual"></p-dropdown>
+      </div>
+
+      <div class="input-container m-2 min-w-min md:min-w-max">
+        <label for="prioridad">Prioridad: </label>
+        <p-dropdown id="prioridad" appendTo="body" placeholder="Seleccionar" [options]="prioridades" formControlName="prioridad"></p-dropdown>
+      </div>
+
+      <div class="input-container m-2 min-w-min md:min-w-max">
+        <label for="estado">Estado: </label>
+        <p-dropdown id="estado" appendTo="body" placeholder="Seleccionar" [options]="estados" formControlName="estado"></p-dropdown>
+      </div>
+
+      <!--
+      <div class="input-container min-w-min md:min-w-max">
+        <p-floatLabel class="m-2">
+          <input id="fechaInicio" pInputText type="date" formControlName="fechaInicio" autocomplete="off" />
+          <label for="fechaInicio">Fecha Inicio</label>
+        </p-floatLabel>
+      </div>
+      -->
+      <div class="flex justify-content-center flex-wrap min-w-min md:min-w-max">
+        <p-button type="submit" rounded="true" label="Guardar"></p-button>
+        <p-button type="button" rounded="true" label="Cancelar" (click)="cancel()"></p-button>
+      </div>
     </form>
   </div>
 </p-dialog>
