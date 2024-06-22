@@ -24,9 +24,7 @@
         >
         <ng-template pTemplate="header">
             <tr>
-                <th pSortableColumn="actividadActual" style="width:10%">
-                    Actividad <p-sortIcon field="actividadActual" />
-                </th>
+               
                 <th pSortableColumn="clienteActual" style="width:10%">
                     Cliente <p-sortIcon field="clienteActual" />
                 </th>
@@ -51,7 +49,7 @@
         </ng-template>
             <ng-template pTemplate="body" let-auditoria>
                 <tr>
-                    <td>{{ auditoria.actividadActual?.id }}</td> 
+                    
                     <td>{{ auditoria.clienteActual?.nombres }}</td> 
                     <td>{{ auditoria.descripcion }}</td>
                     <td>{{ auditoria.usuarioActual?.nombres }}</td> 
