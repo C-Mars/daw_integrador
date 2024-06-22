@@ -12,7 +12,6 @@ import { ButtonModule } from 'primeng/button';
 import {ToastModule} from 'primeng/toast'
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { MessageService } from 'primeng/api';
-import { Router } from '@angular/router';
 import { DialogModule } from 'primeng/dialog';
 import { EstadosUsuarioEnum } from '../../enums/estado-usuario.enum';
 import { RolesEnum } from '../../enums/roles.enum';
@@ -21,9 +20,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { UsuariosService } from '../../services/usuarios.service';
 import { EditarUsuarioDto } from '../../dtos/editar-usuario.dto';
 import { NgFor, NgIf } from '@angular/common';
-import { DomSanitizer } from '@angular/platform-browser';
-import { AuthService } from '../../services/auth.service';
-import { catchError, finalize, of, switchMap, tap } from 'rxjs';
+
 
 
 
@@ -82,51 +79,56 @@ export class EditarUsarioComponent {
 
 constructor(
   private messageService: MessageService,
-  private _router: Router,
   private _usuariosService: UsuariosService,
-private sanitizer: DomSanitizer, 
-  private _authService:AuthService
 ) {}
 
 ngOnInit() {
   this._usuariosService.getUsuarios().subscribe({
     next: (res) => {
       this.usuarios = res;
-      this.usuario = this.usuarios[0];
+      if (this.usuarios.length > 0) {
+        this.usuario = this.usuarios[0];
+        this.llenarTabla(); 
+      }
+      this.archivos=[]
     },
     error: (err) => {
       this.messageService.add({
         severity: 'error',
-        summary: 'Hubo un error al recuperar las opciones de usuario',
+        summary: 'Hubo un error al recuperar los usuarios',
       });
     },
   });
 }
 
 llenarTabla() {
-  this.formEditarUsuario.patchValue({
-    id:this.usuario!.id as number,
-    nombres:this.usuario!.nombres,
-    apellidos:this.usuario!.apellidos,
-    email:this.usuario!.email,
-    foto:this.usuario!.foto,
-    rol:this.usuario!.rol,
-    nombreUsuario:this.usuario!.nombreUsuario,
-    clave:this.usuario!.clave,
-    estado:this.usuario!.estado, 
-  });
+  if (this.usuario) {
+    this.formEditarUsuario.patchValue({
+      id: this.usuario.id,
+      nombres: this.usuario.nombres,
+      apellidos: this.usuario.apellidos,
+      email: this.usuario.email,
+      foto: this.usuario.foto,
+      rol: this.usuario.rol,
+      nombreUsuario: this.usuario.nombreUsuario,
+      clave: this.usuario.clave,
+      estado: this.usuario.estado
+    });
+  } else {
+    this.formEditarUsuario.reset();
+  }
 }
 
 ngOnChanges() {
   if (this.usuario) {
     this.llenarTabla();
+    
   } else {
     this.formEditarUsuario.reset();
   }
 }
 
 editar() {
-
   if (!this.formEditarUsuario.valid) {
     this.formEditarUsuario.markAllAsTouched();
     this.messageService.add({
@@ -154,7 +156,7 @@ editar() {
           this.messageService.add({
             severity: 'success',
             summary: 'Usuario editado con éxito!',
-            detail: 'Se han guardado los cambios al usuario'
+            detail: 'Se han guardado los cambios'
           });
           this.llenarTabla();
         },
@@ -162,7 +164,7 @@ editar() {
           this.messageService.add({
             severity: 'error',
             summary: 'Ocurrió un error al editar el usuario',
-            detail: 'Contactar al administrador'
+            detail: ''
           });
         },
         complete: () => {
@@ -190,7 +192,7 @@ editar() {
           this.messageService.add({
             severity: 'success',
             summary: 'Usuario editado con éxito!',
-            detail: 'Se han guardado los cambios al usuario'
+            detail: 'Se han guardado los cambios'
           });
           this.llenarTabla();
         },
@@ -198,7 +200,7 @@ editar() {
           this.messageService.add({
             severity: 'error',
             summary: 'Ocurrió un error al editar el usuario',
-            detail: 'Contactar al administrador'
+            detail: ''
           });
         }
       });
@@ -223,7 +225,6 @@ editar() {
         this.archivos = [];
         for (let file of event.files) {
           this.archivos.push(file);
-
         }
       }
     
