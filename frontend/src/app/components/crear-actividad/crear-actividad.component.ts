@@ -84,6 +84,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule } from '@angular/forms';
 import { ClientesService } from '../../services/clientes.service';
 import { UsuariosService } from '../../services/usuarios.service';
+import { response } from 'express';
 
 @Component({
   selector: 'app-crear-actividad',
@@ -179,17 +180,17 @@ export class CrearActividadComponent implements OnInit {
       actividad.fechaInicio = new Date(); // Asigna la fecha actual del sistema
       actividad.idUsuarioModificacion = 1;  // Supongamos que el usuario ADMINISTRADOR tiene el ID 1
 
-      this.actividadesService.crearActividad(actividad).subscribe(
-        response => {
+      this.actividadesService.crearActividad(actividad).subscribe({
+        next: (response) => {
           this.displayDialog = false;
           this.displayDialogChange.emit(this.displayDialog);
           this.refresh.emit();
           this.close.emit();
         },
-        error => {
+        error: (error) => {
           console.error('Error al guardar la actividad:', error);
         }
-      );
+      });
     } else {
       console.error('Formulario no válido');
     }
