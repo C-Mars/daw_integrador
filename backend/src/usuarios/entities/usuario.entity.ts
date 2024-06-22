@@ -21,7 +21,7 @@ export class Usuario {
     @Column({ type: 'varchar' })
     clave: string;
 
-    @Column({ type: 'varchar' })
+    @Column({ nullable: true })
     foto: string;
 
     @Column({ type: 'varchar' })

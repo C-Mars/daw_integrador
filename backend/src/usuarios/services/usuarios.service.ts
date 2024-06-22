@@ -142,7 +142,17 @@ export class UsuariosService {
         'El usuario no existe',
       );
     }
-    Object.assign(usuario, editarUsuario);
+    usuario.nombres = editarUsuario.nombres;
+    usuario.apellidos = editarUsuario.apellidos;
+    usuario.email = editarUsuario.email;
+    usuario.rol = editarUsuario.rol;
+    usuario.nombreUsuario = editarUsuario.nombreUsuario;
+    usuario.clave = editarUsuario.clave;
+    usuario.estado = editarUsuario.estado;
+
+    if (editarUsuario.foto) {
+      usuario.foto = editarUsuario.foto; 
+    }
 
    return await this.usuariosRepo.save(usuario);
 

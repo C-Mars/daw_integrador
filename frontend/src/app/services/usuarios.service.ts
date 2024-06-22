@@ -6,7 +6,6 @@ import { UsuarioDto } from '../dtos/usuario.dto';
 import { EditarUsuarioDto } from '../dtos/editar-usuario.dto';
 import { HttpClient } from '@angular/common/http';
 import { isPlatformBrowser } from '@angular/common';
-import { CrearUsuarioDto } from '../dtos/crear-usuario.dto';
 import { environment } from '../environments/environment';
 import { AuthService } from './auth.service';
 
@@ -19,7 +18,7 @@ export class UsuariosService {
   constructor(
     private _client: HttpClient,
     private _authService: AuthService,
-    private _router: Router) { }
+    ) { }
 
 
   getUsuarios(): Observable<UsuarioDto[]> {

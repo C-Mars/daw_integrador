@@ -95,7 +95,7 @@ ngOnInit() {
     error: (err) => {
       this.messageService.add({
         severity: 'error',
-        summary: 'Hubo un error al recuperar los usuarios',
+        summary: 'Ocurrió un error al recuperar los usuarios',
       });
     },
   });
