@@ -45,17 +45,6 @@ export class UsuariosService {
   }
 
 
-  // crearv(usuarioDto: CrearUsuarioDto): Observable<UsuarioDto> {
-  //   if (isPlatformBrowser(this.platformId)) {
-  //     if (!this._authService.hasRole(RolesEnum.ADMINISTRADOR)) {
-  //       throw new Error('El usuario no esta autorizado para ver esta sección')
-  //     }
-  //   }
-  //   return this._client.post<UsuarioDto>(
-  //     `${environment?.apiUrl}/usuarios`,
-  //     usuarioDto
-  //   );
-  // }
   crear(formData: FormData): Observable<UsuarioDto> {
     if (isPlatformBrowser(this.platformId)) {
       if (!this._authService.hasRole(RolesEnum.ADMINISTRADOR)) {
@@ -63,8 +52,7 @@ export class UsuariosService {
       }
     }
     return this._client.post<UsuarioDto>(
-        `${environment.apiUrl}/usuarios`,
-        formData
+        `${environment.apiUrl}/usuarios`, formData
 );
 }
 
@@ -79,7 +67,19 @@ export class UsuariosService {
     );
 
   }
-
+  
+  editarConFoto(formData: FormData, id: number) {
+    if (isPlatformBrowser(this.platformId)) {
+      if (!this._authService.hasRole(RolesEnum.ADMINISTRADOR)) {
+        throw new Error('El usuario no está autorizado para ver esta sección');
+      }
+    }
+  
+    return this._client.patch(
+      `${environment?.apiUrl}/usuarios/editar/${id}`, formData
+    );
+  }
+  
   eliminar(id: number): Observable<void> {
     if (isPlatformBrowser(this.platformId)) {
       if (!this._authService.hasRole(RolesEnum.ADMINISTRADOR)) {

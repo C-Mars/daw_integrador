@@ -23,7 +23,7 @@ import { EditarUsuarioDto } from '../../dtos/editar-usuario.dto';
 import { NgFor, NgIf } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AuthService } from '../../services/auth.service';
-import { catchError, finalize, of, tap } from 'rxjs';
+import { catchError, finalize, of, switchMap, tap } from 'rxjs';
 
 
 
@@ -126,6 +126,7 @@ ngOnChanges() {
 }
 
 editar() {
+  this.archivos = []
   if (!this.formEditarUsuario.valid) {
     this.formEditarUsuario.markAllAsTouched();
     this.messageService.add({
@@ -134,30 +135,26 @@ editar() {
     });
     return;
   }
-
+  
   const usuarioDto = this.formEditarUsuario.getRawValue();
 
   if (this.usuario) {
-    const editarUsuarioDto: EditarUsuarioDto = {
-      id: usuarioDto.id!,
-      nombres: usuarioDto.nombres!,
-      apellidos: usuarioDto.apellidos!,
-      email: usuarioDto.email!,
-      foto:usuarioDto.foto,
-      rol: usuarioDto.rol!,
-      nombreUsuario: usuarioDto.nombreUsuario!,
-      clave:usuarioDto.clave!,
-      estado:usuarioDto.estado!
-    };
-    
-      this._usuariosService.editar(editarUsuarioDto).subscribe({
+    if (this.archivos.length > 0) {
+      const formData = new FormData();
+      this.archivos.forEach(archivo => {
+        formData.append('foto', archivo);
+      });
+
+      this.loading = true;
+      const idUsu =this.usuario!.id as number
+      this._usuariosService.editarConFoto(formData, idUsu).subscribe({
         next: (res) => {
           this.cerrar();
           this.refrescar.emit(true);
           this.messageService.add({
             severity: 'success',
             summary: 'Usuario editado con éxito!',
-            detail: 'Se ha realizado Los cambios al usuario'
+            detail: 'Se han guardado los cambios al usuario'
           });
           this.llenarTabla();
         },
@@ -166,24 +163,60 @@ editar() {
             severity: 'error',
             summary: 'Ocurrió un error al editar el usuario',
             detail: 'Contactar al administrador'
-            // detail: 'Detalles del error: ' + err.message
           });
-        
         },
-        
+        complete: () => {
+          this.loading = false;
+        }
       });
-      }
+
+    } else {
+      const editarUsuarioDto: EditarUsuarioDto = {
+        id: usuarioDto.id!,
+        nombres: usuarioDto.nombres!,
+        apellidos: usuarioDto.apellidos!,
+        email: usuarioDto.email!,
+        foto: usuarioDto.foto, 
+        rol: usuarioDto.rol!,
+        nombreUsuario: usuarioDto.nombreUsuario!,
+        clave: usuarioDto.clave!,
+        estado: usuarioDto.estado!
+      };
+
+      this._usuariosService.editar(editarUsuarioDto).subscribe({
+        next: (res) => {
+          this.cerrar();
+          this.refrescar.emit(true);
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Usuario editado con éxito!',
+            detail: 'Se han guardado los cambios al usuario'
+          });
+          this.llenarTabla();
+        },
+        error: (err) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Ocurrió un error al editar el usuario',
+            detail: 'Contactar al administrador'
+          });
+        }
+      });
+    }
+  }
 }
-
-
     cerrar() {
-      this.visibleChange.emit(false);
+      this.visible = false;
+      this.visibleChange.emit(this.visible);
+      this.formEditarUsuario.reset();
+      this.archivos = [];
     }
 
     closeDialog(){
       this.visible = false;
       this.visibleChange.emit(this.visible);
       this.formEditarUsuario.reset();
+      this.archivos = [];
     }
     
   fotoSeleccionada(event: any): void {
@@ -194,48 +227,7 @@ editar() {
         }
       }
     
-  subirArchivo(event:any): void {
-        if (!this.archivos.length || !this.usuario) {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'No hay fotos seleccionadas o no se ha seleccionado un usuario',
-          });
-          return;
-        }
-    
-        const formData = new FormData();
-        this.archivos.forEach(archivo => {
-          formData.append('foto', archivo.name);
-        });
-    
-        this.loading = true;
-        this._usuariosService.subirFoto(formData).pipe(
-          tap(res => {
-            if (res && res.url) {
-              console.log('URL de la foto subida:', res.url);
-              this.archivos = [];
-            } else {
-              this.messageService.add({
-                severity: 'error',
-                summary: 'Error al subir la foto',
-              });
-            }
-          }),
-          catchError(err => {
-            console.error('Error al subir la foto', err);
-            this.messageService.add({
-              severity: 'error',
-              summary: 'Error al subir la foto',
-              detail: err.message ? err.message : 'Error desconocido (no se)',
-            });
-            return of(null);
-          }),
-          finalize(() => {
-            this.loading = false;
-          })
-        ).subscribe();
-      }
-    
+
     
     isEstadoView(): boolean {
       return this.usuario?.estado === EstadosUsuarioEnum.BAJA;
