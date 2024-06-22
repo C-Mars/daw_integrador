@@ -106,10 +106,10 @@ async getUsuariosTodos() {
     @Param('id', ParseIntPipe) id: number,
     @Body() editarUsuarioDto: EditarUsuario,
     @UploadedFile() foto: Express.Multer.File) {
-      // if (foto) {
+      if (foto) {
         editarUsuarioDto.foto  = await this.archivosService.guardarArchivo(foto); 
        
-      // }
+      }
     // Edita por fin al usuario
     return await this.usuariosService.editarUsuario( id ,editarUsuarioDto);
     }    

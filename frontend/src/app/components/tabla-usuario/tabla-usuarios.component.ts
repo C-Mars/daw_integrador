@@ -11,8 +11,6 @@ import { UsuariosService } from '../../services/usuarios.service';
 import { EditarUsarioComponent } from '../editar-usario/editar-usario.component';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { Subscription } from 'rxjs';
-import { environment } from '../../environments/environment';
 import { AvatarModule } from 'primeng/avatar';
 import { TagModule } from 'primeng/tag';
 import { TooltipModule } from 'primeng/tooltip';
@@ -55,13 +53,10 @@ export class TablaUsuariosComponent implements OnInit {
     private messageService: MessageService,
     private _usuarioService: UsuariosService,
     private confirmacionService:  ConfirmationService,
-    private _route: Router
   ) { }
 
   ngOnInit(): void {
-   
     this.llenarTabla();
-
   }
 
   
@@ -93,10 +88,12 @@ export class TablaUsuariosComponent implements OnInit {
           usuario.foto = obFotoURL; 
         } else {
           console.error('El Blob es nulo');
+          usuario.foto = '../../../assets/images/avatar.png'
         }
       },
-      error: (error) => {
-        console.error('Error al cargar la foto del usuario:', error);
+      error: (err) => {
+        console.error('Error al cargar la foto del usuario:');
+        usuario.foto = '../../../assets/images/avatar.png'
       }
     });
   }
@@ -136,8 +133,7 @@ eliminar(item: UsuarioDto): void {
           });
           this.llenarTabla();
         },
-        error: (error) => {
-          console.error('Error al eliminar el usuario:', error);
+        error: () => {
           this.messageService.add({
             severity: 'error',
             summary: 'Error',
@@ -170,7 +166,6 @@ getSeverityEstado(rol: string) {
 }
 
 getSeverityRol(rol: string)  {
- 
   switch (rol) {
       case 'administrador':
           return 'info';
