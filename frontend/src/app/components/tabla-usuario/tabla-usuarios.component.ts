@@ -88,12 +88,12 @@ export class TablaUsuariosComponent implements OnInit {
           usuario.foto = obFotoURL; 
         } else {
           console.error('El Blob es nulo');
-          usuario.foto = '../../../assets/images/avatar.png'
+          usuario.foto = '../../../assets/images/avatar2.png'
         }
       },
       error: (err) => {
         console.error('Error al cargar la foto del usuario:');
-        usuario.foto = '../../../assets/images/avatar.png'
+        usuario.foto = '../../../assets/images/avatar2.png'
       }
     });
   }
