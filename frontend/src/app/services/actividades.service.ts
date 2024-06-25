@@ -46,7 +46,7 @@ export class ActividadesService {
         throw new Error('El usuario no esta autorizado para ver esta sección')
       }
     }
-    return this._client.post<ActividadDto>(environment?.apiUrl, actividad);
+    return this._client.post<ActividadDto>(environment?.apiUrl + '/actividades', actividad);
   }
 
   actualizarActividad(actividad: ActividadDto): Observable<ActividadDto> {
