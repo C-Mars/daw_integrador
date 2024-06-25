@@ -5,8 +5,8 @@ export interface EditarActividadDto {
   id: number;
   idCliente: number;
   descripcion: string;
-  fechaInicio: Date;
-  fechaModificacion: Date;
+  //fechaInicio: Date;
+  //fechaModificacion: Date;
   prioridad: PrioridadActividadEnum;
   estado: EstadoActividadEnum;
 }

@@ -4,7 +4,7 @@ import { PrioridadActividadEnum } from "../enums/prioridad-actividad.enum";
 export interface CrearActividadDto {
   idCliente: number;
   descripcion: string;
-  fechaInicio: Date;
+  //fechaInicio: Date;
   prioridad: PrioridadActividadEnum;
   estado: EstadoActividadEnum;
 }

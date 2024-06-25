@@ -5,12 +5,12 @@ import { ClienteDto } from "./cliente.dto";
 
 export interface ActividadDto {
   id: number;
-  idCliente: number;
-  descripcion: string;
-  fechaInicio: Date;
-  fechaModificacion: Date;
-  prioridad: PrioridadActividadEnum;
-  estado: EstadoActividadEnum;
-  idUsuarioActual: number;
-  idUsuarioModificacion: number;
+  idCliente: number|null;
+  descripcion: string|null;
+  //fechaInicio: Date;
+  //fechaModificacion: Date;
+  prioridad: PrioridadActividadEnum|null;
+  estado: EstadoActividadEnum|null;
+  idUsuarioActual: number|null;
+  idUsuarioModificacion: number|null;
 }

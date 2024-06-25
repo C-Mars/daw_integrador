@@ -177,7 +177,7 @@ export class CrearActividadComponent implements OnInit {
   save() {
     if (this.actividadForm.valid) {
       const actividad: ActividadDto = this.actividadForm.value;
-      actividad.fechaInicio = new Date(); // Asigna la fecha actual del sistema
+      //actividad.fechaInicio = new Date(); // Asigna la fecha actual del sistema
       actividad.idUsuarioModificacion = 1;  // Supongamos que el usuario ADMINISTRADOR tiene el ID 1
 
       this.actividadesService.crearActividad(actividad).subscribe({
