@@ -69,10 +69,8 @@ export class TablaActividadesComponent implements OnInit {
 
   cargarActividades() {
     this.actividadesService.getActividades().subscribe((data) => {
-      this.actividades = data;
-    });
-  }
-
+      this.actividades = data;})
+    }
   eliminarActividad(id: number) {
     this.confirmacionService.confirm({
       message: '¿Estás seguro de que quieres eliminar esta actividad?',

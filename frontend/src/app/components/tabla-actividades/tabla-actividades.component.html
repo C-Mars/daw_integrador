@@ -21,20 +21,20 @@
     >
       <ng-template pTemplate="header">
         <tr>
-          <th pSortableColumn="idCliente" style="width:10%">
-            ID Cliente <p-sortIcon field="idCliente" />
+          <th pSortableColumn="clienteActual" style="width:10%">
+            Cliente <p-sortIcon field="clienteActual" />
           </th>
           <th pSortableColumn="descripcion" style="width:20%">
             Descripción <p-sortIcon field="descripcion" />
           </th>
-          <th pSortableColumn="idUsuarioActual" style="width:10%">
-            ID Usuario Actual <p-sortIcon field="idUsuarioActual" />
+          <th pSortableColumn="usuarioActual" style="width:10%">
+            Usuario Actual <p-sortIcon field="usuarioActual" />
           </th>
           <th pSortableColumn="prioridad" style="width:10%">
             Prioridad <p-sortIcon field="prioridad" />
           </th>
-          <th pSortableColumn="idUsuarioModificacion" style="width:10%">
-            ID Usuario Modificación <p-sortIcon field="idUsuarioModificacion" />
+          <th pSortableColumn="usuarioModificacion" style="width:10%">
+            Usuario Modificación <p-sortIcon field="usuarioModificacion" />
           </th>
           <th pSortableColumn="fechaModificacion" style="width:20%">
             Fecha Modificación <p-sortIcon field="fechaModificacion" />
@@ -47,11 +47,11 @@
       </ng-template>
       <ng-template pTemplate="body" let-actividad>
         <tr>
-          <td>{{ actividad.idCliente }}</td>
+          <td>{{ actividad.idCliente?.nombres }}</td>
           <td>{{ actividad.descripcion }}</td>
-          <td>{{ actividad.idUsuarioActual }}</td>
+          <td>{{ actividad.usuarioActual?.nombres }}</td>
           <td>{{ actividad.prioridad }}</td>
-          <td>{{ actividad.idUsuarioModificacion }}</td>
+          <td>{{ actividad.idUsuarioModificacion?.nombres }}</td>
           <td>{{ actividad.fechaModificacion | date }}</td>
           <td>{{ actividad.fechaInicio | date }}</td>
           <td class="flex flex-wrap p-2">

@@ -32,7 +32,9 @@ export class ActividadesService {
 
   // Obtenemos todas las actividades
   async obtenerTodasLasActividades(): Promise<Actividades[]> {
-    return await this.actividadesRepo.find();
+    return await this.actividadesRepo.find( {
+      relations: ['idCliente', 'usuarioActual', 'idUsuarioModificacion']
+    });
   }
 
   // Crear una nueva actividad

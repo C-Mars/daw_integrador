@@ -21,7 +21,7 @@ export class ActividadesController {
     @Req() request: Request,
     @Body() crearActvidadDto: CrearActividadDto,
   ) {
-    await this.actividadService.crearActividad(
+    return await this.actividadService.crearActividad(
       crearActvidadDto,
       request['usuario'],
     );

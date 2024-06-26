@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Table, TableModule } from 'primeng/table';
 import { CardModule } from 'primeng/card';
 import { MessageService } from 'primeng/api';
@@ -23,11 +23,10 @@ export class TablaAuditoriaComponent implements OnInit {
 
   titulo: string = 'AUDITORIA';
   auditorias: AuditoriaDto[] = [];
-  datosCargados: boolean = false;
   @ViewChild('dt', { static: false }) table!: Table;
   cols!: any[];
   exportColumns!: any[];
-
+  actividades: ActividadDto[] = [];
   constructor(
     private auditoriaService: AuditoriaService,
     private messageService: MessageService,
@@ -58,12 +57,15 @@ export class TablaAuditoriaComponent implements OnInit {
   cargarAuditorias(): void {
     this.actividadesService.getActividades().subscribe({
       next: (actividades: ActividadDto[]) => {
+        this.auditorias = []
+        this.actividades = []
         actividades.forEach(actividad => {
+          
           this.auditoriaService.getAuditoriaActividad(actividad.id).subscribe({
             next: (res: AuditoriaDto[]) => {
               this.auditorias.push(...res);
-              console.log(res)
-              this.datosCargados = true;
+              console.log(res);
+              
             },
             error: (err) => {
               this.messageService.add({
@@ -86,7 +88,7 @@ export class TablaAuditoriaComponent implements OnInit {
   }
 
   exportarCSV(): void {
-    if (this.datosCargados && this.table && this.auditorias && this.auditorias.length > 0) {
+    if (this.auditorias && this.auditorias.length > 0) {
       try {
         this.table.exportCSV();
       } catch (error) {
@@ -97,6 +99,7 @@ export class TablaAuditoriaComponent implements OnInit {
         });
       }
     } else {
+
       this.messageService.add({
         severity: 'warn',
         summary: 'No hay datos para exportar',
