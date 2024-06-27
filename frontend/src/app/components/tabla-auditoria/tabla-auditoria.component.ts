@@ -9,6 +9,7 @@ import { AuditoriaService } from '../../services/auditoria.service';
 import { ActividadesService } from '../../services/actividades.service';
 import { ActividadDto } from '../../dtos/Actividad.dto';
 import { NgForOf } from '@angular/common';
+import { error } from 'node:console';
 
 
 @Component({
@@ -53,39 +54,21 @@ export class TablaAuditoriaComponent implements OnInit {
       dataKey: col.field
     }));
   }
-
-  cargarAuditorias(): void {
-    this.actividadesService.getActividades().subscribe({
-      next: (actividades: ActividadDto[]) => {
-        this.auditorias = []
-        this.actividades = []
-        actividades.forEach(actividad => {
-          
-          this.auditoriaService.getAuditoriaActividad(actividad.id).subscribe({
-            next: (res: AuditoriaDto[]) => {
-              this.auditorias.push(...res);
-              console.log(res);
-              
-            },
-            error: (err) => {
-              this.messageService.add({
-                severity: 'error',
-                summary: 'Error al recuperar auditorías',
-                detail: `No se pudieron cargar las auditorías para la actividad ${actividad.id}`
-              });
-            }
-          });
-        });
+  cargarAuditorias() {
+    this.auditoriaService.getTodasAuditorias().subscribe({
+      next: (data) => {
+      this.auditorias = data
       },
       error: (err) => {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error al recuperar actividades',
-          detail: 'No se pudieron cargar las actividades.'
-        });
-      }
-    });
-  }
+                    this.messageService.add({
+                      severity: 'error',
+                      summary: 'Error al recuperar auditorías',
+                      detail: `No se pudieron cargar las auditorías para las actividades`
+                    });
+                  }
+      ,})
+    }
+  
 
   exportarCSV(): void {
     if (this.auditorias && this.auditorias.length > 0) {

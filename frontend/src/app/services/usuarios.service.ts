@@ -18,7 +18,7 @@ export class UsuariosService {
   constructor(
     private _client: HttpClient,
     private _authService: AuthService,
-    ) { }
+  ) { }
 
 
   getUsuarios(): Observable<UsuarioDto[]> {
@@ -39,8 +39,8 @@ export class UsuariosService {
         throw new Error('El usuario no está autorizado para ver esta sección');
       }
     }
-    return this._client.get(`${environment.apiUrl}/usuarios/foto/${usuarioDto.foto}`,{ responseType: 'blob' })
- 
+    return this._client.get(`${environment.apiUrl}/usuarios/foto/${usuarioDto.foto}`, { responseType: 'blob' })
+
   }
 
 
@@ -51,9 +51,9 @@ export class UsuariosService {
       }
     }
     return this._client.post<UsuarioDto>(
-        `${environment.apiUrl}/usuarios`, formData
-);
-}
+      `${environment.apiUrl}/usuarios`, formData
+    );
+  }
 
   editar(UsuarioDto: EditarUsuarioDto) {
     if (isPlatformBrowser(this.platformId)) {
@@ -61,35 +61,35 @@ export class UsuariosService {
         throw new Error('El usuario no está autorizado para ver esta sección');
       }
     }
-      return this._client.patch(
-        `${environment?.apiUrl}/usuarios/editar/${UsuarioDto.id}`, UsuarioDto
+    return this._client.patch(
+      `${environment?.apiUrl}/usuarios/editar/${UsuarioDto.id}`, UsuarioDto
     );
 
   }
-  
+
   editarConFoto(formData: FormData, id: number) {
     if (isPlatformBrowser(this.platformId)) {
       if (!this._authService.hasRole(RolesEnum.ADMINISTRADOR)) {
         throw new Error('El usuario no está autorizado para ver esta sección');
       }
     }
-  
+
     return this._client.patch(
       `${environment?.apiUrl}/usuarios/editar/${id}`, formData
     );
   }
-  
+
   eliminar(id: number): Observable<void> {
     if (isPlatformBrowser(this.platformId)) {
       if (!this._authService.hasRole(RolesEnum.ADMINISTRADOR)) {
         throw new Error('El usuario no está autorizado para ver esta sección');
       }
     }
-  
+
     return this._client.delete<void>(`${environment.apiUrl}/usuarios/eliminar/${id}`);
   }
 
-subirFoto( formData: FormData): Observable<any> {
+  subirFoto(formData: FormData): Observable<any> {
     if (isPlatformBrowser(this.platformId)) {
       if (!this._authService.hasRole(RolesEnum.ADMINISTRADOR)) {
         throw new Error('El usuario no esta autorizado para ver esta sección')
@@ -97,8 +97,8 @@ subirFoto( formData: FormData): Observable<any> {
     }
 
     return this._client.post<any>(
-      `${environment.apiUrl}/usuarios/foto/`, formData, 
+      `${environment.apiUrl}/usuarios/foto/`, formData,
     )
-  
-      }
+
+  }
 }

@@ -22,13 +22,7 @@ export class AuditoriaController {
        return await this.auditoriaService.obtenerAuditorias();
     }
 
-    @Get(':id')
-    @ApiBearerAuth()
-    @Roles([RolesEnum.ADMINISTRADOR])
-    @UseGuards(AuthGuard)
-    async auditoriaActividad(@Param('id', ParseIntPipe) id: Actividades): Promise<Auditoria[]> {
-        return await this.auditoriaService.getAuditoriaActividad(id);
-    }
+   
    }
      
 
