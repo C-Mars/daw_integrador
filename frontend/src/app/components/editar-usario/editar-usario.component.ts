@@ -148,7 +148,7 @@ editar() {
       });
 
       this.loading = true;
-      const idUsu =this.usuario!.id as number
+      const idUsu = this.usuario!.id as number;
       this._usuariosService.editarConFoto(formData, idUsu).subscribe({
         next: (res) => {
           this.cerrar();
@@ -178,7 +178,6 @@ editar() {
         nombres: usuarioDto.nombres!,
         apellidos: usuarioDto.apellidos!,
         email: usuarioDto.email!,
-        foto: usuarioDto.foto, 
         rol: usuarioDto.rol!,
         nombreUsuario: usuarioDto.nombreUsuario!,
         clave: usuarioDto.clave!,
