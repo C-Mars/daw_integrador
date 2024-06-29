@@ -1,15 +1,16 @@
 import { Injectable, PLATFORM_ID, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { Observable, of } from 'rxjs';
+import { Observable, catchError, of, throwError } from 'rxjs';
 import { RolesEnum } from '../enums/roles.enum';
 import { ClienteDto } from '../dtos/cliente.dto';
 import { environment } from '../environments/environment';
 import { EditarClienteDto } from '../dtos/editar-cliente.dto';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { isPlatformBrowser } from '@angular/common';
 import { AuthService } from './auth.service';
 
+import { CrearClienteDto } from '../dtos/crear-cliente.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -33,15 +34,24 @@ export class ClientesService {
   }
 
 
-  crear(ClienteDto: FormData): Observable<ClienteDto> {
+ 
+  crear(clienteDto: CrearClienteDto): Observable<ClienteDto> {
     if (isPlatformBrowser(this.platformId)) {
       if (!this._authService.hasRole(RolesEnum.ADMINISTRADOR)) {
-        throw new Error('El usuario no esta autorizado para ver esta sección')
+        throw new Error('El usuario no está autorizado para ver esta sección');
       }
     }
+    const headers = new HttpHeaders({'Content-Type': 'application/json'}); // Cabecera para enviar formato JSON
+
     return this._client.post<ClienteDto>(
-        `${environment.apiUrl}/clientes`,
-        ClienteDto
+      `${environment.apiUrl}/clientes`,
+      clienteDto,
+      { headers } // Pasar las cabeceras en la solicitud
+    ).pipe(
+      catchError(error => {
+        // Manejar el error aquí si es necesario
+        return throwError(error);
+      })
     );
 }
   editar(ClienteDto: EditarClienteDto) {
