@@ -11,6 +11,7 @@ import { EditarActividadDto } from '../dtos/editar-actividades.dto';
 @ApiTags('actividades')
 @Controller('/actividades')
 export class ActividadesController {
+  
   constructor(private actividadService: ActividadesService) {}
 
   @Post()

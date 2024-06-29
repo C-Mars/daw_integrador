@@ -1,9 +1,13 @@
-import { Component, EventEmitter, Input, Output, PLATFORM_ID, inject } from '@angular/core';
+import { Component, 
+  EventEmitter, 
+  Input, Output, 
+  PLATFORM_ID, 
+  inject 
+} from '@angular/core';
 import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
- 
 } from "@angular/forms";
 import { FileUploadModule, } from 'primeng/fileupload';
 import { InputTextModule } from 'primeng/inputtext';
@@ -28,7 +32,8 @@ import { NgFor, NgIf } from '@angular/common';
 @Component({
   selector: 'app-editar-usario',
   standalone: true,
-  imports: [ToastModule,
+  imports: [
+    ToastModule,
     FileUploadModule,
     InputTextModule,
     PasswordModule,
@@ -37,7 +42,8 @@ import { NgFor, NgIf } from '@angular/common';
     DialogModule,
     DropdownModule,
     ReactiveFormsModule,
-  NgIf,NgFor],
+    NgIf,
+    NgFor],
   templateUrl: './editar-usario.component.html',
   styleUrl: './editar-usario.component.scss'
 })
@@ -95,7 +101,7 @@ ngOnInit() {
     error: (err) => {
       this.messageService.add({
         severity: 'error',
-        summary: 'Ocurrió un error al recuperar los usuarios',
+        summary: 'Ocurrió un error al recuperar los usuarios'+ err.message,
       });
     },
   });
@@ -199,7 +205,7 @@ editar() {
           this.messageService.add({
             severity: 'error',
             summary: 'Ocurrió un error al editar el usuario',
-            detail: ''
+            detail: 'Ocurrió un error al editar el usuario seleccionado' + err.message
           });
         }
       });

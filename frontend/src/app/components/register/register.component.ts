@@ -1,10 +1,15 @@
-import { Component, EventEmitter, Input, Output, PLATFORM_ID, inject } from '@angular/core';
+import { Component, 
+  EventEmitter, 
+  Input, 
+  Output, 
+  PLATFORM_ID, 
+  inject 
+} from '@angular/core';
 import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
- 
 } from "@angular/forms";
 import { FileUploadModule, } from 'primeng/fileupload';
 import { InputTextModule } from 'primeng/inputtext';
@@ -14,20 +19,12 @@ import {ToastModule} from 'primeng/toast'
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { CardModule } from 'primeng/card';
 import { MessageService } from 'primeng/api';
-import { Router } from '@angular/router';
 import { DialogModule } from 'primeng/dialog';
 import { EstadosUsuarioEnum } from '../../enums/estado-usuario.enum';
 import { RolesEnum } from '../../enums/roles.enum';
 import { UsuarioDto } from '../../dtos/usuario.dto';
 import { DropdownModule } from 'primeng/dropdown';
 import { UsuariosService } from '../../services/usuarios.service';
-import { EditarUsuarioDto } from '../../dtos/editar-usuario.dto';
-import { environment } from '../../environments/environment';
-import { CrearUsuarioDto } from '../../dtos/crear-usuario.dto';
-import { SafeUrl } from '@angular/platform-browser';
-import { isPlatformBrowser } from '@angular/common';
-import { AuthService } from '../../services/auth.service';
-import { catchError, finalize, of, tap } from 'rxjs';
 
 
 
@@ -68,10 +65,10 @@ export class RegisterComponent {
   estados = Object.values(EstadosUsuarioEnum);
 
   archivos: File[] = [];
+
   loading = false;
   
   private readonly platformId = inject(PLATFORM_ID);
-
 
   form = new FormGroup ({
     id: new FormControl<number | null>(null),
@@ -85,18 +82,11 @@ export class RegisterComponent {
     estado:  new FormControl< EstadosUsuarioEnum |null>(EstadosUsuarioEnum.ACTIVO)
 });
 
-
-
-
-
-
-
 constructor(
   private messageService: MessageService,
-  private _router: Router,
   private _usuariosService: UsuariosService,
-  private _authService: AuthService,
 ) {}
+
 
 ngOnInit() {
   this._usuariosService.getUsuarios().subscribe({
@@ -106,12 +96,11 @@ ngOnInit() {
     error: (err) => {
       this.messageService.add({
         severity: 'error',
-        summary: 'Hubo un error al recuperar las opciones de usuario',
+        summary: 'Hubo un error al recuperar las datos de los usuarios' + err.message,
       });
     },
   });
 }
-
 
 
 llenarForm() {
@@ -128,6 +117,7 @@ llenarForm() {
   });
 }
 
+
 ngOnChanges() {
   if (this.usuario) {
     this.llenarForm();
@@ -137,19 +127,18 @@ ngOnChanges() {
 }
 
 enviar() {
-  if (!this.form.valid || !this.archivos.length) {
-      this.form.markAllAsTouched();
-      this.messageService.add({
-          severity: 'error',
-          summary: 'Debe ingresar todos los campos y seleccionar una foto',
-      });
-      return;
+  if (!this.form.valid) {
+    this.form.markAllAsTouched();
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Debe ingresar todos los campos obligatorios',
+    });
+    return;
   }
 
   const formData = new FormData();
   const usuarioDto = this.form.getRawValue();
 
- 
   if (usuarioDto.nombres) formData.append('nombres', usuarioDto.nombres);
   if (usuarioDto.apellidos) formData.append('apellidos', usuarioDto.apellidos);
   if (usuarioDto.email) formData.append('email', usuarioDto.email);
@@ -158,33 +147,35 @@ enviar() {
   if (usuarioDto.clave) formData.append('clave', usuarioDto.clave);
   if (usuarioDto.estado) formData.append('estado', usuarioDto.estado);
 
-  this.archivos.forEach(archivo => {
+  if (this.archivos.length > 0) {
+    this.archivos.forEach(archivo => {
       formData.append('foto', archivo);
-  });
-
- 
+    });
+  }
+  this.loading = true;
   this._usuariosService.crear(formData).subscribe({
-      next: (res) => {
-          this.cerrar();
-          this.refrescar.emit(true);
-          this.messageService.add({
-              severity: 'success',
-              summary: 'Usuario registrado con éxito!',
-          });
-      },
-      error: (err) => {
-          this.messageService.add({
-              severity: 'error',
-              summary: 'Ocurrió un error al registrar el usuario',
-              detail: err.message ? err.message : 'Ocurrió un error al registrar'
-          });
-      },
+    next: (res) => {
+      this.cerrar();
+      this.refrescar.emit(true);
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Usuario registrado con éxito!',
+        detail: 'Se han guardado los datos ingresados'
+      });
+    },
+    error: (err) => {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Ocurrió un error al registrar el usuario',
+        detail: 'Ocurrió un error al intentar registrar un usuario:' + err.message
+      });
+    },
+    complete: () => {
+      this.loading = false;
+    }
   });
 }
 
-
-
-  
 cerrar() {
       this.visibleChange.emit(false);
     }
@@ -197,5 +188,4 @@ fotoSeleccionada(event: any): void {
       }
     }
   
-   
-  }
+}

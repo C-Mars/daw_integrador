@@ -14,13 +14,15 @@ import { AuthService } from './auth.service';
   providedIn: 'root'
 })
 export class UsuariosService {
+ 
   private readonly platformId = inject(PLATFORM_ID);
+ 
   constructor(
     private _client: HttpClient,
     private _authService: AuthService,
   ) { }
 
-
+//Trae todos los usuarios activos y baja
   getUsuarios(): Observable<UsuarioDto[]> {
     if (isPlatformBrowser(this.platformId)) {
       if (!this._authService.hasRole(RolesEnum.ADMINISTRADOR)) {
@@ -32,7 +34,7 @@ export class UsuariosService {
   }
 
 
-
+//Trae las fotos de cada usuario 
   getFotoUsuario(usuarioDto: UsuarioDto): Observable<Blob> {
     if (isPlatformBrowser(this.platformId)) {
       if (!this._authService.hasRole(RolesEnum.ADMINISTRADOR)) {
@@ -43,7 +45,7 @@ export class UsuariosService {
 
   }
 
-
+// Registra un nuevo usuario
   crear(formData: FormData): Observable<UsuarioDto> {
     if (isPlatformBrowser(this.platformId)) {
       if (!this._authService.hasRole(RolesEnum.ADMINISTRADOR)) {
@@ -55,6 +57,7 @@ export class UsuariosService {
     );
   }
 
+  // Edita un usuario seleccionado
   editar(UsuarioDto: EditarUsuarioDto) {
     if (isPlatformBrowser(this.platformId)) {
       if (!this._authService.hasRole(RolesEnum.ADMINISTRADOR)) {
@@ -67,6 +70,7 @@ export class UsuariosService {
 
   }
 
+  //Además de editar un usuario seleccionado  me permite canbiar la foto  
   editarConFoto(formData: FormData, id: number) {
     if (isPlatformBrowser(this.platformId)) {
       if (!this._authService.hasRole(RolesEnum.ADMINISTRADOR)) {
@@ -79,6 +83,7 @@ export class UsuariosService {
     );
   }
 
+  //Eliminar usuario
   eliminar(id: number): Observable<void> {
     if (isPlatformBrowser(this.platformId)) {
       if (!this._authService.hasRole(RolesEnum.ADMINISTRADOR)) {
@@ -87,18 +92,5 @@ export class UsuariosService {
     }
 
     return this._client.delete<void>(`${environment.apiUrl}/usuarios/eliminar/${id}`);
-  }
-
-  subirFoto(formData: FormData): Observable<any> {
-    if (isPlatformBrowser(this.platformId)) {
-      if (!this._authService.hasRole(RolesEnum.ADMINISTRADOR)) {
-        throw new Error('El usuario no esta autorizado para ver esta sección')
-      }
-    }
-
-    return this._client.post<any>(
-      `${environment.apiUrl}/usuarios/foto/`, formData,
-    )
-
   }
 }

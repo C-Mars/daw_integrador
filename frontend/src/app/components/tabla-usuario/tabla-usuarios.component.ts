@@ -1,7 +1,6 @@
 import { CommonModule, NgIf } from '@angular/common';
 import { Component, OnInit, PLATFORM_ID, inject } from '@angular/core';
 import { TableModule } from 'primeng/table';
-import { Router } from '@angular/router';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { RegisterComponent } from '../register/register.component';
@@ -15,10 +14,12 @@ import { AvatarModule } from 'primeng/avatar';
 import { TagModule } from 'primeng/tag';
 import { TooltipModule } from 'primeng/tooltip';
 
+
 @Component({
   selector: 'app-tabla-usuario',
   standalone: true,
-  imports: [TableModule,
+  imports: [
+    TableModule,
     CardModule,
     CommonModule,
     ButtonModule,
@@ -29,7 +30,7 @@ import { TooltipModule } from 'primeng/tooltip';
     ConfirmDialogModule,
     AvatarModule,
     TagModule,
-    TooltipModule
+    TooltipModule,
   ],
   templateUrl: './tabla-usuarios.component.html',
   styleUrl: './tabla-usuarios.component.scss'
@@ -37,13 +38,20 @@ import { TooltipModule } from 'primeng/tooltip';
 export class TablaUsuariosComponent implements OnInit {
 
   titulo: string = 'USUARIOS'
+
   usuarios!: UsuarioDto[];
+
   newRegiterVisible: boolean = false;
+
   newEditVisible: boolean = false;
+
   newDeleteVisible: boolean = false;
+
   accion!: string
+
   usuarioSeleccionado!: UsuarioDto | null;
-  imagenSrc: string | null = null;
+
+  foto: string | null = null;
  
 
   private readonly platformId = inject(PLATFORM_ID);
@@ -73,7 +81,7 @@ export class TablaUsuariosComponent implements OnInit {
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: 'Ocurrió un error al recuperar la lista de usuarios: ' + err,
+          detail: 'Ocurrió un error al recuperar la lista de usuarios: ' + err.message,
         });
       }
     });
@@ -92,7 +100,7 @@ export class TablaUsuariosComponent implements OnInit {
         }
       },
       error: (err) => {
-        console.error('Error al cargar la foto del usuario:');
+        console.error('Error al cargar la foto del usuario:'+ err.message);
         usuario.foto = '../../../assets/images/avatar2.png'
       }
     });
@@ -111,9 +119,9 @@ editar(item: UsuarioDto): void {
   this.usuarioSeleccionado = item;
    
     if (this.usuarioSeleccionado.foto) {
-      this.imagenSrc = this.usuarioSeleccionado.foto;
+      this.foto = this.usuarioSeleccionado.foto;
   } else {
-      this.imagenSrc = null;
+      this.foto = null;
   }
   this.newEditVisible = true;
 }
@@ -125,7 +133,7 @@ eliminar(item: UsuarioDto): void {
     message: `Confirme si desea dar de baja a ${item.apellidos}, ${item.nombres}.`,
     accept: () => {
       this._usuarioService.eliminar(item.id).subscribe({
-        next: () => {
+        next: (res) => {
           this.messageService.add({
             severity: 'info',
             summary: 'Confirmado',
@@ -133,11 +141,11 @@ eliminar(item: UsuarioDto): void {
           });
           this.llenarTabla();
         },
-        error: () => {
+        error: (err) => {
           this.messageService.add({
             severity: 'error',
             summary: 'Error',
-            detail: 'No se pudo eliminar el usuario'
+            detail: 'No se pudo eliminar el usuario selecionado: ' + err.message,
           });
           
         }
