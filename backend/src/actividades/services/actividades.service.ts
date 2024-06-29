@@ -36,7 +36,15 @@ export class ActividadesService {
       relations: ['idCliente', 'usuarioActual', 'idUsuarioModificacion']
     });
   }
-
+  
+ // Obtener actividades por ID de usuario
+    async obtenerActividadesPorUsuario(idUsuario: number): Promise<Actividades[]> {
+      return await this.actividadesRepo.find({
+        where: { usuarioActual: { id: idUsuario } },
+        relations: ['usuarioActual'],
+      });
+    }
+  
   // Crear una nueva actividad
   async crearActividad(crearActividadDto: CrearActividadDto, usuario: Usuario) {
     const nuevaActividad: Actividades = this.actividadesRepo.create();
