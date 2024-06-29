@@ -1,0 +1,53 @@
+<p-dialog
+  header="{{ accion }} Cliente"
+  [(visible)]="visible"
+  (onHide)="cerrar()"
+  [modal]="true"
+>
+  <form [formGroup]="formRegistro">
+    <div class="input-container">
+      <p-floatLabel class="p-2">
+        <input 
+        id="nombres" 
+        pInputText 
+        type="text" 
+        formControlName="nombres" 
+        autocomplete="off" />
+        <label for="nombres">Nombre Completo</label>
+      </p-floatLabel>
+    </div>
+    <div class="input-container">
+      <p-floatLabel class="p-2">
+        <input 
+        id="apellidos" 
+        pInputText 
+        type="text" 
+        formControlName="apellidos" 
+        autocomplete="off" />
+        <label for="apellidos">Apellido Completo</label>
+      </p-floatLabel>
+    </div>
+    <div class="input-container">
+      <p-floatLabel class="p-2">
+        <input 
+        id="email" 
+        pInputText 
+        type="email" 
+        formControlName="email" 
+        autocomplete="off" />
+        <label for="email">Email</label>
+      </p-floatLabel>
+    </div>
+   
+    
+   
+    
+  
+    <p-button 
+    [rounded]="true"
+    [label]="accion" 
+    (onClick)="enviar()" />
+  </form>
+</p-dialog>
+<p-toast></p-toast>
+
