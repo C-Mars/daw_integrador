@@ -18,25 +18,24 @@
         [value]="auditorias"
         [paginator]="true"
         [rows]="5"
-        [tableStyle]="{ 'min-width': '70rem' }"
+        [tableStyle]="{ 'max-width': '88rem' }"
         [rowsPerPageOptions]="[5, 10, 20]"
         class="flex flex-wrap w-min md:w-max"
         >
         <ng-template pTemplate="header">
             <tr>
-               
-                <th pSortableColumn="clienteActual" style="width:10%">
-                    Cliente <p-sortIcon field="clienteActual" />
+                <th pSortableColumn="clienteActual.nombres" style="width:10%">
+                    Cliente <p-sortIcon field="clienteActual.nombres" />
                 </th>
                 <th pSortableColumn="descripcion" style="width:20%">
                     Descripción <p-sortIcon field="descripcion" />
                 </th>
-                <th pSortableColumn="usuarioActual" style="width:10%">
-                    Administrador <p-sortIcon field="usuarioActual" />
+                <th pSortableColumn="usuarioActual.nombres" style="width:10%">
+                    Administrador <p-sortIcon field="usuarioActual.nombres" />
                 <th pSortableColumn="prioridad" style="width:10%">
                     Prioridad <p-sortIcon field="prioridad" />
-                <th pSortableColumn="usuarioModificacion" style="width:10%">
-                    Encargado <p-sortIcon field="usuarioModificacion" />
+                <th pSortableColumn="usuarioModificacion.nombres" style="width:10%">
+                    Encargado <p-sortIcon field="usuarioModificacion.nombres" />
                 <th pSortableColumn="fechaModificacion" style="width:10%">
                     Última modificación <p-sortIcon field="fechaModificacion" />
                 <th pSortableColumn="fechaInicio" style="width:10%">
@@ -45,6 +44,36 @@
                     Estado <p-sortIcon field="estado" />
                 <th pSortableColumn="operacion" style="width:10%">
                     Operación <p-sortIcon field="operacion" />
+            </tr>
+            <tr>
+                <th>
+                    <p-columnFilter type="text" field="clienteActual.nombres" [showMenu]="false"/>
+                </th>
+                <th>
+                    <p-columnFilter type="text" field="descripcion" [showMenu]="false" />
+                </th>
+                <th>
+                  <p-columnFilter type="text" field="usuarioActual.nombres" [showMenu]="false" />
+                </th>
+               
+                <th>
+                  <p-columnFilter type="text" field="prioridad" [showMenu]="false" />
+                </th>
+                <th>
+                  <p-columnFilter type="text" field="usuarioModificacion.nombres" [showMenu]="false" />
+                </th>
+                <th>
+                   
+                </th>
+                <th>
+                    
+                </th>
+                <th>
+                    <p-columnFilter type="text" field="estado" [showMenu]="false" />
+                </th>
+                <th>
+                    <p-columnFilter type="text" field="operacion" [showMenu]="false" />
+                </th>
             </tr>
         </ng-template>
             <ng-template pTemplate="body" let-auditoria>
