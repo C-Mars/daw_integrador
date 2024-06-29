@@ -66,4 +66,15 @@ export class ActividadesController {
   ) {
     await this.actividadService.borrarActividad(id, request['usuario']);
   }
+
+  @Get('/usuario/:idUsuario')
+  @ApiBearerAuth()
+  @Roles([RolesEnum.ADMINISTRADOR,RolesEnum.EJECUTOR])
+  @UseGuards(AuthGuard)
+  async getActividadesPorUsuario(
+    @Param('idUsuario', ParseIntPipe) idUsuario: number,
+  ): Promise<Actividades[]> {
+    return await this.actividadService.obtenerActividadesPorUsuario(idUsuario);
+  }
+  
 }
