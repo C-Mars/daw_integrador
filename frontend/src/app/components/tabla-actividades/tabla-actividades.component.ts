@@ -126,4 +126,30 @@ export class TablaActividadesComponent implements OnInit {
     this.displayEditDialog = false;
     this.displayNewDialog = false;
   }
+
+  getSeverityPrioridad(rol: string){
+    switch (rol){
+      case 'alta':
+        return 'danger';
+      case 'media':
+        return 'warning';
+      case 'baja':
+        return 'info';
+      default:
+        return 'contrast';
+    }
+  }
+
+  getSeverityEstado(rol: string){
+    switch (rol){
+      case 'pendiente':
+        return 'success';
+      case 'en proceso':
+        return 'info';
+      case 'finalizada':
+        return 'danger';
+      default:
+        return 'contrast'
+    }
+  }
 }

@@ -81,12 +81,30 @@
                     <td>{{ auditoria.clienteActual?.nombres }}</td> 
                     <td>{{ auditoria.descripcion }}</td>
                     <td>{{ auditoria.usuarioActual?.nombres }}</td> 
-                    <td>{{ auditoria.prioridad }}</td>
+                    <td>
+                        <p-tag
+                            [value]="auditoria.prioridad"
+                            [severity]="getSeverityPrioridad(auditoria.prioridad)"
+                            [rounded]="true"
+                        />
+                    </td>
                     <td>{{ auditoria.usuarioModificacion?.nombres }}</td> 
                     <td>{{ auditoria.fechaModificacion }}</td>
                     <td>{{ auditoria.fechaInicio }}</td>
-                    <td>{{ auditoria.estado }}</td>
-                    <td>{{ auditoria.operacion }}</td>
+                    <td>
+                        <p-tag
+                            [value]="auditoria.estado"
+                            [severity]="getSeverityEstado(auditoria.estado)"
+                            [rounded]="true"
+                        />
+                    </td>
+                    <td>
+                        <p-tag
+                            [value]="auditoria.operacion"
+                            [severity]="getSeverityOperacion(auditoria.operacion)"
+                            [rounded]="true"
+                        />
+                    </td>
                 </tr>
             </ng-template>
         </p-table>

@@ -83,8 +83,20 @@
           <td>{{ actividad.idCliente?.nombres }}</td>
           <td>{{ actividad.descripcion }}</td>
           <td>{{ actividad.usuarioActual?.nombres }}</td>
-          <td>{{ actividad.prioridad }}</td>
-          <td>{{ actividad.estado }}</td>
+          <td>
+            <p-tag
+              [value]="actividad.prioridad"
+              [severity]="getSeverityPrioridad(actividad.prioridad)"
+              [rounded]="true"
+            />
+          </td>
+          <td>
+            <p-tag
+              [value]="actividad.estado"
+              [severity]="getSeverityEstado(actividad.estado)"
+              [rounded]="true"
+            />
+          </td>
           <td>{{ actividad.idUsuarioModificacion?.nombres }}</td>
           <td>{{ actividad.fechaModificacion | date }}</td>
           <td>{{ actividad.fechaInicio | date }}</td>

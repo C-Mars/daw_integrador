@@ -10,6 +10,7 @@ import { ActividadesService } from '../../services/actividades.service';
 import { ActividadDto } from '../../dtos/Actividad.dto';
 import { NgForOf } from '@angular/common';
 import { error } from 'node:console';
+import { TagModule } from 'primeng/tag';
 
 
 @Component({
@@ -19,6 +20,7 @@ import { error } from 'node:console';
     TableModule,
     CardModule,
     ButtonModule,
+    TagModule,
     TooltipModule,
     NgForOf],
   templateUrl: './tabla-auditoria.component.html',
@@ -93,6 +95,49 @@ export class TablaAuditoriaComponent implements OnInit {
       });
     }
   }
+
+getSeverityPrioridad(rol: string){
+  switch (rol){
+    case 'alta':
+      return 'danger';
+    case 'media':
+      return 'warning';
+    case 'baja':
+      return 'info';
+    default:
+      return 'contrast';
+  }
+}
+
+getSeverityEstado(rol: string){
+  switch (rol){
+    case 'pendiente':
+      return 'info';
+    case 'en proceso':
+      return 'warning';
+    case 'finalizada':
+      return 'warning';
+    case 'eliminada':
+      return 'danger'
+    default:
+      return 'contrast'
+  }
+}
+
+
+
+getSeverityOperacion(rol: string){
+  switch (rol){
+    case 'creación':
+      return 'success';
+    case 'modificación':
+      return 'warning';
+    case 'eliminación':
+      return 'danger';
+    default:
+      return 'contrast'
+  }
+}
 
 }
 
