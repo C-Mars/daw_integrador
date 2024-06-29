@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 import { DialogModule } from 'primeng/dialog';
 import { RolesEnum } from '../../enums/roles.enum';
 import { DropdownModule } from 'primeng/dropdown';
-import { ClientesService } from '../../services/clientes.service';
+
 import { CrearClienteDto } from '../../dtos/crear-cliente.dto';
 import { SafeUrl } from '@angular/platform-browser';
 import { isPlatformBrowser } from '@angular/common';
@@ -21,6 +21,7 @@ import { catchError, finalize, of, tap } from 'rxjs';
 import { ClienteDto } from '../../dtos/cliente.dto';
 import { HttpErrorResponse } from '@angular/common/http';
 import { EditarClienteDto } from '../../dtos/editar-cliente.dto';
+import { ClientesService } from '../../services/clientes.service';
 
 
 @Component({

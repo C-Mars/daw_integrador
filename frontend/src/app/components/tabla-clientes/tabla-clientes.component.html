@@ -13,6 +13,10 @@
         </div>
         <p-table 
         [value]="clientes" 
+        [paginator]="true"
+        [rows]="5"
+        [tableStyle]="{ 'max-width': '88rem' }"
+        [rowsPerPageOptions]="[5, 10, 20]"
         class="flex flex-wrap w-min md:w-max">
             <ng-template pTemplate="header">
                 <tr>

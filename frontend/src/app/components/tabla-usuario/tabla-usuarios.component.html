@@ -16,27 +16,50 @@
         [value]="usuarios" 
         [paginator]="true"
         [rows]="5"
-        [tableStyle]="{ 'min-width': '70rem' }"
+        [tableStyle]="{ 'max-width': '75rem' }"
         [rowsPerPageOptions]="[5, 10, 20]"
         class="flex flex-wrap w-4 md:w-max">
             <ng-template pTemplate="header">
                 <tr>
-                    <th pSortableColumn="nombres" style="width:20%">
+                    <th pSortableColumn="nombres" style="width:25%">
                         Nombres <p-sortIcon field="nombres" />
                     </th>
-                    <th pSortableColumn="apellidos" style="width:20%">
+                    <th pSortableColumn="apellidos" style="width:25%">
                         Apellidos <p-sortIcon field="apellidos" />
                     </th>
-                    <th pSortableColumn="foto" style="width:10%">
+                    <th pSortableColumn="foto" style="width:5%">
                         Foto <p-sortIcon field="foto" />
                     </th>
-                    <th pSortableColumn="email" style="width:20%">
+                    <th pSortableColumn="email" style="width:10%">
                         Email <p-sortIcon field="email" />
-                    <th pSortableColumn="rol" style="width:10%">
+                    <th pSortableColumn="rol" style="width:20%">
                         Rol <p-sortIcon field="rol" />
                     <th pSortableColumn="estado" style="width:20%">
                         Estado <p-sortIcon field="estado" />
-                    <th>Herramientas</th>
+                    <th style="width:5%">Herramientas</th>
+                </tr>
+                <tr>
+                    <th>
+                        <p-columnFilter type="text" field="nombres" [showMenu]="false"/>
+                    </th>
+                    <th>
+                        <p-columnFilter type="text" field="apellidos" [showMenu]="false" />
+                    </th>
+                    <th>
+
+                    </th>
+                    <th>
+
+                    </th>
+                    <th>
+                        <p-columnFilter type="text" field="rol" [showMenu]="false" />
+                    </th>
+                    <th>
+                        <p-columnFilter type="text" field="estado"  [showMenu]="false"/>
+                    </th>
+                    <th>
+                       
+                    </th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-usuario>

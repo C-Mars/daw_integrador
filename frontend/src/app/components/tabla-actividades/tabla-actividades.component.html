@@ -15,35 +15,68 @@
       [value]="actividades"
       [paginator]="true"
       [rows]="5"
-      [tableStyle]="{ 'min-width': '70rem' }"
+      [tableStyle]="{ 'max-width': '88rem' }"
       [rowsPerPageOptions]="[5, 10, 20]"
       class="flex flex-wrap w-4 md:w-max"
     >
       <ng-template pTemplate="header">
         <tr>
-          <th pSortableColumn="clienteActual" style="width:10%">
-            Cliente <p-sortIcon field="clienteActual" />
+          <th pSortableColumn="idCliente.nombres" style="width:10%">
+            Cliente <p-sortIcon field="idCliente.nombres" />
           </th>
-          <th pSortableColumn="descripcion" style="width:20%">
+          <th pSortableColumn="descripcion" style="width:15%">
             Descripción <p-sortIcon field="descripcion" />
           </th>
-          <th pSortableColumn="usuarioActual" style="width:10%">
-            Usuario Actual <p-sortIcon field="usuarioActual" />
+          <th pSortableColumn="usuarioActual?.nombres" style="width:15%">
+            Usuario Actual <p-sortIcon field="usuarioActual?.nombres" />
           </th>
           <th pSortableColumn="prioridad" style="width:10%">
             Prioridad <p-sortIcon field="prioridad" />
           </th>
-          <th pSortableColumn="usuarioModificacion" style="width:10%">
-            Usuario Modificación <p-sortIcon field="usuarioModificacion" />
+          <th pSortableColumn="estado" style="width:10%">
+            Estado <p-sortIcon field="estado" />
           </th>
-          <th pSortableColumn="fechaModificacion" style="width:20%">
+          <th pSortableColumn="idUsuarioModificacion.nombres" style="width:15%">
+            Usuario Modificación <p-sortIcon field="idUsuarioModificacion.nombres" />
+          </th>
+          <th pSortableColumn="fechaModificacion" style="width:10%">
             Fecha Modificación <p-sortIcon field="fechaModificacion" />
           </th>
-          <th pSortableColumn="fechaInicio" style="width:20%">
+          <th pSortableColumn="fechaInicio" style="width:10%">
             Fecha Inicio <p-sortIcon field="fechaInicio" />
           </th>
-          <th>Herramientas</th>
+          <th style="width:5%">Herramientas</th>
         </tr>
+        <tr>
+          <th>
+              <p-columnFilter type="text" field="idCliente.nombres" [showMenu]="false"/>
+          </th>
+          <th>
+            <p-columnFilter type="text" field="descripcion" [showMenu]="false" />
+          </th>
+          <th>
+            <p-columnFilter type="text" field="usuarioActual.nombres" [showMenu]="false" />
+          </th>
+          <th>
+            <p-columnFilter type="text" field="prioridad" [showMenu]="false" />
+          </th>
+          <th>
+            <p-columnFilter type="text" field="estado" [showMenu]="false" />
+          </th>
+          <th>
+              <p-columnFilter type="text" field="idUsuarioModificacion.nombres" [showMenu]="false" />
+          </th>
+         
+          <th>
+              
+          </th>
+          <th>
+           
+          </th>
+          <th>
+
+          </th>
+      </tr>
       </ng-template>
       <ng-template pTemplate="body" let-actividad>
         <tr>
@@ -51,6 +84,7 @@
           <td>{{ actividad.descripcion }}</td>
           <td>{{ actividad.usuarioActual?.nombres }}</td>
           <td>{{ actividad.prioridad }}</td>
+          <td>{{ actividad.estado }}</td>
           <td>{{ actividad.idUsuarioModificacion?.nombres }}</td>
           <td>{{ actividad.fechaModificacion | date }}</td>
           <td>{{ actividad.fechaInicio | date }}</td>

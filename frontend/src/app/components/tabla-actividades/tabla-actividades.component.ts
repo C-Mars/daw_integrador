@@ -28,7 +28,8 @@ import { EditarActividadComponent } from '../editar-actividad/editar-actividad.c
 @Component({
   selector: 'app-tabla-actividades',
   standalone: true,
-  imports: [ TableModule,
+  imports: [ 
+    TableModule,
     CardModule,
     CommonModule,
     ButtonModule,

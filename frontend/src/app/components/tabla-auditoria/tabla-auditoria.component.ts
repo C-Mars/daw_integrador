@@ -15,8 +15,12 @@ import { error } from 'node:console';
 @Component({
   selector: 'app-tabla-auditoria',
   standalone: true,
-  imports: [TableModule,
-    CardModule,ButtonModule,TooltipModule,NgForOf],
+  imports: [
+    TableModule,
+    CardModule,
+    ButtonModule,
+    TooltipModule,
+    NgForOf],
   templateUrl: './tabla-auditoria.component.html',
   styleUrl: './tabla-auditoria.component.scss'
 })
@@ -31,7 +35,6 @@ export class TablaAuditoriaComponent implements OnInit {
   constructor(
     private auditoriaService: AuditoriaService,
     private messageService: MessageService,
-    private actividadesService: ActividadesService
   ) { }
 
   ngOnInit(): void {
