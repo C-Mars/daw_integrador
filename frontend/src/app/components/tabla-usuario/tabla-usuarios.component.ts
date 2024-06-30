@@ -162,8 +162,8 @@ eliminar(item: UsuarioDto): void {
   
 }
 
-getSeverityEstado(rol: string) {
-  switch (rol) {
+getSeverityEstado(estado: string) {
+  switch (estado) {
       case 'activo':
           return 'success';
       case 'baja':

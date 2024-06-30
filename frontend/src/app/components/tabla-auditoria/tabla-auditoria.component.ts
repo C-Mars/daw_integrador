@@ -109,8 +109,8 @@ getSeverityPrioridad(rol: string){
   }
 }
 
-getSeverityEstado(rol: string){
-  switch (rol){
+getSeverityEstado(estado: string){
+  switch (estado){
     case 'pendiente':
       return 'info';
     case 'en proceso':
@@ -126,8 +126,8 @@ getSeverityEstado(rol: string){
 
 
 
-getSeverityOperacion(rol: string){
-  switch (rol){
+getSeverityOperacion(operacion: string){
+  switch (operacion){
     case 'creación':
       return 'success';
     case 'modificación':
