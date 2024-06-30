@@ -17,6 +17,7 @@ import { UsuariosService } from '../../services/usuarios.service';
 import { MessageService } from 'primeng/api';
 import { ReactiveFormsModule } from '@angular/forms'
 import { EstadosActividadEnum } from '../../enums/estados-actividad.enum';
+import { EditarActividadDto } from '../../dtos/editar-actividad.dto';
 
 @Component({
   selector: 'app-editar-actividad',

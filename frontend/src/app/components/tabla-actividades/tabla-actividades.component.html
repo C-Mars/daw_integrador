@@ -16,7 +16,7 @@
             Descripción <p-sortIcon field="descripcion" />
           </th>
           <th pSortableColumn="usuarioActual?.nombres" style="width:15%">
-            Usuario Actual <p-sortIcon field="usuarioActual?.nombres" />
+            Administrador <p-sortIcon field="usuarioActual?.nombres" />
           </th>
           <th pSortableColumn="prioridad" style="width:10%">
             Prioridad <p-sortIcon field="prioridad" />
@@ -25,14 +25,14 @@
             Estado <p-sortIcon field="estado" />
           </th>
           <th pSortableColumn="idUsuarioModificacion.nombres" style="width:15%">
-            Usuario Modificación <p-sortIcon field="idUsuarioModificacion.nombres" />
+            Usuario(última modificación) <p-sortIcon field="idUsuarioModificacion.nombres" />
           </th>
           <th pSortableColumn="fechaModificacion" style="width:10%">
-            Fecha Modificación <p-sortIcon field="fechaModificacion" />
+            Fecha de Modificación <p-sortIcon field="fechaModificacion" />
           </th>
-          <th pSortableColumn="fechaInicio" style="width:10%">
+          <!-- <th pSortableColumn="fechaInicio" style="width:10%">
             Fecha Inicio <p-sortIcon field="fechaInicio" />
-          </th>
+          </th> -->
           <th style="width:5%">Herramientas</th>
         </tr>
         <tr>
@@ -61,9 +61,9 @@
           <th>
 
           </th>
-          <th>
+          <!-- <th>
 
-          </th>
+          </th> -->
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-actividad>
@@ -81,7 +81,7 @@
           </td>
           <td>{{ actividad.idUsuarioModificacion?.nombres }}</td>
           <td>{{ actividad.fechaModificacion | date }}</td>
-          <td>{{ actividad.fechaInicio | date }}</td>
+          <!-- <td>{{ actividad.fechaInicio | date }}</td> -->
           <td class="flex flex-wrap p-2">
             <p-button class="accion" pRipple icon="pi pi-pen-to-square" class="mr-2 pb-2 pt-4" [rounded]="true"
               severity="primary" pTooltip="Editar" (onClick)="editarActividad(actividad)"></p-button>

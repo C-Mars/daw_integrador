@@ -1,4 +1,4 @@
-import { HttpClient, withFetch } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable, PLATFORM_ID, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';

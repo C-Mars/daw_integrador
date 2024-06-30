@@ -4,8 +4,7 @@ import {
     FormControl,
     FormGroup,
     ReactiveFormsModule,
-    Validators,
-    FormBuilder
+    Validators
 } from "@angular/forms";
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
@@ -43,7 +42,6 @@ export class LoginComponent {
   @Input() visible: boolean = false; 
   @Output() visibleChange = new EventEmitter<boolean>();
 
-  // Método para cerrar el modal
  
 
   

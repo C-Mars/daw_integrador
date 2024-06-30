@@ -35,11 +35,11 @@
                 <th pSortableColumn="prioridad" style="width:10%">
                     Prioridad <p-sortIcon field="prioridad" />
                 <th pSortableColumn="usuarioModificacion.nombres" style="width:10%">
-                    Encargado <p-sortIcon field="usuarioModificacion.nombres" />
+                    Usuario(última modificación) <p-sortIcon field="usuarioModificacion.nombres" />
                 <th pSortableColumn="fechaModificacion" style="width:10%">
                     Última modificación <p-sortIcon field="fechaModificacion" />
-                <th pSortableColumn="fechaInicio" style="width:10%">
-                    Fecha de creación <p-sortIcon field="fechaInicio" />
+                <!-- <th pSortableColumn="fechaInicio" style="width:10%">
+                    Fecha de creación <p-sortIcon field="fechaInicio" /> -->
                 <th pSortableColumn="estado" style="width:10%">
                     Estado <p-sortIcon field="estado" />
                 <th pSortableColumn="operacion" style="width:10%">
@@ -65,9 +65,9 @@
                 <th>
                    
                 </th>
-                <th>
+                <!-- <th>
                     
-                </th>
+                </th> -->
                 <th>
                     <p-columnFilter type="text" field="estado" [showMenu]="false" />
                 </th>
@@ -89,8 +89,8 @@
                         />
                     </td>
                     <td>{{ auditoria.usuarioModificacion?.nombres }}</td> 
-                    <td>{{ auditoria.fechaModificacion }}</td>
-                    <td>{{ auditoria.fechaInicio }}</td>
+                    <td>{{ auditoria.fechaModificacion}}</td>
+                    <!-- <td>{{ auditoria.fechaInicio }}</td> -->
                     <td>
                         <p-tag
                             [value]="auditoria.estado"
