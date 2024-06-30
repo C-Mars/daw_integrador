@@ -143,7 +143,7 @@ export class ActividadesService {
         'actividad no existe',
       );
     }
-    
+    actividad.fechaModificacion =  new Date();
     actividad.estado = EstadoActividad.ELIMINADO
     return await this.actividadesRepo.save(actividad);
     
