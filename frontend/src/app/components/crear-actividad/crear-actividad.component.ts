@@ -44,17 +44,10 @@ export class CrearActividadComponent implements OnInit {
 
   actividadForm: FormGroup;
 
-  prioridades = [
-    { label: 'Baja', value: PrioridadActividadEnum.BAJA },
-    { label: 'Media', value: PrioridadActividadEnum.MEDIA },
-    { label: 'Alta', value: PrioridadActividadEnum.ALTA }
-  ];
-
-  estados = [
-    { label: 'Pendiente', value: EstadoActividadEnum.PENDIENTE },
-    { label: 'En Proceso', value: EstadoActividadEnum.EN_PROCESO },
-    { label: 'Finalizada', value: EstadoActividadEnum.FINALIZADA },
-  ];
+  //prioridades = [ { label: 'Baja', value: PrioridadActividadEnum.BAJA }, { label: 'Media', value: PrioridadActividadEnum.MEDIA }, { label: 'Alta', value: PrioridadActividadEnum.ALTA }];
+  //estados = [{ label: 'Pendiente', value: EstadoActividadEnum.PENDIENTE }, { label: 'En Proceso', value: EstadoActividadEnum.EN_PROCESO }, { label: 'Finalizada', value: EstadoActividadEnum.FINALIZADA },];
+  prioridades = Object.values(PrioridadActividadEnum).map(prioridad => ({ label: prioridad, value: prioridad }));
+  estados = Object.values(EstadoActividadEnum).map(estado => ({ label: estado, value: estado }));
 
   clientes: any[] = [];
   usuarios: any[] = [];

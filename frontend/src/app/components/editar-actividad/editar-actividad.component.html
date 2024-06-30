@@ -1,32 +1,39 @@
-<p-dialog header="Editar Actividad" [(visible)]="displayDialog" [responsive]="true" [style]="{width: '500px'}">
-  <div class="p-fluid">
-    <div class="p-field">
-      <label for="descripcion">Descripción</label>
-      <input id="descripcion" type="text" pInputText [(ngModel)]="actividad.descripcion">
-    </div>
-    <div class="p-field">
-      <label for="idCliente">ID Cliente</label>
-      <input id="idCliente" type="number" pInputText [(ngModel)]="actividad.idCliente">
-    </div>
-    <div class="p-field">
-      <label for="estado">Estado</label>
-      <input id="estado" type="text" pInputText [(ngModel)]="actividad.estado">
-    </div>
-     <!--<div class="p-field">
-      <label for="fechaInicio">Fecha Inicio</label>
-      <p-calendar id="fechaInicio" [(ngModel)]="actividad.fechaInicio" dateFormat="yy-mm-dd"></p-calendar>
-    </div>
-    <div class="p-field">
-      <label for="fechaModificacion">Fecha Modificación</label>
-      <p-calendar id="fechaModificacion" [(ngModel)]="actividad.fechaModificacion" dateFormat="yy-mm-dd"></p-calendar>
-    </div>-->
-    <div class="p-field">
-      <label for="prioridad">Prioridad</label>
-      <input id="prioridad" type="text" pInputText [(ngModel)]="actividad.prioridad">
-    </div>
+ <p-dialog header="Editar Actividad" [(visible)]="displayDialog" (onHide)="closeDialog()" [modal]="true" class="flex justify-content-center flex-wrap min-w-min md:min-w-max">
+  <div class="flex justify-content-center flex-wrap" autocomplete="off">
+    <form [formGroup]="actividadForm" (ngSubmit)="save()" autocomplete="off">
+      <div class="input-container min-w-min md:min-w-max">
+        <p-floatLabel class="m-2">
+          <input id="descripcion" pInputText type="text" formControlName="descripcion" autocomplete="off" />
+          <label for="descripcion">Descripción</label>
+        </p-floatLabel>
+      </div>
+
+      <div class="input-container min-w-min md:min-w-max">
+        <label for="idCliente">Cliente</label>
+        <p-dropdown id="idCliente" appendTo="body" placeholder="Seleccionar" [options]="clientes" formControlName="idCliente"></p-dropdown>
+      </div>
+
+      <div class="input-container min-w-min md:min-w-max">
+        <label for="idUsuarioActual">Usuario</label>
+        <p-dropdown id="idUsuarioActual" appendTo="body" placeholder="Seleccionar" [options]="usuarios" formControlName="idUsuarioActual"></p-dropdown>
+      </div>
+
+      <div class="input-container m-2 min-w-min md:min-w-max">
+        <label for="prioridad">Prioridad: </label>
+        <p-dropdown id="prioridad" appendTo="body" placeholder="Seleccionar" [options]="prioridades" formControlName="prioridad"></p-dropdown>
+      </div>
+
+      <div class="input-container m-2 min-w-min md:min-w-max">
+        <label for="estado">Estado: </label>
+        <p-dropdown id="estado" appendTo="body" placeholder="Seleccionar" [options]="estados" formControlName="estado"></p-dropdown>
+      </div>
+
+      <div class="flex justify-content-center flex-wrap min-w-min md:min-w-max">
+        <p-button type="submit" rounded="true" label="Guardar"></p-button>
+        <p-button type="button" rounded="true" label="Cancelar" (click)="cancel()"></p-button>
+      </div>
+    </form>
   </div>
-  <p-footer>
-    <button type="button" pButton label="Guardar" icon="pi pi-check" (click)="save()"></button>
-    <button type="button" pButton label="Cancelar" icon="pi pi-times" (click)="cancel()"></button>
-  </p-footer>
 </p-dialog>
+
+<p-toast></p-toast>

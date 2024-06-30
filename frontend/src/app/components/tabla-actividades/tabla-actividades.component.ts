@@ -28,7 +28,7 @@ import { EditarActividadComponent } from '../editar-actividad/editar-actividad.c
 @Component({
   selector: 'app-tabla-actividades',
   standalone: true,
-  imports: [ 
+  imports: [
     TableModule,
     CardModule,
     CommonModule,
@@ -72,21 +72,31 @@ export class TablaActividadesComponent implements OnInit {
     this.actividadesService.getActividades().subscribe((data) => {
       this.actividades = data;})
     }
-  eliminarActividad(id: number) {
-    this.confirmacionService.confirm({
-      message: '¿Estás seguro de que quieres eliminar esta actividad?',
-      accept: () => {
-        this.actividadesService.eliminarActividad(id).subscribe(() => {
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Éxito',
-            detail: 'Actividad eliminada',
-          });
-          this.cargarActividades();
-        });
-      },
-    });
-  }
+    eliminarActividad(id: number) {
+      this.confirmacionService.confirm({
+        message: '¿Estás seguro de que quieres eliminar esta actividad?',
+        accept: () => {
+          this.actividadesService.eliminarActividad(id).subscribe(
+            () => {
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Éxito',
+                detail: 'Actividad eliminada',
+              });
+              this.cargarActividades();
+            },
+            (error) => {
+              console.error('Error al eliminar la actividad', error);
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Hubo un error al eliminar la actividad',
+              });
+            }
+          );
+        },
+      });
+    }
 
   editarActividad(actividad: ActividadDto) {
     this.selectedActividad = { ...actividad };
@@ -98,35 +108,12 @@ export class TablaActividadesComponent implements OnInit {
     this.displayNewDialog = true;
   }
 
-  saveActividad() {
-    if (this.selectedActividad.id) {
-      this.actividadesService.editarActividad(this.selectedActividad).subscribe(() => {
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Éxito',
-          detail: 'Actividad actualizada',
-        });
-        this.cargarActividades();
-        this.displayEditDialog = false;
-      });
-    } else {
-      this.actividadesService.crearActividad(this.selectedActividad).subscribe(() => {
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Éxito',
-          detail: 'Actividad creada',
-        });
-        this.cargarActividades();
-        this.displayNewDialog = false;
-      });
-    }
-  }
-
   cancel() {
     this.displayEditDialog = false;
     this.displayNewDialog = false;
   }
 
+  /*
   getSeverityPrioridad(rol: string){
     switch (rol){
       case 'alta':
@@ -152,4 +139,34 @@ export class TablaActividadesComponent implements OnInit {
         return 'contrast'
     }
   }
+    */
+
+ // Método para obtener la severidad (color) según la prioridad
+ getSeverityPrioridad(prioridad: string): 'success' | 'info' | 'danger' | 'contrast' {
+  switch (prioridad.toLowerCase()) {
+    case PrioridadActividadEnum.ALTA.toLowerCase():
+      return 'danger'; // (rojo)
+    case PrioridadActividadEnum.MEDIA.toLowerCase():
+      return 'info';   // (azul)
+    case PrioridadActividadEnum.BAJA.toLowerCase():
+      return 'success'; // (verde)
+    default:
+      return 'contrast'; // Valor por defecto o para cualquier otro caso
+  }
+}
+
+
+// Método para obtener la severidad (color) según el estado
+getSeverityEstado(estado: string): 'success' | 'info' | 'danger' | 'contrast' {
+  switch (estado.toLowerCase()) {
+    case EstadoActividadEnum.PENDIENTE.toLowerCase():
+      return 'danger';
+    case EstadoActividadEnum.EN_PROCESO.toLowerCase():
+      return 'info';
+    case EstadoActividadEnum.FINALIZADA.toLowerCase():
+      return 'success';
+    default:
+      return 'contrast';
+  }
+}
 }
