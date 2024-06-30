@@ -16,6 +16,7 @@ import { ClientesService } from '../../services/clientes.service';
 import { UsuariosService } from '../../services/usuarios.service';
 import { MessageService } from 'primeng/api';
 import { ReactiveFormsModule } from '@angular/forms'
+import { EstadosActividadEnum } from '../../enums/estados-actividad.enum';
 
 @Component({
   selector: 'app-editar-actividad',
@@ -56,7 +57,7 @@ export class EditarActividadComponent implements OnInit {
   actividadForm: FormGroup;
 
   prioridades = Object.values(PrioridadActividadEnum).map(prioridad => ({ label: prioridad, value: prioridad }));
-  estados = Object.values(EstadoActividadEnum).map(estado => ({ label: estado, value: estado }));
+  estados = Object.values(EstadosActividadEnum).map(estado => ({ label: estado, value: estado }));
 
   clientes: any[] = [];
   usuarios: any[] = [];
