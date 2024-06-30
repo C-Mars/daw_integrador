@@ -145,8 +145,8 @@ export class TablaActividadesComponent implements OnInit {
       case 'pendiente':
         return 'success';
       case 'en proceso':
-        return 'info';
-      case 'finalizada':
+        return 'secondary';
+      case 'finalizado':
         return 'danger';
       default:
         return 'contrast'

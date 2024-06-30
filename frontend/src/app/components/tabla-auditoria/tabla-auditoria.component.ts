@@ -114,10 +114,10 @@ getSeverityEstado(rol: string){
     case 'pendiente':
       return 'info';
     case 'en proceso':
+      return 'secondary';
+    case 'finalizado':
       return 'warning';
-    case 'finalizada':
-      return 'warning';
-    case 'eliminada':
+    case 'eliminado':
       return 'danger'
     default:
       return 'contrast'
