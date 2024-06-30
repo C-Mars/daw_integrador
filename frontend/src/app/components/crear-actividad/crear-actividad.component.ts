@@ -52,6 +52,8 @@ export class CrearActividadComponent implements OnInit {
   clientes: any[] = [];
   usuarios: any[] = [];
 
+
+
   constructor(
     private actividadesService: ActividadesService,
     private clientesService: ClientesService,
@@ -59,11 +61,13 @@ export class CrearActividadComponent implements OnInit {
     private messageService: MessageService
   ) {
     this.actividadForm = new FormGroup({
-      descripcion: new FormControl('', Validators.required),
-      idCliente: new FormControl(null, Validators.required),
-      idUsuarioActual: new FormControl(null, Validators.required),
-      prioridad: new FormControl(PrioridadActividadEnum.BAJA, Validators.required),
-      estado: new FormControl(EstadoActividadEnum.PENDIENTE, Validators.required),
+      id: new FormControl<number | null>(null),
+      descripcion: new FormControl<string | null>('', Validators.required),
+      idCliente: new FormControl<string | null>(null, Validators.required),
+      idUsuarioActual:new FormControl<string | null>(null),
+      idUsuarioModificacion: new FormControl<string | null>(null, Validators.required),
+      prioridad: new FormControl<PrioridadActividadEnum | null>(PrioridadActividadEnum.BAJA, Validators.required),
+      estado: new FormControl<EstadoActividadEnum | null>(EstadoActividadEnum.PENDIENTE, Validators.required),
       //fechaInicio: new FormControl(new Date(), Validators.required)
     });
   }
@@ -102,12 +106,26 @@ export class CrearActividadComponent implements OnInit {
   }
 
   save() {
-    if (this.actividadForm.valid) {
-      const actividad: ActividadDto = this.actividadForm.value;
-      //actividad.fechaInicio = new Date(); // Asigna la fecha actual del sistema
-      actividad.idUsuarioModificacion = 1;  // Supongamos que el usuario ADMINISTRADOR tiene el ID 1
+    if (!this.actividadForm.valid) {
+      this.actividadForm.markAllAsTouched();
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Debe ingresar todos los campos obligatorios',
+      });
+      return;
+    }
+      const actividad = this.actividadForm.getRawValue();
+      
+      const crearActividad: ActividadDto ={
+        idCliente: actividad.idCliente!,
+        descripcion:actividad.descripcion! ,
+        prioridad:actividad.prioridad! ,
+        estado: actividad.estado!,
+        idUsuarioActual:actividad.idUsuarioActual! ,
+        idUsuarioModificacion: actividad.idUsuarioModificacion!
+      }
 
-      this.actividadesService.crearActividad(actividad).subscribe({
+      this.actividadesService.crearActividad(crearActividad).subscribe({
         next: (response) => {
           this.displayDialog = false;
           this.displayDialogChange.emit(this.displayDialog);
@@ -128,12 +146,10 @@ export class CrearActividadComponent implements OnInit {
           this.messageService.add({
             severity:'error',
             summary:'Error',
-            detail:'Error al crear la actividad'});
+            detail:'Error al crear la actividad' + error.message});
         }
         });
-      } else {
-      console.error('Formulario no válido');
-    }
+      
   }
 
   cancel() {

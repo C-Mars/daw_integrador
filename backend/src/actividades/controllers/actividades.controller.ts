@@ -19,13 +19,10 @@ export class ActividadesController {
   @Roles([RolesEnum.ADMINISTRADOR])
   @UseGuards(AuthGuard)
   async crearActividad(
-    @Req() request: Request,
+
     @Body() crearActvidadDto: CrearActividadDto,
   ) {
-    return await this.actividadService.crearActividad(
-      crearActvidadDto,
-      request['usuario'],
-    );
+    return await this.actividadService.crearActividad(crearActvidadDto);
   }
 
   @Get(':id')

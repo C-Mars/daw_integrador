@@ -4,7 +4,8 @@ import { PrioridadActividad } from "../enums/prioridad-actividad.enum";
 
 
 export class EditarActividadDto{
-    
+    @IsOptional()
+    id?:number
     
     @IsOptional()
     @IsNotEmpty()
@@ -32,10 +33,10 @@ export class EditarActividadDto{
     @IsDate()
     fechaModificacion?: Date;
    
-    @IsOptional()
-    @IsNotEmpty()
-    @IsDate()
-    fechaInicio?: Date;
+    // @IsOptional()
+    // @IsNotEmpty()
+    // @IsDate()
+    // fechaInicio?: Date;
     
     @IsOptional()
     @IsString()

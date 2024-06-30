@@ -41,12 +41,12 @@ export class ActividadesService {
     async obtenerActividadesPorUsuario(idUsuario: number): Promise<Actividades[]> {
       return await this.actividadesRepo.find({
         where: { usuarioActual: { id: idUsuario } },
-        relations: ['usuarioActual'],
+        relations: ['idCliente', 'usuarioActual', 'idUsuarioModificacion'],
       });
     }
   
   // Crear una nueva actividad
-  async crearActividad(crearActividadDto: CrearActividadDto, usuario: Usuario) {
+  async crearActividad(crearActividadDto: CrearActividadDto) {
     const nuevaActividad: Actividades = this.actividadesRepo.create();
     nuevaActividad.idCliente = crearActividadDto.idCliente;
     nuevaActividad.descripcion = crearActividadDto.descripcion;
@@ -71,6 +71,7 @@ export class ActividadesService {
     const consulta = this.actividadesRepo
       .createQueryBuilder('actividad')
       .innerJoin('actividad.usuarioActual', 'usuario');
+      
 
     if (rol === RolesEnum.EJECUTOR) {
       consulta
@@ -95,19 +96,20 @@ export class ActividadesService {
     if (!actividad) {
       throw new UnauthorizedException('La actividad no existe o fue eliminada');
     }
-
-    if (editarActividadDto.estado !== undefined) {
+      actividad.fechaModificacion =  new Date();
+    
+      if (editarActividadDto.estado !== undefined) {
       actividad.estado = editarActividadDto.estado;
     }
     if (editarActividadDto.descripcion !== undefined) {
       actividad.descripcion = editarActividadDto.descripcion;
     }
-    if (editarActividadDto.fechaInicio !== undefined) {
-      actividad.fechaInicio = editarActividadDto.fechaInicio;
-    }
-    if (editarActividadDto.fechaModificacion !== undefined) {
-      actividad.fechaModificacion = editarActividadDto.fechaModificacion;
-    }
+    // if (editarActividadDto.fechaInicio !== undefined) {
+    //   actividad.fechaInicio = editarActividadDto.fechaInicio;
+    // }
+   
+      
+    
     if (editarActividadDto.prioridad !== undefined) {
       actividad.prioridad = editarActividadDto.prioridad;
     }

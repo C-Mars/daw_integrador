@@ -126,7 +126,7 @@ export class EditarActividadComponent implements OnInit {
           this.messageService.add({
             severity: 'success',
             summary: 'ACTIVIDAD ACTUALIZADA',
-            detail: 'La actividad ha sido actualizada correctamente',
+            detail: 'La actividad ha sido actualizada correctamente' ,
             life: 5000 // Duración del mensaje en milisegundos (5 segundos)
           });
         },
@@ -137,7 +137,7 @@ export class EditarActividadComponent implements OnInit {
           this.messageService.add({
             severity: 'error',
             summary: 'Error',
-            detail: 'Error al actualizar la actividad'
+            detail: 'Error al actualizar la actividad' + error.message
           });
         }
       });

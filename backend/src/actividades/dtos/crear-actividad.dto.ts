@@ -5,6 +5,7 @@ import { PrioridadActividad } from "../enums/prioridad-actividad.enum";
 
 export class CrearActividadDto{
     
+    
     // @IsNotEmpty()
     @IsOptional()
     idCliente: number;
@@ -21,16 +22,7 @@ export class CrearActividadDto{
     
     @IsNotEmpty()
     idUsuarioModificacion:number;
-    
-    // @IsNotEmpty()
-    // @IsDate()
-    // fechaModificacion: Date;
    
-    
-    // @IsNotEmpty()
-    // @IsDate()
-    // fechaInicio: Date;
-    
     @IsString()
     @IsNotEmpty()
     estado: EstadoActividad;

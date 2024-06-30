@@ -12,10 +12,14 @@
         <label for="idCliente">Cliente</label>
         <p-dropdown id="idCliente" appendTo="body" placeholder="Seleccionar" [options]="clientes" formControlName="idCliente"></p-dropdown>
       </div>
+      <div class="input-container min-w-min md:min-w-max">
+        <label for="idUsuarioActual">Administrador</label>
+        <p-dropdown id="idUsuarioActual" appendTo="body" placeholder="Seleccionar" [options]="usuarios" formControlName="idUsuarioActual"></p-dropdown>
+      </div>
 
       <div class="input-container min-w-min md:min-w-max">
-        <label for="idUsuarioActual">Usuario</label>
-        <p-dropdown id="idUsuarioActual" appendTo="body" placeholder="Seleccionar" [options]="usuarios" formControlName="idUsuarioActual"></p-dropdown>
+        <label for="idUsuarioModificacion">Usuario</label>
+        <p-dropdown id="idUsuarioModificacion" appendTo="body" placeholder="Seleccionar" [options]="usuarios" formControlName="idUsuarioModificacion"></p-dropdown>
       </div>
 
       <div class="input-container m-2 min-w-min md:min-w-max">

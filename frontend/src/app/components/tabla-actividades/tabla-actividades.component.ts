@@ -163,7 +163,7 @@ getSeverityEstado(estado: string): 'success' | 'info' | 'danger' | 'contrast' {
       return 'danger';
     case EstadoActividadEnum.EN_PROCESO.toLowerCase():
       return 'info';
-    case EstadoActividadEnum.FINALIZADA.toLowerCase():
+    case EstadoActividadEnum.FINALIZADO.toLowerCase():
       return 'success';
     default:
       return 'contrast';
