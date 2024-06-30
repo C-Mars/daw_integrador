@@ -68,7 +68,7 @@ export class ActividadesService {
         throw new Error('El usuario no esta autorizado para ver esta sección')
       }
     }
-     return this._client.delete<void>(`${environment.apiUrl}/actividades/${id}`);
+     return this._client.delete<void>(`${environment?.apiUrl}/actividades/${id}`);
   }
 
   private verificarAutorizacion(): void {

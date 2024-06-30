@@ -8,6 +8,7 @@ import { EstadoActividad } from '../enums/estado-actividad.enum';
 import { Usuario } from 'src/usuarios/entities/usuario.entity';
 import { RolesEnum } from 'src/auth/enums/roles.enum';
 import { EditarActividadDto } from '../dtos/editar-actividades.dto';
+import { EstadosUsuarioEnum } from 'src/auth/enums/estado-usuario.enum';
 
 @Injectable()
 export class ActividadesService {
@@ -123,12 +124,29 @@ export class ActividadesService {
   }
 
   // Borrar una actividad
-  async borrarActividad(id: number, usuario: Usuario) {
-    const rol: RolesEnum = usuario.rol;
+  // async borrarActividad(id: number, usuario: Usuario) {
+  //   const rol: RolesEnum = usuario.rol;
 
-    if (rol === RolesEnum.EJECUTOR || rol === RolesEnum.ADMINISTRADOR) {
-      await this.actividadesRepo.delete(id);
+  //   if (rol === RolesEnum.EJECUTOR || rol === RolesEnum.ADMINISTRADOR) {
+  //     await this.actividadesRepo.delete(id);
+  //   }
+  // }
+
+  async borrarActividad(id: number) {
+    const actividad = await this.actividadesRepo.findOne({
+      where: {
+        id
+      },
+    });
+    if (!actividad) {
+      throw new UnauthorizedException(
+        'actividad no existe',
+      );
     }
+    
+    actividad.estado = EstadoActividad.ELIMINADO
+    return await this.actividadesRepo.save(actividad);
+    
   }
 }
 

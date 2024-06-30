@@ -76,8 +76,8 @@ export class TablaActividadesComponent implements OnInit {
       this.confirmacionService.confirm({
         message: '¿Estás seguro de que quieres eliminar esta actividad?',
         accept: () => {
-          this.actividadesService.eliminarActividad(id).subscribe(
-            () => {
+          this.actividadesService.eliminarActividad(id).subscribe({
+            next: (res) => {
               this.messageService.add({
                 severity: 'success',
                 summary: 'Éxito',
@@ -85,15 +85,15 @@ export class TablaActividadesComponent implements OnInit {
               });
               this.cargarActividades();
             },
-            (error) => {
+              error : (error) => {
               console.error('Error al eliminar la actividad', error);
               this.messageService.add({
                 severity: 'error',
                 summary: 'Error',
-                detail: 'Hubo un error al eliminar la actividad',
+                detail: 'Hubo un error al eliminar la actividad' + error.message,
               });
             }
-          );
+        });
         },
       });
     }

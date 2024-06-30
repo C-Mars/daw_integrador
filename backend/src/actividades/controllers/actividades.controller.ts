@@ -59,10 +59,8 @@ export class ActividadesController {
   @Roles([RolesEnum.ADMINISTRADOR])
   @UseGuards(AuthGuard)
   async borrarActividad(
-    @Param('id', ParseIntPipe) id: number,
-    @Req() request: Request,
-  ) {
-    await this.actividadService.borrarActividad(id, request['usuario']);
+    @Param('id', ParseIntPipe) id: number){
+    return await this.actividadService.borrarActividad(id);
   }
 
   @Get('/usuario/:idUsuario')
@@ -75,4 +73,14 @@ export class ActividadesController {
     return await this.actividadService.obtenerActividadesPorUsuario(idUsuario);
   }
   
+//   @Delete(':id')
+//   @ApiBearerAuth()
+//   @Roles([RolesEnum.ADMINISTRADOR])
+//   @UseGuards(AuthGuard)
+//   async borrarActividad(
+//     @Param('id', ParseIntPipe) id: number,
+//     @Req() request: Request,
+//   ) {
+//     await this.actividadService.borrarActividad(id, request['usuario']);
+//   }
 }
