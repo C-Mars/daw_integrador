@@ -1,84 +1,3 @@
-<!--
-<p-toolbar>
-  <div class="p-toolbar-group-start">
-    <img src="../../../assets/images/icons8-música-128.png"
-    alt="Logo"
-    class="logo"
-    style="width: 40px; height: 40px; margin: 10px;">
-
-    <button
-    pButton icon="pi pi-home"
-    label="Inicio"
-    [rounded]="true"
-    routerLink="inicio"
-    *ngIf='isLoggedView()&& !isEjecutor()'
-    (click)="onHomeClick()"
-    ></button>
-
-    <button
-    pButton icon="pi pi-home"
-    label="Inicio"
-    [rounded]="true"
-    routerLink="inicio"
-    *ngIf='isLoggedView() && isEjecutor()'
-    (click)="onHomeUsuClick()"
-    ></button>
-  </div>
-
-  <div class="p-toolbar-group-center">
-
-    //esta parte estaba comentada
-     <p-button
-    pRipple icon="pi pi-cog"
-    class="mr-2"
-    [rounded]="true"
-    [outlined]="true"
-    severity="primary"
-    (click)="onAjustesUsuario()"
-    *ngIf="isLoggedView()"
-    pTooltip="Ajustes"/>
-    //hasta aca estaba comentada
-
-    <p-button
-    pRipple icon="pi pi-briefcase"
-    class="mr-2"
-    [rounded]="true"
-    severity="primary"
-    (click)="onMenuFooter()"
-    *ngIf="isLoggedView()"
-    pTooltip="Menú de trabajo"/>
-
-  </div>
-
-  <div class="p-toolbar-group-end">
-    <button
-    pButton icon="pi pi-sign-out"
-    label="Cerrar Sesión"
-    [rounded]="true"
-    (click)="cerrarSesion()"
-    *ngIf="isLoggedView()"
-    ></button>
-    <button
-    pButton icon="pi pi-user"
-    label="Iniciar Sesión"
-    [rounded]="true"
-    (click)="onLoginClick()"
-    *ngIf="!isLoggedView()"
-    ></button>
-  </div>
-</p-toolbar>
-
-<app-menu-footer
-[visible]="sidebarVisible"
-(usersClick)="onUsersClick()"
-></app-menu-footer>
-
-
-<app-ajustes-usuario
-[visible]="dialogVisible"
-(usersClick)="onAjustesUsuario()">
-</app-ajustes-usuario>
--->
 <p-toolbar>
   <div class="p-toolbar-group-start">
     <img src="../../../assets/images/icons8-música-128.png"
@@ -120,8 +39,8 @@
    <div class="p-toolbar-group-end">
       <div *ngIf="usuario" class="user-info">
         <div class="user-details">
-          <span class="user-name">Bienvenido {{usuario.nombreUsuario}} </span>
-          <p-badge [value]="usuario.rol" styleClass="ml-2" severity="info"></p-badge>
+          <!-- <span class="user-name p-2" >Bienvenido,{{usuario.nombres}} </span> -->
+          <p-badge [value]="usuario.rol" styleClass="ml-2" severity="info"class="p-2" ></p-badge>
         </div>
       </div>
 

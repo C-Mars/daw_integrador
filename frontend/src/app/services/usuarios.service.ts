@@ -1,6 +1,5 @@
 import { Injectable, PLATFORM_ID, inject } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
 import { RolesEnum } from '../enums/roles.enum';
 import { UsuarioDto } from '../dtos/usuario.dto';
 import { EditarUsuarioDto } from '../dtos/editar-usuario.dto';
