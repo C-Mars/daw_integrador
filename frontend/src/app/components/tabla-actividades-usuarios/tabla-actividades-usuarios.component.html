@@ -1,0 +1,108 @@
+<p-card header="ACTIVIDADES" class="w-auto md:min-w-max">
+  <ng-template pTemplate="content">
+ 
+    <p-table
+      [value]="actividades"
+      [paginator]="true"
+      [rows]="5"
+      [tableStyle]="{ 'max-width': '88rem' }"
+      [rowsPerPageOptions]="[5, 10, 20]"
+      class="flex flex-wrap w-4 md:w-max"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="idCliente.nombres" style="width:10%">
+            Cliente <p-sortIcon field="idCliente.nombres" />
+          </th>
+          <th pSortableColumn="descripcion" style="width:15%">
+            Descripción <p-sortIcon field="descripcion" />
+          </th>
+          <th pSortableColumn="usuarioActual?.nombres" style="width:15%">
+            Usuario Actual <p-sortIcon field="usuarioActual?.nombres" />
+          </th>
+          <th pSortableColumn="prioridad" style="width:10%">
+            Prioridad <p-sortIcon field="prioridad" />
+          </th>
+          <th pSortableColumn="estado" style="width:10%">
+            Estado <p-sortIcon field="estado" />
+          </th>
+          <th pSortableColumn="idUsuarioModificacion.nombres" style="width:15%">
+            Usuario Modificación <p-sortIcon field="idUsuarioModificacion.nombres" />
+          </th>
+          <th pSortableColumn="fechaModificacion" style="width:10%">
+            Fecha Modificación <p-sortIcon field="fechaModificacion" />
+          </th>
+          <th pSortableColumn="fechaInicio" style="width:10%">
+            Fecha Inicio <p-sortIcon field="fechaInicio" />
+          </th>
+          <th style="width:5%">Herramientas</th>
+        </tr>
+        <tr>
+          <th>
+              <p-columnFilter type="text" field="idCliente.nombres" [showMenu]="false"/>
+          </th>
+          <th>
+            <p-columnFilter type="text" field="descripcion" [showMenu]="false" />
+          </th>
+          <th>
+            <p-columnFilter type="text" field="usuarioActual.nombres" [showMenu]="false" />
+          </th>
+          <th>
+            <p-columnFilter type="text" field="prioridad" [showMenu]="false" />
+          </th>
+          <th>
+            <p-columnFilter type="text" field="estado" [showMenu]="false" />
+          </th>
+          <th>
+              <p-columnFilter type="text" field="idUsuarioModificacion.nombres" [showMenu]="false" />
+          </th>
+         
+          <th>
+              
+          </th>
+          <th>
+           
+          </th>
+          <th>
+
+          </th>
+      </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-actividad>
+        <tr>
+          <td>{{ actividad.idCliente?.nombres }}</td>
+          <td>{{ actividad.descripcion }}</td>
+          <td>{{ actividad.usuarioActual?.nombres }}</td>
+          <td>{{ actividad.prioridad }}</td>
+          <td>{{ actividad.estado }}</td>
+          <td>{{ actividad.idUsuarioModificacion?.nombres }}</td>
+          <td>{{ actividad.fechaModificacion | date }}</td>
+          <td>{{ actividad.fechaInicio | date }}</td>
+          <td class="flex flex-wrap p-2">
+            <p-button
+              class="accion"
+              pRipple
+              icon="pi pi-pen-to-square"
+              class="mr-2 pb-2 pt-4"
+              [rounded]="true"
+              severity="primary"
+              pTooltip="Editar"
+              (onClick)="editarActividad(actividad)"
+            ></p-button>
+           
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </ng-template>
+</p-card>
+
+<app-editar-actividad-usuarios
+  [(actividad)]="selectedActividad"
+  [(displayDialog)]="displayEditDialog"
+  (refresh)="cargarActividades()"
+  (close)="displayEditDialog = false"
+></app-editar-actividad-usuarios>
+
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>

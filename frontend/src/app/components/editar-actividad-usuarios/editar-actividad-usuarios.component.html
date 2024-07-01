@@ -1,0 +1,40 @@
+<p-dialog header="Editar Actividad" [(visible)]="displayDialog" (onHide)="closeDialog()" [modal]="true" class="flex justify-content-center flex-wrap min-w-min md:min-w-max">
+  <div class="flex justify-content-center flex-wrap" autocomplete="off">
+    <form [formGroup]="actividadForm" (ngSubmit)="save()" autocomplete="off">
+      <!-- Descripción -->
+      <div class="input-container min-w-min md:min-w-max">
+        <p-floatLabel class="m-2">
+          <input id="descripcion" pInputText type="text" formControlName="descripcion" autocomplete="off" />
+          <label for="descripcion">Descripción</label>
+        </p-floatLabel>
+        <!-- Mostrar mensaje de error si la descripción no es válida -->
+        <small *ngIf="actividadForm.get('descripcion')?.invalid && (actividadForm.get('descripcion')?.dirty || actividadForm.get('descripcion')?.touched)"
+          class="text-danger">La descripción es requerida</small>
+      </div>
+
+      <!-- Estado -->
+      <div class="input-container m-2 min-w-min md:min-w-max">
+        <label for="estado">Estado: </label>
+        <p-dropdown id="estado" appendTo="body" placeholder="Seleccionar" [options]="estados" formControlName="estado"></p-dropdown>
+        <!-- Mostrar mensaje de error si el estado no es seleccionado -->
+        <small *ngIf="actividadForm.get('estado')?.invalid && (actividadForm.get('estado')?.dirty || actividadForm.get('estado')?.touched)"
+          class="text-danger">Seleccione un estado</small>
+      </div>
+<!-- Mostrar valores actuales -->
+<div>
+  <h4>Valores a enviar:</h4>
+  <p>Descripción: {{ actividadForm.value.descripcion }}</p>
+  <p>Estado: {{ actividadForm.value.estado }}</p>
+  <!-- Mostrar más campos según necesites -->
+</div>
+      <!-- Botones -->
+      <div class="flex justify-content-center flex-wrap min-w-min md:min-w-max">
+        <p-button type="submit" rounded="true" label="Guardar"></p-button>
+        <p-button type="button" rounded="true" label="Cancelar" (click)="cancel()"></p-button>
+      </div>
+    </form>
+  </div>
+</p-dialog>
+
+<p-toast></p-toast>
+
