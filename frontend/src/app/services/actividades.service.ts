@@ -7,6 +7,8 @@ import { environment } from '../environments/environment';
 import { RolesEnum } from '../enums/roles.enum';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
+import { EditarActividadDto } from '../dtos/editar-actividad.dto';
+import { CrearActividadDto } from '../dtos/crear-actividad.dto';
 
 
 @Injectable({
@@ -39,27 +41,24 @@ export class ActividadesService {
     return this._client.get<ActividadDto>(`${environment?.apiUrl}/actividades/${id}`);
   }
 
-  crearActividad(actividad: ActividadDto): Observable<ActividadDto> {
+  crearActividad(actividad: CrearActividadDto): Observable<CrearActividadDto> {
     if (isPlatformBrowser(this.platformId)) {
       if (!this._authService.hasRole(RolesEnum.ADMINISTRADOR)) {
         throw new Error('El usuario no esta autorizado para ver esta sección')
       }
     }
-    return this._client.post<ActividadDto>(`${environment?.apiUrl}/actividades`, actividad);
+    return this._client.post<CrearActividadDto>(`${environment?.apiUrl}/actividades`, actividad);
   }
 
 
-  editarActividad(actividad: ActividadDto): Observable<ActividadDto> {
+  editarActividad(actividad: EditarActividadDto): Observable<EditarActividadDto> {
     if (isPlatformBrowser(this.platformId)) {
        if (!this._authService.hasRole(RolesEnum.ADMINISTRADOR)) {
          throw new Error('El usuario no esta autorizado para ver esta sección')
         }
     }
-  //return this._client.put<ActividadDto>(`${environment.apiUrl}/actividades/${actividad.id}`, actividad);
-  //return this._client.patch<ActividadDto>(`${environment.apiUrl}/actividades/${actividad.id}`, actividad);
-  //return this._client.patch<ActividadDto>(environment?.apiUrl + '/actividades/${actividad.id}', actividad)
-  //return this._client.patch<ActividadDto>(`${environment.apiUrl}/actividades/${actividad.id}`, actividad);
-   return this._client.patch<ActividadDto>(environment?.apiUrl + `/actividades/{actividad.id}`, actividad);
+
+  return this._client.patch<EditarActividadDto>(`${environment.apiUrl}/actividades/${actividad.id}`, actividad);
   }
 
   eliminarActividad(id: number): Observable<void> {

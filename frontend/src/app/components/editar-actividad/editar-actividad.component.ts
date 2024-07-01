@@ -18,6 +18,8 @@ import { MessageService } from 'primeng/api';
 import { ReactiveFormsModule } from '@angular/forms'
 import { EstadosActividadEnum } from '../../enums/estados-actividad.enum';
 import { EditarActividadDto } from '../../dtos/editar-actividad.dto';
+import { ClienteDto } from '../../dtos/cliente.dto';
+import { UsuarioDto } from '../../dtos/usuario.dto';
 
 @Component({
   selector: 'app-editar-actividad',
@@ -47,78 +49,129 @@ export class EditarActividadComponent implements OnInit {
   @Input()
   set actividad(value: ActividadDto) {
     this._actividad = value;
-    if (this.actividadForm) {
-      this.actividadForm.patchValue(this._actividad);
+    if (this.formEditarActividad) {
+      this.formEditarActividad.patchValue(this._actividad);
     }
   }
   get actividad(): ActividadDto {
     return this._actividad;
   }
 
-  actividadForm: FormGroup;
+  actividades!: ActividadDto[];
+
 
   prioridades = Object.values(PrioridadActividadEnum).map(prioridad => ({ label: prioridad, value: prioridad }));
   estados = Object.values(EstadosActividadEnum).map(estado => ({ label: estado, value: estado }));
-
   clientes: any[] = [];
   usuarios: any[] = [];
 
+  formEditarActividad = new FormGroup ({
+  id: new FormControl<number | null>(null),
+  descripcion: new FormControl<string | null>(null),
+  idCliente: new FormControl<ClienteDto| null>(null),
+  idUsuarioModificacion: new FormControl<UsuarioDto | null>(null),
+  idUsuarioActual: new FormControl<UsuarioDto | null>(null),
+  prioridad: new FormControl< PrioridadActividadEnum|null>(null),
+  estado: new FormControl<EstadoActividadEnum|null>(null)})
+  
   constructor(
     private actividadesService: ActividadesService,
     private clientesService: ClientesService,
     private usuariosService: UsuariosService,
     private messageService: MessageService
-  ) {
-    this.actividadForm = new FormGroup({
-      descripcion: new FormControl('', Validators.required),
-      idCliente: new FormControl(null, Validators.required),
-      idUsuarioActual: new FormControl(null, Validators.required),
-      prioridad: new FormControl(PrioridadActividadEnum.BAJA, Validators.required),
-      estado: new FormControl(EstadoActividadEnum.PENDIENTE, Validators.required)
-    });
-  }
+  ) {}
 
   ngOnInit() {
-    this.cargarClientes();
-    this.cargarUsuarios();
-  }
-
-  cargarClientes() {
-    this.clientesService.getClientes().subscribe(
-      (clientes: any[]) => {
-        this.clientes = clientes.map(cliente => ({
-          label: cliente.nombres,
-          value: cliente.id
-        }));
+    this.actividadesService.getActividades().subscribe({
+      next: (res) => {
+        this.actividades = res;
+        if (this.actividades.length > 0) {
+          this.actividad = this.actividades[0];
+          this.llenarTabla(); 
+        }
       },
-      error => {
-        console.error('Error al cargar los clientes:', error);
-      }
-    );
-  }
-
-  cargarUsuarios() {
-    this.usuariosService.getUsuarios().subscribe(
-      (usuarios: any[]) => {
-        this.usuarios = usuarios.map(usuario => ({
-          label: usuario.nombres,
-          value: usuario.id
-        }));
+      error: (err) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Ocurrió un error al recuperar los usuarios'+ err.message,
+        });
       },
-      error => {
-        console.error('Error al cargar los usuarios:', error);
-      }
-    );
+    })
+    
   }
+  llenarTabla() {
+    if (this.actividad) {
+      this.formEditarActividad.patchValue({
+        id: this.actividad.id,
+        descripcion: this.actividad.descripcion,
+        idCliente: this.actividad.idCliente,
+        idUsuarioActual: this.actividad.idUsuarioActual,
+        idUsuarioModificacion: this.actividad.idUsuarioModificacion,
+        prioridad: this.actividad.prioridad,
+        estado: this.actividad.estado,
+      });
+  
+      this.clientes = [];
+      if (this.actividad.idCliente) {
+        this.clientes.push({ label: this.actividad.idCliente.nombres, value: this.actividad.idCliente });
+      }
+      this.clientesService.getClientes().subscribe({
+        next:(clientes: any[]) => {
+          this.clientes.push(...clientes.map(cliente => ({
+            label: cliente.nombres,
+            value: cliente
+          })));
+        },
+        error: (error) => {
+          console.error('Error al cargar los clientes:', error);
+        }
+      });
+ 
+      this.usuarios = [];
+      if (this.actividad.idUsuarioModificacion) {
+        this.usuarios.push({ label: this.actividad.idUsuarioModificacion.nombres, value: this.actividad.idUsuarioModificacion });
+      }
+      this.usuariosService.getUsuarios().subscribe({
+        next:(usuarios: any[]) => {
+          this.usuarios.push(...usuarios.map(usuario => ({
+            label: usuario.nombres,
+            value: usuario
+          })));
+        },
+        error: (error) => {
+          console.error('Error al cargar los usuarios:', error);
+        }
+      });
+  
+    } else {
+      this.formEditarActividad.reset();
+    }
+  }
+  
 
   save() {
-    if (this.actividadForm.valid) {
-      const actividad: ActividadDto = { ...this.actividad, ...this.actividadForm.value };
-      actividad.idUsuarioModificacion = 1;  // Supongamos que el usuario ADMINISTRADOR tiene el ID 1
+    if (!this.formEditarActividad.valid) {
+      this.formEditarActividad.markAllAsTouched();
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Debe ingresar todos los campos',
+      });
+      return;
+    }
+    const actividad = this.formEditarActividad.getRawValue()
+    const editarActividad: EditarActividadDto ={
+      id:actividad.id!,
+      idCliente: actividad.idCliente!,
+      descripcion:actividad.descripcion! ,
+      prioridad:actividad.prioridad! ,
+      estado: actividad.estado!,
+      idUsuarioActual:actividad.idUsuarioActual! ,
+      idUsuarioModificacion: actividad.idUsuarioModificacion!
+    } 
 
-      this.actividadesService.editarActividad(actividad).subscribe({
+    this.actividadesService.editarActividad(editarActividad).subscribe({
         next: (response) => {
-          this.actividadChange.emit(actividad);
+          // this.actividadChange.emit(actividad);
           this.displayDialog = false;
           this.displayDialogChange.emit(this.displayDialog);
           this.refresh.emit();
@@ -143,10 +196,8 @@ export class EditarActividadComponent implements OnInit {
           });
         }
       });
-    } else {
-      console.error('Formulario no válido');
     }
-  }
+  
 
   cancel() {
     this.displayDialog = false;

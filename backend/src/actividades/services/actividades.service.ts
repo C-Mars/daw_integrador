@@ -97,40 +97,28 @@ export class ActividadesService {
     if (!actividad) {
       throw new UnauthorizedException('La actividad no existe o fue eliminada');
     }
-      actividad.fechaModificacion =  new Date();
+      
     
-      if (editarActividadDto.estado !== undefined) {
+    if (editarActividadDto.estado !== undefined) {
       actividad.estado = editarActividadDto.estado;
     }
     if (editarActividadDto.descripcion !== undefined) {
       actividad.descripcion = editarActividadDto.descripcion;
     }
-    // if (editarActividadDto.fechaInicio !== undefined) {
-    //   actividad.fechaInicio = editarActividadDto.fechaInicio;
-    // }
-   
-      
-    
+ 
     if (editarActividadDto.prioridad !== undefined) {
       actividad.prioridad = editarActividadDto.prioridad;
     }
     if (editarActividadDto.idCliente !== undefined) {
       actividad.idCliente = editarActividadDto.idCliente;
     }
-
+    actividad.fechaModificacion =  new Date();
     await this.actividadesRepo.save(actividad);
 
     return actividad;
   }
 
-  // Borrar una actividad
-  // async borrarActividad(id: number, usuario: Usuario) {
-  //   const rol: RolesEnum = usuario.rol;
 
-  //   if (rol === RolesEnum.EJECUTOR || rol === RolesEnum.ADMINISTRADOR) {
-  //     await this.actividadesRepo.delete(id);
-  //   }
-  // }
 
   async borrarActividad(id: number) {
     const actividad = await this.actividadesRepo.findOne({

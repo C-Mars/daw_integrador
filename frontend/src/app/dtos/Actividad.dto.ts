@@ -4,12 +4,11 @@ import { UsuarioDto } from "./usuario.dto";
 import { ClienteDto } from "./cliente.dto";
 
 export interface ActividadDto {
-
-  idCliente: number|null;
+  id:number |null;
+  idCliente: ClienteDto;
   descripcion: string|null;
-
   prioridad: PrioridadActividadEnum|null;
   estado: EstadoActividadEnum|null;
-  idUsuarioActual: number|null;
-  idUsuarioModificacion: number|null;
+  idUsuarioActual: UsuarioDto |null;
+  idUsuarioModificacion:UsuarioDto|null;
 }

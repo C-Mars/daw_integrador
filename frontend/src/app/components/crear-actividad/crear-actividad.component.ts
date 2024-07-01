@@ -17,6 +17,9 @@ import { UsuariosService } from '../../services/usuarios.service';
 import { response } from 'express';
 import { MessageService } from 'primeng/api';
 import { ClientesService } from '../../services/clientes.service';
+import { ClienteDto } from '../../dtos/cliente.dto';
+import { UsuarioDto } from '../../dtos/usuario.dto';
+import { CrearActividadDto } from '../../dtos/crear-actividad.dto';
 
 @Component({
   selector: 'app-crear-actividad',
@@ -44,8 +47,6 @@ export class CrearActividadComponent implements OnInit {
 
   actividadForm: FormGroup;
 
-  //prioridades = [ { label: 'Baja', value: PrioridadActividadEnum.BAJA }, { label: 'Media', value: PrioridadActividadEnum.MEDIA }, { label: 'Alta', value: PrioridadActividadEnum.ALTA }];
-  //estados = [{ label: 'Pendiente', value: EstadoActividadEnum.PENDIENTE }, { label: 'En Proceso', value: EstadoActividadEnum.EN_PROCESO }, { label: 'Finalizada', value: EstadoActividadEnum.FINALIZADA },];
   prioridades = Object.values(PrioridadActividadEnum).map(prioridad => ({ label: prioridad, value: prioridad }));
   estados = Object.values(EstadoActividadEnum).map(estado => ({ label: estado, value: estado }));
 
@@ -63,9 +64,9 @@ export class CrearActividadComponent implements OnInit {
     this.actividadForm = new FormGroup({
       id: new FormControl<number | null>(null),
       descripcion: new FormControl<string | null>('', Validators.required),
-      idCliente: new FormControl<string | null>(null, Validators.required),
-      idUsuarioActual:new FormControl<string | null>(null),
-      idUsuarioModificacion: new FormControl<string | null>(null, Validators.required),
+      idCliente: new FormControl<ClienteDto | null>(null, Validators.required),
+      idUsuarioActual:new FormControl<UsuarioDto | null>(null),
+      idUsuarioModificacion: new FormControl<UsuarioDto | null>(null, Validators.required),
       prioridad: new FormControl<PrioridadActividadEnum | null>(PrioridadActividadEnum.BAJA, Validators.required),
       estado: new FormControl<EstadoActividadEnum | null>(EstadoActividadEnum.PENDIENTE, Validators.required),
       //fechaInicio: new FormControl(new Date(), Validators.required)
@@ -78,31 +79,32 @@ export class CrearActividadComponent implements OnInit {
   }
 
   cargarClientes() {
-    this.clientesService.getClientes().subscribe(
-      (clientes: any[]) => {
+    this.clientesService.getClientes().subscribe({
+      next:(clientes: any[]) => {
         this.clientes = clientes.map(cliente => ({
           label: cliente.nombres,
           value: cliente.id
         }));
       },
-      error => {
+      error: (error) => {
         console.error('Error al cargar los clientes:', error);
       }
-    );
+  });
   }
 
   cargarUsuarios() {
-    this.usuariosService.getUsuarios().subscribe(
-      (usuarios: any[]) => {
+    this.usuariosService.getUsuarios().subscribe({
+  
+      next:(usuarios: any[]) => {
         this.usuarios = usuarios.map(usuario => ({
           label: usuario.nombres,
           value: usuario.id
         }));
       },
-      error => {
+      error:(error) => {
         console.error('Error al cargar los usuarios:', error);
       }
-    );
+  });
   }
 
   save() {
@@ -116,7 +118,8 @@ export class CrearActividadComponent implements OnInit {
     }
       const actividad = this.actividadForm.getRawValue();
       
-      const crearActividad: ActividadDto ={
+      const crearActividad: CrearActividadDto ={
+       
         idCliente: actividad.idCliente!,
         descripcion:actividad.descripcion! ,
         prioridad:actividad.prioridad! ,

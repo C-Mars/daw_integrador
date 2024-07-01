@@ -1,6 +1,6 @@
  <p-dialog header="Editar Actividad" [(visible)]="displayDialog" (onHide)="closeDialog()" [modal]="true" class="flex justify-content-center flex-wrap min-w-min md:min-w-max">
   <div class="flex justify-content-center flex-wrap" autocomplete="off">
-    <form [formGroup]="actividadForm" (ngSubmit)="save()" autocomplete="off">
+    <form [formGroup]="formEditarActividad" (ngSubmit)="save()" autocomplete="off">
       <div class="input-container min-w-min md:min-w-max">
         <p-floatLabel class="m-2">
           <input id="descripcion" pInputText type="text" formControlName="descripcion" autocomplete="off" />
@@ -14,8 +14,8 @@
       </div>
 
       <div class="input-container min-w-min md:min-w-max">
-        <label for="idUsuarioActual">Usuario</label>
-        <p-dropdown id="idUsuarioActual" appendTo="body" placeholder="Seleccionar" [options]="usuarios" formControlName="idUsuarioActual"></p-dropdown>
+        <label for="idUsuarioModificacion">Usuario</label>
+        <p-dropdown id="idUsuarioModificacion" appendTo="body" placeholder="Seleccionar" [options]="usuarios" formControlName="idUsuarioModificacion"></p-dropdown>
       </div>
 
       <div class="input-container m-2 min-w-min md:min-w-max">
