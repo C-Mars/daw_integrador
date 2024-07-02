@@ -9,6 +9,7 @@ import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
 import { EditarActividadDto } from '../dtos/editar-actividad.dto';
 import { CrearActividadDto } from '../dtos/crear-actividad.dto';
+import { EstadoActividadEnum } from '../enums/estado-actividad.enum';
 
 
 @Injectable({
@@ -34,10 +35,9 @@ export class ActividadesService {
 
   // Obtener Actividades por usuario
   getActividadPorUsuario(Id: number): Observable<ActividadDto[]> {
-    return this._client.get<ActividadDto[]>(`${environment.apiUrl}/actividades/usuario/${Id}`).pipe(
-      map(actividades => actividades.filter(actividad => actividad.estado === 'pendiente'))
-    );
+    return this._client.get<ActividadDto[]>(`${environment.apiUrl}/actividades/usuario/${Id}`)
   }
+  
   getActividad(id: number): Observable<ActividadDto> {
     if (isPlatformBrowser(this.platformId)) {
       if (!this._authService.hasRole(RolesEnum.ADMINISTRADOR)) {
@@ -58,7 +58,6 @@ export class ActividadesService {
 
   editarActividad(actividad: EditarActividadDto): Observable<EditarActividadDto> {
     if (isPlatformBrowser(this.platformId)) {
-      // Verificar si el usuario tiene el rol de ADMINISTRADOR o EJECUTOR
       if (!this._authService.hasRole(RolesEnum.ADMINISTRADOR) && !this._authService.hasRole(RolesEnum.EJECUTOR)) {
         throw new Error('El usuario no está autorizado para realizar esta acción.');
       }

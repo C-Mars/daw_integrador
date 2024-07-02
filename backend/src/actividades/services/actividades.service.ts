@@ -41,7 +41,7 @@ export class ActividadesService {
  // Obtener actividades por ID de usuario
     async obtenerActividadesPorUsuario(idUsuario: number): Promise<Actividades[]> {
       return await this.actividadesRepo.find({
-        where: { usuarioActual: { id: idUsuario } },
+        where: { idUsuarioModificacion: { id: idUsuario } },
         relations: ['idCliente', 'usuarioActual', 'idUsuarioModificacion'],
       });
     }
@@ -65,27 +65,28 @@ export class ActividadesService {
     await this.actividadesRepo.save(nuevaActividad);
   }
 
-  // Obtener actividades según el rol del usuario
-  async getActividades(usuario: Usuario): Promise<Actividades[]> {
-    const rol: RolesEnum = usuario.rol;
+  // // Obtener actividades según el rol del usuario
+  // async getActividades(usuario: Usuario): Promise<Actividades[]> {
+  //   const rol: RolesEnum = usuario.rol;
 
-    const consulta = this.actividadesRepo
-      .createQueryBuilder('actividad')
-      .innerJoin('actividad.usuarioActual', 'usuario');
+  //   const consulta = this.actividadesRepo
+  //     .createQueryBuilder('actividad')
+  //     .innerJoin('actividad.usuarioActual', 'usuario');
+
       
 
-    if (rol === RolesEnum.EJECUTOR) {
-      consulta
-        .where('actividad.estado = :estado', {
-          estado: EstadoActividad.PENDIENTE,
-        })
-        .andWhere('usuario.id = :idUsuario', {
-          idUsuario: usuario.id,
-        });
-    }
+  //   if (rol === RolesEnum.EJECUTOR) {
+  //     consulta
+  //       .where('actividad.estado = :estado', {
+  //         estado: EstadoActividad.PENDIENTE,EditarActividadDto
+  //       })
+  //       .andWhere('usuario.id = :idUsuario', {
+  //         idUsuario: usuario.id,
+  //       });
+  //   }
 
-    return await consulta.getMany();
-  }
+  //   return await consulta.getMany();
+  // }
 
   // Editar una actividad
   async editarActividad(id: number, editarActividadDto: EditarActividadDto) {

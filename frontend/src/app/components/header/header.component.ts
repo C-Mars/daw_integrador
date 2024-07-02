@@ -63,7 +63,6 @@ export class HeaderComponent {
 
   isLoggedView(): boolean {
     if (isPlatformBrowser(this.platformId)) {
-      console.log(this.usuario)
       return this._authService.isLogged();
     }
     return false;

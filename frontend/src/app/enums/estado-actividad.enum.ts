@@ -1,5 +1,5 @@
 export enum EstadoActividadEnum{
-    PENDIENTE = 'pendiente',
+    PENDIENTE = 'Pendiente',
     EN_PROCESO = 'En proceso',
     FINALIZADO = 'Finalizado',
     ELIMINADO = 'Eliminado'
