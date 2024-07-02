@@ -39,7 +39,8 @@
    <div class="p-toolbar-group-end">
       <div *ngIf="usuario" class="user-info">
         <div class="user-details">
-          <!-- <span class="user-name p-2" >Bienvenido,{{usuario.nombres}} </span> -->
+          
+          <span class="user-name p-2" >Bienvenido,{{usuario.nombreUsuario}} </span>
           <p-badge [value]="usuario.rol" styleClass="ml-2" severity="info"class="p-2" ></p-badge>
         </div>
       </div>
